@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Privacy Policy — Hound-Up</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <a class="brand" href="/">Hound-Up</a>
+    <nav>
+      <a href="/privacy.html" aria-current="page">Privacy</a>
+      <a href="/terms.html">Terms</a>
+    </nav>
+  </header>
+
+  <h1>Privacy Policy</h1>
+  <p class="meta">Effective 23 August 2026 &middot; Operated by Andy Vaughan (sole trader)</p>
+
+  <p>Hound-Up is a business management app for solo dog walkers — scheduling, client and dog records, and invoicing. It's built to work entirely offline. This page explains, plainly, what data the app handles and where it goes.</p>
+
+  <h2>Data that stays on your device</h2>
+  <p>Everything you enter — client details, dog details, schedules, walk records, notes, and invoices — is stored locally on your device using Apple's on-device database (SwiftData). Andy Vaughan has no server that stores or has access to this data.</p>
+
+  <h2>iCloud sync (optional)</h2>
+  <p>If you turn on iCloud sync in Settings, this same data is also stored in <strong>your own private iCloud account</strong>, using Apple's CloudKit, so it carries over to your other devices. This sync is between your device and Apple directly — Andy Vaughan cannot see, access, or receive this data at any point. Apple's own privacy policy governs how iCloud handles it.</p>
+
+  <h2>Sending an invoice by email</h2>
+  <p>When you choose to email an invoice from inside the app, the following is sent, only for that purpose, to a backend that relays it on to your client:</p>
+  <ul>
+    <li>The recipient's email address (as you've entered it for that client)</li>
+    <li>The invoice PDF — which includes your business name, address, contact details and bank payment details, and your client's name, address, and a summary of the walks being billed</li>
+    <li>The email subject and message text</li>
+  </ul>
+  <p>This is relayed through two services, solely to deliver that one email:</p>
+  <div class="card">
+    <p><strong>Supabase</strong> — runs the backend that receives the request and forwards it to Resend. It also stores a device attestation key for your phone (see below), so the sending feature can't be abused by requests that didn't come from a genuine copy of the app. This key isn't linked to your name, your clients, or any account — there are no accounts.</p>
+  </div>
+  <div class="card">
+    <p><strong>Resend</strong> — the email delivery provider that actually sends the message to your client's inbox.</p>
+  </div>
+  <p>None of this is stored for any purpose beyond delivering that email, used for marketing, or sold or shared with anyone else. If you never use the "email invoice" feature, none of this ever happens — you can also just print or share invoices directly from your device instead.</p>
+
+  <h2>App Attest (device check)</h2>
+  <p>Before the app can email an invoice, Apple's App Attest generates a one-time cryptographic key for your device and confirms with Apple that it's a genuine, untampered copy of Hound-Up. This is a standard anti-abuse mechanism — it identifies your <em>device</em>, not you, and carries no personal information.</p>
+
+  <h2>Microphone &amp; speech-to-text</h2>
+  <p>If you use voice-to-text for walk notes, the audio is transcribed entirely on your device using Apple's on-device Speech framework. Nothing is recorded, stored, or sent anywhere.</p>
+
+  <h2>What Hound-Up doesn't do</h2>
+  <ul>
+    <li>No accounts or sign-in</li>
+    <li>No advertising or ad tracking</li>
+    <li>No analytics or usage tracking</li>
+    <li>No selling or sharing of data with third parties beyond what's needed to send an invoice you've asked to send</li>
+  </ul>
+
+  <h2>Your clients' data</h2>
+  <p>Hound-Up is a tool you use to run your own dog-walking business. The personal details you enter about your clients (names, addresses, contact details, emergency contacts, and their dogs' medical/vet information) are your responsibility to collect and use appropriately — for example, telling clients you keep these records and only using them for the purposes they'd reasonably expect (scheduling and invoicing their walks).</p>
+
+  <h2>Your control over your data</h2>
+  <p>You can edit or delete any client, dog, or walk record at any time from within the app. Deleting the app from your device removes the local copy; if iCloud sync was on, you can also delete the data from iCloud in the app or via your device's iCloud settings.</p>
+
+  <h2>Children</h2>
+  <p>Hound-Up isn't directed at children and isn't intended for use by them.</p>
+
+  <h2>Changes to this policy</h2>
+  <p>If this policy changes, the update will be posted here with a new effective date.</p>
+
+  <h2>Contact</h2>
+  <p>Questions about this policy or your data: <a href="mailto:avaughan78@gmail.com">avaughan78@gmail.com</a></p>
+
+  <footer>
+    Hound-Up &middot; Andy Vaughan &middot; <a href="/terms.html">Terms of Service</a>
+  </footer>
+</div>
+</body>
+</html>
