@@ -1,43 +1,46 @@
+/* Matches Hound-Up's own design tokens exactly — see
+   Packages/DesignSystem/Sources/DesignSystem/Colors/ColorTokens.swift
+   in the app repo (canvas/surface/ink/mutedBody/hairline/accent/onAccent). */
 :root {
-  --bg: #faf9f7;
+  --bg: #f6f6f5;
   --surface: #ffffff;
-  --ink: #1c1a17;
-  --muted: #6b6560;
-  --hairline: #e7e2db;
-  --accent: #b8863f;
-  --accent-ink: #1c1a17;
+  --ink: #1d1e1e;
+  --muted: #7c7d7c;
+  --hairline: #e9e9e7;
+  --accent: #b08006;
+  --accent-ink: #ffffff;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg: #17140f;
-    --surface: #201c16;
-    --ink: #f3efe8;
-    --muted: #a89f92;
-    --hairline: #35302a;
-    --accent: #d9a85c;
-    --accent-ink: #17140f;
+    --bg: #111212;
+    --surface: #1a1b1b;
+    --ink: #eeefef;
+    --muted: #868888;
+    --hairline: #272828;
+    --accent: #e8be4a;
+    --accent-ink: #111212;
   }
 }
 
 :root[data-theme="dark"] {
-  --bg: #17140f;
-  --surface: #201c16;
-  --ink: #f3efe8;
-  --muted: #a89f92;
-  --hairline: #35302a;
-  --accent: #d9a85c;
-  --accent-ink: #17140f;
+  --bg: #111212;
+  --surface: #1a1b1b;
+  --ink: #eeefef;
+  --muted: #868888;
+  --hairline: #272828;
+  --accent: #e8be4a;
+  --accent-ink: #111212;
 }
 
 :root[data-theme="light"] {
-  --bg: #faf9f7;
+  --bg: #f6f6f5;
   --surface: #ffffff;
-  --ink: #1c1a17;
-  --muted: #6b6560;
-  --hairline: #e7e2db;
-  --accent: #b8863f;
-  --accent-ink: #1c1a17;
+  --ink: #1d1e1e;
+  --muted: #7c7d7c;
+  --hairline: #e9e9e7;
+  --accent: #b08006;
+  --accent-ink: #ffffff;
 }
 
 * { box-sizing: border-box; }

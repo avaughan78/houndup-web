@@ -17,7 +17,7 @@
   </header>
 
   <h1>Privacy Policy</h1>
-  <p class="meta">Effective 23 August 2026 &middot; Operated by Andy Vaughan (sole trader)</p>
+  <p class="meta">Effective 31 August 2026 &middot; Operated by Andy Vaughan (sole trader)</p>
 
   <p>Hound-Up is a business management app for solo dog walkers — scheduling, client and dog records, and invoicing. It's built to work entirely offline. This page explains, plainly, what data the app handles and where it goes.</p>
 
@@ -41,10 +41,19 @@
   <div class="card">
     <p><strong>Resend</strong> — the email delivery provider that actually sends the message to your client's inbox.</p>
   </div>
-  <p>None of this is stored for any purpose beyond delivering that email, used for marketing, or sold or shared with anyone else. If you never use the "email invoice" feature, none of this ever happens — you can also just print or share invoices directly from your device instead.</p>
+  <p>None of this is stored for any purpose beyond delivering that email, used for marketing, or sold or shared with anyone else. If you never use the "email invoice" feature, none of this ever happens — the separate "Share" option instead hands the PDF straight to iOS's own share sheet, reaching only whichever app you pick there (Mail, WhatsApp, AirDrop, etc.), and doesn't touch our backend at all.</p>
+
+  <h2>Reading a booking message</h2>
+  <p>The "read a message" feature (for turning a pasted booking request into a scheduled walk or sit) sends the message text you paste in to <strong>Microsoft Azure OpenAI</strong>, which returns the booking details it found — who, when, any notes — back to the app. Nothing is retained by us once the response comes back. This only happens when you actively use this feature.</p>
+
+  <h2>Publishing a calendar feed</h2>
+  <p>If you turn on "Publish a calendar feed" in Settings, your booked walks and sits (dates, times, and dog names) are uploaded to a file on our backend (via Supabase), at a link only you have. Anyone who has that exact link can view it, which is why the in-app confirmation warns against sharing it publicly. Turning the feed off removes the file. This is entirely opt-in and off by default.</p>
+
+  <h2>Contacting support</h2>
+  <p>Messages sent via Settings &rarr; Contact support are relayed through the same backend and Resend to the developer's own inbox, along with a reply-to address if you gave one, purely so we can reply to you.</p>
 
   <h2>App Attest (device check)</h2>
-  <p>Before the app can email an invoice, Apple's App Attest generates a one-time cryptographic key for your device and confirms with Apple that it's a genuine, untampered copy of Hound-Up. This is a standard anti-abuse mechanism — it identifies your <em>device</em>, not you, and carries no personal information.</p>
+  <p>Before any of the backend features above run, Apple's App Attest generates a one-time cryptographic key for your device and confirms with Apple that it's a genuine, untampered copy of Hound-Up. This is a standard anti-abuse mechanism — it identifies your <em>device</em>, not you, and carries no personal information.</p>
 
   <h2>Microphone &amp; speech-to-text</h2>
   <p>If you use voice-to-text for walk notes, the audio is transcribed entirely on your device using Apple's on-device Speech framework. Nothing is recorded, stored, or sent anywhere.</p>
@@ -54,14 +63,14 @@
     <li>No accounts or sign-in</li>
     <li>No advertising or ad tracking</li>
     <li>No analytics or usage tracking</li>
-    <li>No selling or sharing of data with third parties beyond what's needed to send an invoice you've asked to send</li>
+    <li>No selling of data, and no sharing with third parties beyond what a feature you actively chose to use needs to do its job</li>
   </ul>
 
   <h2>Your clients' data</h2>
   <p>Hound-Up is a tool you use to run your own dog-walking business. The personal details you enter about your clients (names, addresses, contact details, emergency contacts, and their dogs' medical/vet information) are your responsibility to collect and use appropriately — for example, telling clients you keep these records and only using them for the purposes they'd reasonably expect (scheduling and invoicing their walks).</p>
 
   <h2>Your control over your data</h2>
-  <p>You can edit or delete any client, dog, or walk record at any time from within the app. Deleting the app from your device removes the local copy; if iCloud sync was on, you can also delete the data from iCloud in the app or via your device's iCloud settings.</p>
+  <p>You can edit or delete any client, dog, or walk record at any time from within the app, or use Settings &rarr; Data &rarr; "Erase all data" to wipe everything on the device at once. Deleting the app from your device removes the local copy; if iCloud sync was ever turned on, a copy may remain in your iCloud account until you clear it from your device's iCloud settings, or until Apple's own retention policy removes it — turning sync off in Hound-Up stops future syncing but doesn't retroactively delete what's already there.</p>
 
   <h2>Children</h2>
   <p>Hound-Up isn't directed at children and isn't intended for use by them.</p>
