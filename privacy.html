@@ -66,6 +66,14 @@
     <li>No selling of data, and no sharing with third parties beyond what a feature you actively chose to use needs to do its job</li>
   </ul>
 
+  <h2 id="sub-processors">Sub-processors</h2>
+  <p>These are every third party any backend feature above can send data to, and exactly what each one sees:</p>
+  <div class="card"><p><strong>Supabase</strong> (EU, eu-west-1) &mdash; hosts the backend itself and the calendar feed files. Sees whatever a given request sends, as described above.</p></div>
+  <div class="card"><p><strong>Resend</strong> &mdash; delivers invoice and support emails. Sees the recipient address, subject, body, and any PDF attached to that one email.</p></div>
+  <div class="card"><p><strong>Microsoft Azure OpenAI</strong> &mdash; parses pasted booking messages. Sees the message text you paste in, for that one request.</p></div>
+  <div class="card"><p><strong>Apple (iCloud/CloudKit)</strong> &mdash; optional backup, under your own Apple ID. Sees your full local database if backup is on &mdash; never shared with us.</p></div>
+  <p>We won't add or replace a sub-processor for these features without updating this list first.</p>
+
   <h2>Your clients' data</h2>
   <p>Hound-Up is a tool you use to run your own dog-walking business. The personal details you enter about your clients (names, addresses, contact details, emergency contacts, and their dogs' medical/vet information) are your responsibility to collect and use appropriately — for example, telling clients you keep these records and only using them for the purposes they'd reasonably expect (scheduling and invoicing their walks).</p>
 
