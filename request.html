@@ -19,6 +19,11 @@
   <h1>Request a walk</h1>
   <p class="meta">Fill this in and your walker will get it next time they open the app — they'll confirm with you directly.</p>
 
+  <div class="card" id="availability-card" style="display: none;">
+    <p style="margin-top: 0;"><strong>Availability</strong> — tap a free slot to fill in the date and time below.</p>
+    <div id="availability"></div>
+  </div>
+
   <div class="card" id="form-card">
     <p id="missing-token" style="display: none;">This link is missing a walker reference — ask your walker for the link again.</p>
     <form id="request-form">
@@ -35,8 +40,12 @@
         <input type="date" id="requested_date" name="requested_date" required>
       </div>
       <div class="field">
+        <label for="requested_time">Preferred time (optional)</label>
+        <input type="time" id="requested_time" name="requested_time">
+      </div>
+      <div class="field">
         <label for="note">Note (optional)</label>
-        <textarea id="note" name="note" maxlength="1000" placeholder="e.g. dog's name, preferred time"></textarea>
+        <textarea id="note" name="note" maxlength="1000" placeholder="e.g. dog's name, or a preference if you're not fussed on an exact time"></textarea>
       </div>
       <p class="form-error" id="form-error" style="display: none;"></p>
       <button type="submit" class="btn" id="submit-btn">Send request</button>
@@ -53,6 +62,9 @@
 </div>
 
 <script>
+  const FUNCTIONS_BASE = "https://afxlvjnbwojjdszzrajj.supabase.co/functions/v1";
+  const SLOT_MINUTES = 30;
+
   const params = new URLSearchParams(window.location.search);
   const walkerToken = params.get("w");
   const form = document.getElementById("request-form");
@@ -60,6 +72,92 @@
   if (!walkerToken) {
     document.getElementById("missing-token").style.display = "block";
     form.style.display = "none";
+  } else {
+    loadAvailability(walkerToken);
+  }
+
+  function parseTimeToMinutes(value) {
+    const [h, m] = value.split(":").map(Number);
+    return h * 60 + m;
+  }
+
+  function minutesToTime(mins) {
+    const h = Math.floor(mins / 60);
+    const m = mins % 60;
+    return String(h).padStart(2, "0") + ":" + String(m).padStart(2, "0");
+  }
+
+  function formatDayLabel(dateString) {
+    const date = new Date(dateString + "T00:00:00");
+    return date.toLocaleDateString(undefined, { weekday: "short", day: "numeric", month: "short" });
+  }
+
+  // Advisory only — clicking a free slot just fills the plain date/time
+  // inputs below, which stay fully editable. This is deliberately not a
+  // hard reservation: the snapshot is only as fresh as the walker's last
+  // time opening the app, so two people could see the same "free" slot.
+  function renderAvailability(availability) {
+    const container = document.getElementById("availability");
+    container.innerHTML = "";
+    const startMin = parseTimeToMinutes(availability.workingHoursStart);
+    const endMin = parseTimeToMinutes(availability.workingHoursEnd);
+
+    availability.days.forEach((day) => {
+      const row = document.createElement("div");
+      row.className = "avail-day";
+
+      const label = document.createElement("div");
+      label.className = "avail-day-label";
+      label.textContent = formatDayLabel(day.date);
+      row.appendChild(label);
+
+      if (!day.isWorkingDay) {
+        const note = document.createElement("div");
+        note.className = "avail-unavailable";
+        note.textContent = "Not available";
+        row.appendChild(note);
+      } else {
+        const strip = document.createElement("div");
+        strip.className = "avail-strip";
+        for (let t = startMin; t < endMin; t += SLOT_MINUTES) {
+          const slotEnd = t + SLOT_MINUTES;
+          const isBusy = (day.busyRanges || []).some((range) => {
+            const rangeStart = parseTimeToMinutes(range.start);
+            const rangeEnd = parseTimeToMinutes(range.end);
+            return t < rangeEnd && slotEnd > rangeStart;
+          });
+          const block = document.createElement("button");
+          block.type = "button";
+          block.className = "avail-slot " + (isBusy ? "busy" : "free");
+          block.title = minutesToTime(t) + " – " + minutesToTime(slotEnd);
+          if (isBusy) {
+            block.disabled = true;
+          } else {
+            block.addEventListener("click", () => {
+              document.getElementById("requested_date").value = day.date;
+              document.getElementById("requested_time").value = minutesToTime(t);
+              document.querySelectorAll(".avail-slot.selected").forEach((el) => el.classList.remove("selected"));
+              block.classList.add("selected");
+            });
+          }
+          strip.appendChild(block);
+        }
+        row.appendChild(strip);
+      }
+      container.appendChild(row);
+    });
+  }
+
+  async function loadAvailability(token) {
+    try {
+      const response = await fetch(`${FUNCTIONS_BASE}/get-availability?token=${encodeURIComponent(token)}`);
+      if (!response.ok) return; // 404 = walker hasn't turned this on — plain form still works
+      const availability = await response.json();
+      renderAvailability(availability);
+      document.getElementById("availability-card").style.display = "block";
+    } catch {
+      // Silently ignore — the plain date/time/note form still works fine.
+    }
   }
 
   form.addEventListener("submit", async (event) => {
@@ -71,7 +169,7 @@
     submitBtn.textContent = "Sending…";
 
     try {
-      const response = await fetch("https://afxlvjnbwojjdszzrajj.supabase.co/functions/v1/submit-walk-request", {
+      const response = await fetch(`${FUNCTIONS_BASE}/submit-walk-request`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -79,6 +177,7 @@
           client_name: document.getElementById("client_name").value.trim(),
           contact: document.getElementById("contact").value.trim() || undefined,
           requested_date: document.getElementById("requested_date").value,
+          requested_time: document.getElementById("requested_time").value || undefined,
           note: document.getElementById("note").value.trim() || undefined,
         }),
       });
@@ -89,6 +188,7 @@
       }
 
       document.getElementById("form-card").style.display = "none";
+      document.getElementById("availability-card").style.display = "none";
       document.getElementById("success-card").style.display = "block";
     } catch (error) {
       errorEl.textContent = error.message || "Couldn't send this — check your connection and try again.";

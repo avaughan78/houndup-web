@@ -240,3 +240,62 @@ footer {
   font-size: 13.5px;
   margin: -8px 0 16px;
 }
+
+.avail-day {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--hairline);
+}
+
+.avail-day:last-child {
+  border-bottom: none;
+}
+
+.avail-day-label {
+  flex: 0 0 96px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--muted);
+}
+
+.avail-unavailable {
+  font-size: 13px;
+  color: var(--muted);
+  font-style: italic;
+}
+
+.avail-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3px;
+  flex: 1;
+}
+
+.avail-slot {
+  width: 14px;
+  height: 22px;
+  border: none;
+  border-radius: 4px;
+  padding: 0;
+  cursor: pointer;
+}
+
+.avail-slot.free {
+  background: var(--accent);
+  opacity: 0.35;
+}
+
+.avail-slot.free:hover {
+  opacity: 0.6;
+}
+
+.avail-slot.selected {
+  opacity: 1;
+}
+
+.avail-slot.busy {
+  background: var(--hairline);
+  cursor: default;
+}
