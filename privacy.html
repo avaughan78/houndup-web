@@ -17,7 +17,7 @@
   </header>
 
   <h1>Privacy Policy</h1>
-  <p class="meta">Effective 31 August 2026 &middot; Operated by Andy Vaughan (sole trader)</p>
+  <p class="meta">Effective 13 September 2026 &middot; Operated by Andy Vaughan (sole trader)</p>
 
   <p>Hound-Up is a business management app for solo dog walkers — scheduling, client and dog records, and invoicing. It's built to work entirely offline. This page explains, plainly, what data the app handles and where it goes.</p>
 
@@ -26,6 +26,20 @@
 
   <h2>iCloud sync (optional)</h2>
   <p>If you turn on iCloud sync in Settings, this same data is also stored in <strong>your own private iCloud account</strong>, using Apple's CloudKit, so it carries over to your other devices. This sync is between your device and Apple directly — Andy Vaughan cannot see, access, or receive this data at any point. Apple's own privacy policy governs how iCloud handles it.</p>
+
+  <h2>Cloud Sync (Beta) — optional</h2>
+  <p>Hound-Up also offers a separate, off-by-default feature called Cloud Sync, in Settings. Unlike iCloud sync above, turning it on creates a real account (via Sign in with Apple) and copies most of your business data to our own backend, hosted on Supabase — so certain features can keep running even when the app is closed, rather than only when you have it open.</p>
+  <p>If you turn Cloud Sync on, the following is copied to our backend:</p>
+  <ul>
+    <li>Your business details (name, address, rates, bank details)</li>
+    <li>Your clients' names, contact details, addresses, and their dogs' details, including medical/vet notes</li>
+    <li>Your schedules, walks, sits, and notes</li>
+    <li>Your invoices and payment records, including a copy of each sent invoice PDF</li>
+    <li>Your Stripe Restricted API key, if you've connected online payments — so an automatic payment reminder can still include a working "Pay now" link even if your phone isn't reachable at the time</li>
+    <li>A device push token, so booking-request notifications can reach you even when the app is closed</li>
+  </ul>
+  <p>This is used only to run features you've separately chosen to turn on for yourself — automatic payment reminders, automatic visit-summary emails, your calendar feed, your availability calendar, and booking-request notifications — computed on a schedule on our servers instead of only when you have the app open. It's never sold, used for advertising, or shared beyond what's already listed under Sub-processors below.</p>
+  <p>Cloud Sync is entirely optional and off by default. If you never turn it on, none of this applies to you, and everything elsewhere on this page still describes Hound-Up exactly. Signing out (Settings &rarr; Cloud Sync &rarr; Sign out) stops any further syncing but doesn't delete what's already stored. To permanently and immediately delete everything Cloud Sync has stored about you, use Settings &rarr; Cloud Sync &rarr; "Delete cloud data" — this never affects your own device's data, which stays exactly as it is.</p>
 
   <h2>Sending an invoice by email</h2>
   <p>When you choose to email an invoice from inside the app, the following is sent, only for that purpose, to a backend that relays it on to your client:</p>
@@ -60,7 +74,7 @@
 
   <h2>What Hound-Up doesn't do</h2>
   <ul>
-    <li>No accounts or sign-in</li>
+    <li>No account or sign-in required to use the app — Cloud Sync (Settings, off by default) is the one optional exception; see above</li>
     <li>No advertising or ad tracking</li>
     <li>No analytics or usage tracking</li>
     <li>No selling of data, and no sharing with third parties beyond what a feature you actively chose to use needs to do its job</li>
@@ -68,7 +82,7 @@
 
   <h2 id="sub-processors">Sub-processors</h2>
   <p>These are every third party any backend feature above can send data to, and exactly what each one sees:</p>
-  <div class="card"><p><strong>Supabase</strong> (EU, eu-west-1) &mdash; hosts the backend itself and the calendar feed files. Sees whatever a given request sends, as described above.</p></div>
+  <div class="card"><p><strong>Supabase</strong> (EU, eu-west-1) &mdash; hosts the backend itself and the calendar feed files. For every walker, sees whatever a given request sends, as described above. Additionally, for any walker who's turned on Cloud Sync, stores the business/client/schedule/invoice data listed in that section, your device push token, and, if provided, your Stripe Restricted key &mdash; until you delete it or delete your account.</p></div>
   <div class="card"><p><strong>Resend</strong> &mdash; delivers invoice and support emails. Sees the recipient address, subject, body, and any PDF attached to that one email.</p></div>
   <div class="card"><p><strong>Microsoft Azure OpenAI</strong> &mdash; parses pasted booking messages. Sees the message text you paste in, for that one request.</p></div>
   <div class="card"><p><strong>Apple (iCloud/CloudKit)</strong> &mdash; optional backup, under your own Apple ID. Sees your full local database if backup is on &mdash; never shared with us.</p></div>
@@ -78,7 +92,7 @@
   <p>Hound-Up is a tool you use to run your own dog-walking business. The personal details you enter about your clients (names, addresses, contact details, emergency contacts, and their dogs' medical/vet information) are your responsibility to collect and use appropriately — for example, telling clients you keep these records and only using them for the purposes they'd reasonably expect (scheduling and invoicing their walks).</p>
 
   <h2>Your control over your data</h2>
-  <p>You can edit or delete any client, dog, or walk record at any time from within the app, or use Settings &rarr; Data &rarr; "Erase all data" to wipe everything on the device at once. Deleting the app from your device removes the local copy; if iCloud sync was ever turned on, a copy may remain in your iCloud account until you clear it from your device's iCloud settings, or until Apple's own retention policy removes it — turning sync off in Hound-Up stops future syncing but doesn't retroactively delete what's already there.</p>
+  <p>You can edit or delete any client, dog, or walk record at any time from within the app, or use Settings &rarr; Data &rarr; "Erase all data" to wipe everything on the device at once. Deleting the app from your device removes the local copy; if iCloud sync was ever turned on, a copy may remain in your iCloud account until you clear it from your device's iCloud settings, or until Apple's own retention policy removes it — turning sync off in Hound-Up stops future syncing but doesn't retroactively delete what's already there. If you've turned on Cloud Sync, use Settings &rarr; Cloud Sync &rarr; "Delete cloud data" to immediately and permanently erase everything it stored on our backend, independently of anything above.</p>
 
   <h2>Children</h2>
   <p>Hound-Up isn't directed at children and isn't intended for use by them.</p>
