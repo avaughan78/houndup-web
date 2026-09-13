@@ -254,12 +254,6 @@
         document.getElementById("requested_time").value = minutesToTime(t);
         document.querySelectorAll(".avail-chip.selected").forEach((el) => el.classList.remove("selected"));
         chip.classList.add("selected");
-        // Picking a time doesn't book it on its own — the form below still
-        // needs a name and a tap on Send. Scrolling there is what makes
-        // that obvious, instead of leaving the walker's client stuck
-        // thinking a tap on the chip was the whole job.
-        document.getElementById("form-card").scrollIntoView({ behavior: "smooth", block: "start" });
-        document.getElementById("client_name").focus({ preventScroll: true });
       });
       chips.appendChild(chip);
     });
