@@ -20,12 +20,12 @@
   </header>
 
   <h1>Request a booking<span id="hero-suffix"></span></h1>
-  <p class="meta">Fill this in and your walker will get it next time they open the app — they'll confirm with you directly. This is for a one-off walk. If you're after a regular, ongoing arrangement, pop that in the note below instead and your walker will get in touch to sort out the details.</p>
+  <p class="meta">Pick a day and time below, or just fill in the form — your walker will get this next time they open the app. This is for a one-off walk; for a regular arrangement, mention it in the note.</p>
 
   <div class="card" id="availability-card" style="display: none;">
-    <p style="margin-top: 0;"><strong>Availability</strong> — tap a free time to fill in the date and time below.</p>
-    <div class="avail-legend"><span class="swatch"></span> Free time — tap to pick it</div>
-    <div id="availability"></div>
+    <p style="margin-top: 0;"><strong>Availability</strong> — pick a day, then tap a free time.</p>
+    <div id="day-strip" class="day-strip"></div>
+    <div id="day-detail"></div>
   </div>
 
   <div class="card" id="form-card">
@@ -72,6 +72,8 @@
   const params = new URLSearchParams(window.location.search);
   const walkerToken = params.get("w");
   const form = document.getElementById("request-form");
+  let selectedDayIndex = 0;
+  let currentAvailability = null;
 
   if (!walkerToken) {
     document.getElementById("missing-token").style.display = "block";
@@ -122,88 +124,153 @@
     return merged;
   }
 
-  // Advisory only — clicking a free chip just fills the plain date/time
-  // inputs below, which stay fully editable. This is deliberately not a
-  // hard reservation: the snapshot is only as fresh as the walker's last
-  // time opening the app, so two people could see the same "free" chip.
-  function renderAvailability(availability) {
-    const container = document.getElementById("availability");
-    container.innerHTML = "";
+  /// Every half-hour in working hours not covered by a busy range —
+  /// shared by the day strip (just needs the count) and the detail view
+  /// (needs the actual slot list).
+  function freeSlotsFor(day, startMin, endMin) {
+    if (!day.isWorkingDay) return [];
+    const busyRanges = (day.busyRanges || []).map((r) => ({
+      start: parseTimeToMinutes(r.start),
+      end: parseTimeToMinutes(r.end),
+    }));
+    const slots = [];
+    for (let t = startMin; t < endMin; t += SLOT_MINUTES) {
+      const slotEnd = t + SLOT_MINUTES;
+      const isBusy = busyRanges.some((r) => t < r.end && slotEnd > r.start);
+      if (!isBusy) slots.push(t);
+    }
+    return slots;
+  }
+
+  /// A compact horizontal day picker rather than showing every day's full
+  /// time list at once — a normal working day can have a dozen-plus free
+  /// half-hours, and showing that for up to 14 days simultaneously was
+  /// the actual source of this page feeling cluttered. One day's detail
+  /// renders below instead, via renderDayDetail.
+  function renderDayStrip(availability) {
+    const strip = document.getElementById("day-strip");
+    strip.innerHTML = "";
     const startMin = parseTimeToMinutes(availability.workingHoursStart);
     const endMin = parseTimeToMinutes(availability.workingHoursEnd);
     const todayStr = todayDateString();
 
-    availability.days.forEach((day) => {
-      const row = document.createElement("div");
-      row.className = "avail-day";
+    availability.days.forEach((day, index) => {
+      const freeSlots = freeSlotsFor(day, startMin, endMin);
+      const date = new Date(day.date + "T00:00:00");
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "day-btn";
+      if (!day.isWorkingDay) btn.classList.add("closed");
+      else if (freeSlots.length === 0) btn.classList.add("full");
+      if (index === selectedDayIndex) btn.classList.add("selected");
 
-      const label = document.createElement("div");
-      label.className = "avail-day-label";
-      label.textContent = formatDayLabel(day.date);
-      if (day.date === todayStr) {
-        const tag = document.createElement("span");
-        tag.className = "today-tag";
-        tag.textContent = "Today";
-        label.appendChild(tag);
-      }
-      row.appendChild(label);
+      const weekday = document.createElement("span");
+      weekday.className = "weekday";
+      weekday.textContent = day.date === todayStr ? "Today" : date.toLocaleDateString(undefined, { weekday: "short" });
+      const daynum = document.createElement("span");
+      daynum.className = "daynum";
+      daynum.textContent = date.getDate();
+      const dot = document.createElement("span");
+      dot.className = "dot";
 
-      if (!day.isWorkingDay) {
-        const status = document.createElement("div");
-        status.className = "avail-status";
-        status.textContent = "Not available";
-        row.appendChild(status);
-        container.appendChild(row);
-        return;
-      }
-
-      const busyRanges = (day.busyRanges || []).map((r) => ({
-        start: parseTimeToMinutes(r.start),
-        end: parseTimeToMinutes(r.end),
-      }));
-      const freeSlots = [];
-      for (let t = startMin; t < endMin; t += SLOT_MINUTES) {
-        const slotEnd = t + SLOT_MINUTES;
-        const isBusy = busyRanges.some((r) => t < r.end && slotEnd > r.start);
-        if (!isBusy) freeSlots.push(t);
-      }
-
-      if (freeSlots.length === 0) {
-        const status = document.createElement("div");
-        status.className = "avail-status";
-        status.textContent = "Fully booked";
-        row.appendChild(status);
-        container.appendChild(row);
-        return;
-      }
-
-      const chips = document.createElement("div");
-      chips.className = "avail-chips";
-      freeSlots.forEach((t) => {
-        const chip = document.createElement("button");
-        chip.type = "button";
-        chip.className = "avail-chip";
-        chip.textContent = minutesToTime(t);
-        chip.addEventListener("click", () => {
-          document.getElementById("requested_date").value = day.date;
-          document.getElementById("requested_time").value = minutesToTime(t);
-          document.querySelectorAll(".avail-chip.selected").forEach((el) => el.classList.remove("selected"));
-          chip.classList.add("selected");
-        });
-        chips.appendChild(chip);
+      btn.append(weekday, daynum, dot);
+      btn.addEventListener("click", () => {
+        selectedDayIndex = index;
+        renderDayStrip(availability);
+        renderDayDetail(availability);
       });
-      row.appendChild(chips);
-
-      const merged = mergeRanges(busyRanges);
-      if (merged.length > 0) {
-        const busyNote = document.createElement("div");
-        busyNote.className = "avail-busy-note";
-        busyNote.textContent = "Busy " + merged.map((r) => `${minutesToTime(r.start)}–${minutesToTime(r.end)}`).join(", ");
-        row.appendChild(busyNote);
-      }
-
-      container.appendChild(row);
+      strip.appendChild(btn);
     });
+
+    strip.children[selectedDayIndex]?.scrollIntoView({ inline: "center", block: "nearest" });
+  }
+
+  // Advisory only — clicking a free chip just fills the plain date/time
+  // inputs below, which stay fully editable. This is deliberately not a
+  // hard reservation: the snapshot is only as fresh as the walker's last
+  // time opening the app, so two people could see the same "free" chip.
+  function renderDayDetail(availability) {
+    const container = document.getElementById("day-detail");
+    container.innerHTML = "";
+    const day = availability.days[selectedDayIndex];
+    const startMin = parseTimeToMinutes(availability.workingHoursStart);
+    const endMin = parseTimeToMinutes(availability.workingHoursEnd);
+    const todayStr = todayDateString();
+
+    const label = document.createElement("div");
+    label.className = "avail-day-label";
+    label.textContent = formatDayLabel(day.date);
+    if (day.date === todayStr) {
+      const tag = document.createElement("span");
+      tag.className = "today-tag";
+      tag.textContent = "Today";
+      label.appendChild(tag);
+    }
+    container.appendChild(label);
+
+    if (!day.isWorkingDay) {
+      const status = document.createElement("div");
+      status.className = "avail-status";
+      status.textContent = "Not available";
+      container.appendChild(status);
+      return;
+    }
+
+    const freeSlots = freeSlotsFor(day, startMin, endMin);
+    if (freeSlots.length === 0) {
+      const status = document.createElement("div");
+      status.className = "avail-status";
+      status.textContent = "Fully booked";
+      container.appendChild(status);
+      return;
+    }
+
+    const legend = document.createElement("div");
+    legend.className = "avail-legend";
+    legend.innerHTML = '<span class="swatch"></span> Free time — tap to pick it';
+    container.appendChild(legend);
+
+    const chips = document.createElement("div");
+    chips.className = "avail-chips";
+    freeSlots.forEach((t) => {
+      const chip = document.createElement("button");
+      chip.type = "button";
+      chip.className = "avail-chip";
+      chip.textContent = minutesToTime(t);
+      chip.addEventListener("click", () => {
+        document.getElementById("requested_date").value = day.date;
+        document.getElementById("requested_time").value = minutesToTime(t);
+        document.querySelectorAll(".avail-chip.selected").forEach((el) => el.classList.remove("selected"));
+        chip.classList.add("selected");
+      });
+      chips.appendChild(chip);
+    });
+    container.appendChild(chips);
+
+    const busyRanges = (day.busyRanges || []).map((r) => ({
+      start: parseTimeToMinutes(r.start),
+      end: parseTimeToMinutes(r.end),
+    }));
+    const merged = mergeRanges(busyRanges);
+    if (merged.length > 0) {
+      const busyNote = document.createElement("div");
+      busyNote.className = "avail-busy-note";
+      busyNote.textContent = "Busy " + merged.map((r) => `${minutesToTime(r.start)}–${minutesToTime(r.end)}`).join(", ");
+      container.appendChild(busyNote);
+    }
+  }
+
+  function renderAvailability(availability) {
+    currentAvailability = availability;
+    const startMin = parseTimeToMinutes(availability.workingHoursStart);
+    const endMin = parseTimeToMinutes(availability.workingHoursEnd);
+    // Default to the first day that actually has something free, rather
+    // than landing on "Not available" just because today happens to be
+    // a day off.
+    const firstOpenIndex = availability.days.findIndex((day) => freeSlotsFor(day, startMin, endMin).length > 0);
+    selectedDayIndex = firstOpenIndex >= 0 ? firstOpenIndex : 0;
+    renderDayStrip(availability);
+    renderDayDetail(availability);
   }
 
   /// Applies the walker's own business name to the header/hero/footer —
