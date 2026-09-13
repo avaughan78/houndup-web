@@ -24,6 +24,7 @@
 
   <div class="card" id="availability-card" style="display: none;">
     <p style="margin-top: 0;"><strong>Availability</strong> — pick a day, then tap a free time.</p>
+    <div id="month-label" class="month-label"></div>
     <div id="day-strip" class="day-strip"></div>
     <div id="day-detail"></div>
   </div>
@@ -154,6 +155,10 @@
     const endMin = parseTimeToMinutes(availability.workingHoursEnd);
     const todayStr = todayDateString();
 
+    const selectedDate = new Date(availability.days[selectedDayIndex].date + "T00:00:00");
+    document.getElementById("month-label").textContent =
+      selectedDate.toLocaleDateString(undefined, { month: "long", year: "numeric" });
+
     availability.days.forEach((day, index) => {
       const freeSlots = freeSlotsFor(day, startMin, endMin);
       const date = new Date(day.date + "T00:00:00");
@@ -169,7 +174,14 @@
       weekday.textContent = day.date === todayStr ? "Today" : date.toLocaleDateString(undefined, { weekday: "short" });
       const daynum = document.createElement("span");
       daynum.className = "daynum";
-      daynum.textContent = date.getDate();
+      // The 1st of a month (or the very first button in the strip) gets
+      // its month name appended — otherwise a 30-day strip shows "1"
+      // twice with nothing telling you which "1" is which month.
+      const needsMonthTag = index === 0 || date.getDate() === 1;
+      daynum.textContent = needsMonthTag
+        ? `${date.getDate()} ${date.toLocaleDateString(undefined, { month: "short" })}`
+        : String(date.getDate());
+      if (needsMonthTag) daynum.classList.add("with-month");
       const dot = document.createElement("span");
       dot.className = "dot";
 
@@ -227,7 +239,7 @@
 
     const legend = document.createElement("div");
     legend.className = "avail-legend";
-    legend.innerHTML = '<span class="swatch"></span> Free time — tap to pick it';
+    legend.innerHTML = '<span class="swatch"></span> Free time — tap one, then fill in your details below and press Send';
     container.appendChild(legend);
 
     const chips = document.createElement("div");
@@ -242,6 +254,12 @@
         document.getElementById("requested_time").value = minutesToTime(t);
         document.querySelectorAll(".avail-chip.selected").forEach((el) => el.classList.remove("selected"));
         chip.classList.add("selected");
+        // Picking a time doesn't book it on its own — the form below still
+        // needs a name and a tap on Send. Scrolling there is what makes
+        // that obvious, instead of leaving the walker's client stuck
+        // thinking a tap on the chip was the whole job.
+        document.getElementById("form-card").scrollIntoView({ behavior: "smooth", block: "start" });
+        document.getElementById("client_name").focus({ preventScroll: true });
       });
       chips.appendChild(chip);
     });
