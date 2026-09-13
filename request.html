@@ -9,18 +9,22 @@
 <body>
 <div class="wrap">
   <header class="top">
-    <a class="brand" href="/">Hound-Up</a>
+    <div class="brand-group">
+      <a class="brand" id="brand-name" href="/">Hound-Up</a>
+      <span class="brand-tag" id="brand-tag">via Hound-Up</span>
+    </div>
     <nav>
       <a href="/support.html">Support</a>
       <a href="/privacy.html">Privacy</a>
     </nav>
   </header>
 
-  <h1>Request a booking</h1>
+  <h1>Request a booking<span id="hero-suffix"></span></h1>
   <p class="meta">Fill this in and your walker will get it next time they open the app — they'll confirm with you directly.</p>
 
   <div class="card" id="availability-card" style="display: none;">
-    <p style="margin-top: 0;"><strong>Availability</strong> — tap a free slot to fill in the date and time below.</p>
+    <p style="margin-top: 0;"><strong>Availability</strong> — tap a free time to fill in the date and time below.</p>
+    <div class="avail-legend"><span class="swatch"></span> Free time — tap to pick it</div>
     <div id="availability"></div>
   </div>
 
@@ -57,7 +61,7 @@
   </div>
 
   <footer>
-    Hound-Up &middot; Andy Vaughan &middot; <a href="/privacy.html">Privacy Policy</a> &middot; <a href="/terms.html">Terms of Service</a>
+    Hound-Up <span id="footer-name"></span> &middot; <a href="/privacy.html">Privacy Policy</a> &middot; <a href="/terms.html">Terms of Service</a>
   </footer>
 </div>
 
@@ -92,15 +96,42 @@
     return date.toLocaleDateString(undefined, { weekday: "short", day: "numeric", month: "short" });
   }
 
-  // Advisory only — clicking a free slot just fills the plain date/time
+  function todayDateString() {
+    const now = new Date();
+    const y = now.getFullYear();
+    const m = String(now.getMonth() + 1).padStart(2, "0");
+    const d = String(now.getDate()).padStart(2, "0");
+    return `${y}-${m}-${d}`;
+  }
+
+  /// Collapses overlapping/adjacent busy ranges into display-ready spans —
+  /// the source ranges are one per walk/sit and can overlap (e.g. two
+  /// back-to-back bookings), which would otherwise print as redundant,
+  /// confusing entries in the busy summary line.
+  function mergeRanges(ranges) {
+    const sorted = ranges.slice().sort((a, b) => a.start - b.start);
+    const merged = [];
+    for (const r of sorted) {
+      const last = merged[merged.length - 1];
+      if (last && r.start <= last.end) {
+        last.end = Math.max(last.end, r.end);
+      } else {
+        merged.push({ start: r.start, end: r.end });
+      }
+    }
+    return merged;
+  }
+
+  // Advisory only — clicking a free chip just fills the plain date/time
   // inputs below, which stay fully editable. This is deliberately not a
   // hard reservation: the snapshot is only as fresh as the walker's last
-  // time opening the app, so two people could see the same "free" slot.
+  // time opening the app, so two people could see the same "free" chip.
   function renderAvailability(availability) {
     const container = document.getElementById("availability");
     container.innerHTML = "";
     const startMin = parseTimeToMinutes(availability.workingHoursStart);
     const endMin = parseTimeToMinutes(availability.workingHoursEnd);
+    const todayStr = todayDateString();
 
     availability.days.forEach((day) => {
       const row = document.createElement("div");
@@ -109,52 +140,95 @@
       const label = document.createElement("div");
       label.className = "avail-day-label";
       label.textContent = formatDayLabel(day.date);
+      if (day.date === todayStr) {
+        const tag = document.createElement("span");
+        tag.className = "today-tag";
+        tag.textContent = "Today";
+        label.appendChild(tag);
+      }
       row.appendChild(label);
 
       if (!day.isWorkingDay) {
-        const note = document.createElement("div");
-        note.className = "avail-unavailable";
-        note.textContent = "Not available";
-        row.appendChild(note);
-      } else {
-        const strip = document.createElement("div");
-        strip.className = "avail-strip";
-        for (let t = startMin; t < endMin; t += SLOT_MINUTES) {
-          const slotEnd = t + SLOT_MINUTES;
-          const isBusy = (day.busyRanges || []).some((range) => {
-            const rangeStart = parseTimeToMinutes(range.start);
-            const rangeEnd = parseTimeToMinutes(range.end);
-            return t < rangeEnd && slotEnd > rangeStart;
-          });
-          const block = document.createElement("button");
-          block.type = "button";
-          block.className = "avail-slot " + (isBusy ? "busy" : "free");
-          block.title = minutesToTime(t) + " – " + minutesToTime(slotEnd);
-          if (isBusy) {
-            block.disabled = true;
-          } else {
-            block.addEventListener("click", () => {
-              document.getElementById("requested_date").value = day.date;
-              document.getElementById("requested_time").value = minutesToTime(t);
-              document.querySelectorAll(".avail-slot.selected").forEach((el) => el.classList.remove("selected"));
-              block.classList.add("selected");
-            });
-          }
-          strip.appendChild(block);
-        }
-        row.appendChild(strip);
+        const status = document.createElement("div");
+        status.className = "avail-status";
+        status.textContent = "Not available";
+        row.appendChild(status);
+        container.appendChild(row);
+        return;
       }
+
+      const busyRanges = (day.busyRanges || []).map((r) => ({
+        start: parseTimeToMinutes(r.start),
+        end: parseTimeToMinutes(r.end),
+      }));
+      const freeSlots = [];
+      for (let t = startMin; t < endMin; t += SLOT_MINUTES) {
+        const slotEnd = t + SLOT_MINUTES;
+        const isBusy = busyRanges.some((r) => t < r.end && slotEnd > r.start);
+        if (!isBusy) freeSlots.push(t);
+      }
+
+      if (freeSlots.length === 0) {
+        const status = document.createElement("div");
+        status.className = "avail-status";
+        status.textContent = "Fully booked";
+        row.appendChild(status);
+        container.appendChild(row);
+        return;
+      }
+
+      const chips = document.createElement("div");
+      chips.className = "avail-chips";
+      freeSlots.forEach((t) => {
+        const chip = document.createElement("button");
+        chip.type = "button";
+        chip.className = "avail-chip";
+        chip.textContent = minutesToTime(t);
+        chip.addEventListener("click", () => {
+          document.getElementById("requested_date").value = day.date;
+          document.getElementById("requested_time").value = minutesToTime(t);
+          document.querySelectorAll(".avail-chip.selected").forEach((el) => el.classList.remove("selected"));
+          chip.classList.add("selected");
+        });
+        chips.appendChild(chip);
+      });
+      row.appendChild(chips);
+
+      const merged = mergeRanges(busyRanges);
+      if (merged.length > 0) {
+        const busyNote = document.createElement("div");
+        busyNote.className = "avail-busy-note";
+        busyNote.textContent = "Busy " + merged.map((r) => `${minutesToTime(r.start)}–${minutesToTime(r.end)}`).join(", ");
+        row.appendChild(busyNote);
+      }
+
       container.appendChild(row);
     });
+  }
+
+  /// Applies the walker's own business name to the header/hero/footer —
+  /// runs regardless of whether the availability calendar itself is on,
+  /// so branding shows up even on the plain-form-only path. Leaves every
+  /// element at its static "Hound-Up" default when no name resolves (an
+  /// unknown token, or a walker with no business name set).
+  function applyBranding(name) {
+    if (!name) return;
+    document.getElementById("brand-name").textContent = name;
+    document.getElementById("brand-tag").style.display = "inline";
+    document.getElementById("hero-suffix").textContent = " with " + name;
+    document.getElementById("footer-name").textContent = "· " + name;
   }
 
   async function loadAvailability(token) {
     try {
       const response = await fetch(`${FUNCTIONS_BASE}/get-availability?token=${encodeURIComponent(token)}`);
-      if (!response.ok) return; // 404 = walker hasn't turned this on — plain form still works
-      const availability = await response.json();
-      renderAvailability(availability);
-      document.getElementById("availability-card").style.display = "block";
+      if (!response.ok) return; // unknown token — plain form still works, no branding
+      const data = await response.json();
+      applyBranding(data.businessName || data.fullName);
+      if (data.days && data.days.length > 0) {
+        renderAvailability(data);
+        document.getElementById("availability-card").style.display = "block";
+      }
     } catch {
       // Silently ignore — the plain date/time/note form still works fine.
     }

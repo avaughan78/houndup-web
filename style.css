@@ -1,13 +1,15 @@
 /* Matches Hound-Up's own design tokens exactly — see
    Packages/DesignSystem/Sources/DesignSystem/Colors/ColorTokens.swift
-   in the app repo (canvas/surface/ink/mutedBody/hairline/accent/onAccent). */
+   in the app repo (canvas/surface/ink/mutedBody/hairline/accent/onAccent).
+   --accent is the app's own Indigo theme (AppTheme.palette, .indigo case)
+   — every walker's page uses this same brand color, not a per-walker one. */
 :root {
   --bg: #f6f6f5;
   --surface: #ffffff;
   --ink: #1d1e1e;
   --muted: #7c7d7c;
   --hairline: #e9e9e7;
-  --accent: #b08006;
+  --accent: #4E4A8C;
   --accent-ink: #ffffff;
 }
 
@@ -18,7 +20,7 @@
     --ink: #eeefef;
     --muted: #868888;
     --hairline: #272828;
-    --accent: #e8be4a;
+    --accent: #8885B7;
     --accent-ink: #111212;
   }
 }
@@ -29,7 +31,7 @@
   --ink: #eeefef;
   --muted: #868888;
   --hairline: #272828;
-  --accent: #e8be4a;
+  --accent: #8885B7;
   --accent-ink: #111212;
 }
 
@@ -39,7 +41,7 @@
   --ink: #1d1e1e;
   --muted: #7c7d7c;
   --hairline: #e9e9e7;
-  --accent: #b08006;
+  --accent: #4E4A8C;
   --accent-ink: #ffffff;
 }
 
@@ -69,12 +71,25 @@ header.top {
   border-bottom: 1px solid var(--hairline);
 }
 
+header.top .brand-group {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
 header.top .brand {
   font-weight: 800;
   font-size: 17px;
   letter-spacing: -0.01em;
   color: var(--ink);
   text-decoration: none;
+}
+
+header.top .brand-tag {
+  display: none;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--muted);
 }
 
 header.top nav a {
@@ -241,11 +256,26 @@ footer {
   margin: -8px 0 16px;
 }
 
-.avail-day {
+.avail-legend {
   display: flex;
   align-items: center;
-  gap: 14px;
-  padding: 8px 0;
+  gap: 8px;
+  font-size: 12.5px;
+  color: var(--muted);
+  margin-bottom: 16px;
+}
+
+.avail-legend .swatch {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border-radius: 4px;
+  background: color-mix(in srgb, var(--accent) 14%, var(--surface));
+  border: 1px solid color-mix(in srgb, var(--accent) 35%, transparent);
+}
+
+.avail-day {
+  padding: 12px 0;
   border-bottom: 1px solid var(--hairline);
 }
 
@@ -254,48 +284,61 @@ footer {
 }
 
 .avail-day-label {
-  flex: 0 0 96px;
-  font-size: 13px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13.5px;
   font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 9px;
+}
+
+.today-tag {
+  font-size: 10.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--accent-ink);
+  background: var(--accent);
+  padding: 2px 7px;
+  border-radius: 999px;
+}
+
+.avail-status {
+  font-size: 13.5px;
   color: var(--muted);
 }
 
-.avail-unavailable {
-  font-size: 13px;
-  color: var(--muted);
-  font-style: italic;
-}
-
-.avail-strip {
+.avail-chips {
   display: flex;
   flex-wrap: wrap;
-  gap: 3px;
-  flex: 1;
+  gap: 8px;
 }
 
-.avail-slot {
-  width: 14px;
-  height: 22px;
-  border: none;
-  border-radius: 4px;
-  padding: 0;
+.avail-chip {
+  font: inherit;
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 12%, var(--surface));
+  border: 1px solid color-mix(in srgb, var(--accent) 32%, transparent);
+  border-radius: 999px;
+  padding: 7px 14px;
   cursor: pointer;
 }
 
-.avail-slot.free {
+.avail-chip:hover {
+  background: color-mix(in srgb, var(--accent) 22%, var(--surface));
+}
+
+.avail-chip.selected {
+  color: var(--accent-ink);
   background: var(--accent);
-  opacity: 0.35;
+  border-color: var(--accent);
 }
 
-.avail-slot.free:hover {
-  opacity: 0.6;
-}
-
-.avail-slot.selected {
-  opacity: 1;
-}
-
-.avail-slot.busy {
-  background: var(--hairline);
-  cursor: default;
+.avail-busy-note {
+  margin-top: 9px;
+  font-size: 12.5px;
+  color: var(--muted);
 }
