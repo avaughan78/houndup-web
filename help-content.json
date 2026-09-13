@@ -1,0 +1,292 @@
+{
+  "comment": "Canonical Hound-Up help content. A byte-for-byte copy of this file also lives at houndup-web/help-content.json — if you edit one, edit both. Written in plain, short-sentence UK English on purpose (aiming for an easy reading level), for both the in-app Help Centre and houndup-web/help.html.",
+  "articles": [
+    {
+      "id": "what-is-houndup",
+      "category": "Getting Started",
+      "title": "What is Hound-Up?",
+      "body": [
+        "Hound-Up is an app for dog walkers. It helps you keep track of your clients, their dogs, your walks and sits, and your invoices.",
+        "It works fully on your phone, with no internet needed. You can back it up and use it on more than one device if you sign in — more on that below."
+      ]
+    },
+    {
+      "id": "do-i-need-to-sign-in",
+      "category": "Getting Started",
+      "title": "Do I need to sign in?",
+      "body": [
+        "No. Hound-Up works fully without signing in. You can add clients, log walks, and send invoices straight away.",
+        "Signing in is only needed if you want automatic backup, to use Hound-Up on more than one phone, or extra automation like Hound-Up Pro. See \"Free vs Hound-Up Pro\" for the full list."
+      ]
+    },
+    {
+      "id": "adding-first-client",
+      "category": "Getting Started",
+      "title": "Adding your first client",
+      "body": [
+        "Tap the + button on the Today tab, or go to the Dogs tab and tap \"New dog\".",
+        "You'll be asked for the dog's name and the owner's name and phone number. That's all you need to get started — you can fill in the rest of their details later."
+      ]
+    },
+    {
+      "id": "adding-a-client",
+      "category": "Clients & Dogs",
+      "title": "Adding a new client",
+      "body": [
+        "Go to the Dogs tab and tap \"New dog\". Type the dog's name and the owner's details.",
+        "You can add more information later, like the owner's address, emergency contact, and any notes — just open the client's page and tap Edit."
+      ]
+    },
+    {
+      "id": "adding-a-dog",
+      "category": "Clients & Dogs",
+      "title": "Adding a dog to an existing client",
+      "body": [
+        "Open the client's page and tap \"Add a dog\". If they've already got one dog on file, this adds another one for the same owner — you won't need to type the owner's details again."
+      ]
+    },
+    {
+      "id": "finding-address",
+      "category": "Clients & Dogs",
+      "title": "Finding a client's address",
+      "body": [
+        "When you're typing a client's address, start typing and a list of matching addresses will pop up. Tap the right one and it fills in the street, town and postcode for you.",
+        "Can't find it? Tap \"Enter manually\" underneath the search box and type the address in yourself."
+      ]
+    },
+    {
+      "id": "vet-search",
+      "category": "Clients & Dogs",
+      "title": "Adding a dog's vet",
+      "body": [
+        "On a dog's page, tap Edit and use the \"Search for a vet practice\" box. If it finds the practice, it fills in the name and address for you.",
+        "If it can't find it, tap \"Enter manually\" and type the vet's name and address yourself."
+      ]
+    },
+    {
+      "id": "editing-client-dog",
+      "category": "Clients & Dogs",
+      "title": "Editing a client or dog",
+      "body": [
+        "Open the client or dog's page and tap Edit in the top corner. Change whatever you need, then tap Save."
+      ]
+    },
+    {
+      "id": "logging-a-walk",
+      "category": "Walks & Sits",
+      "title": "Logging a walk",
+      "body": [
+        "Tap the + on Today and choose \"Log a past walk\". Pick the dog, the date, and how long the walk was. Hound-Up works out what to charge automatically, using your rates.",
+        "You can add a note or a photo too, if you like."
+      ]
+    },
+    {
+      "id": "recording-live-walk",
+      "category": "Walks & Sits",
+      "title": "Recording a walk live",
+      "body": [
+        "Tap the + on Today and choose \"Start a walk\". Hound-Up tracks your route using GPS while you walk, and you tap \"Stop & save\" when you're done.",
+        "This needs Hound-Up to know your location while you're recording — you'll be asked to allow this the first time."
+      ]
+    },
+    {
+      "id": "booking-a-walk",
+      "category": "Walks & Sits",
+      "title": "Booking a one-off walk",
+      "body": [
+        "Tap a day on the Calendar tab, or use the + button, and choose \"Book a walk\". Pick the dog (or add a new one), then the date and time.",
+        "This is for a single walk. If it's a regular booking, set up a schedule instead — see \"Setting up a regular schedule\"."
+      ]
+    },
+    {
+      "id": "regular-schedule",
+      "category": "Walks & Sits",
+      "title": "Setting up a regular schedule",
+      "body": [
+        "Open a dog's page, go to the Schedule tab, and tap \"Add a schedule\". Pick the day of the week, the time, and how long the walk is.",
+        "Hound-Up creates each week's walk automatically, so you don't need to book it every time."
+      ]
+    },
+    {
+      "id": "logging-a-sit",
+      "category": "Walks & Sits",
+      "title": "Logging or booking a sit",
+      "body": [
+        "Use the + button and choose \"Log a sit\" or \"Book a sit\" from the Calendar tab. Sits can be a few hours or several days — Hound-Up bills by the night for anything longer than a day."
+      ]
+    },
+    {
+      "id": "how-invoicing-works",
+      "category": "Invoicing & Getting Paid",
+      "title": "How invoicing works",
+      "body": [
+        "Every walk and sit you log gets added to that client's running total, on the Ledger tab. When you're ready, you turn that total into an invoice and send it.",
+        "You don't have to invoice after every single walk — most walkers send one invoice a month for everything a client owes."
+      ]
+    },
+    {
+      "id": "sending-an-invoice",
+      "category": "Invoicing & Getting Paid",
+      "title": "Sending an invoice",
+      "body": [
+        "Go to the Ledger tab, open a client's outstanding balance, and tap Send. You can send it by email or WhatsApp, straight from your phone's own Mail or WhatsApp app."
+      ]
+    },
+    {
+      "id": "getting-paid-stripe",
+      "category": "Invoicing & Getting Paid",
+      "title": "Getting paid by card or Apple Pay",
+      "body": [
+        "Hound-Up can add a \"Pay now\" link to your invoices, so clients can pay you by card or Apple Pay. Set this up in Settings > Payment Details by connecting your own Stripe account.",
+        "The money goes straight into your own Stripe account — Hound-Up never touches it or takes a cut."
+      ]
+    },
+    {
+      "id": "marking-invoice-paid",
+      "category": "Invoicing & Getting Paid",
+      "title": "Marking an invoice as paid",
+      "body": [
+        "Open the invoice and tap \"Mark as paid\". If you're signed in to Hound-Up Pro and a client pays through your Stripe \"Pay now\" link, this happens automatically instead — see \"Free vs Hound-Up Pro\"."
+      ]
+    },
+    {
+      "id": "nudging-late-payment",
+      "category": "Invoicing & Getting Paid",
+      "title": "Nudging a late payment",
+      "body": [
+        "On the Ledger tab, overdue invoices show a \"Nudge\" button — this sends a polite reminder. With Hound-Up Pro, this can also happen by itself, without you needing to open the app."
+      ]
+    },
+    {
+      "id": "exporting-income",
+      "category": "Invoicing & Getting Paid",
+      "title": "Exporting your income for tax",
+      "body": [
+        "Go to the Ledger tab and tap the export icon at the top. Choose a tax year (or your own date range) and Hound-Up creates a spreadsheet of everything you've earned, ready for your tax return or your accountant."
+      ]
+    },
+    {
+      "id": "what-is-booking-page",
+      "category": "Booking Requests & Your Availability Page",
+      "title": "What is the booking requests page?",
+      "body": [
+        "It's a web page you can share with clients (or put on your own website) so they can ask you for a walk without phoning or texting you first.",
+        "Turn it on in Settings > Booking Requests. You'll get a link to share."
+      ]
+    },
+    {
+      "id": "availability-calendar",
+      "category": "Booking Requests & Your Availability Page",
+      "title": "Turning on your availability calendar",
+      "body": [
+        "This shows clients which times you're actually free, right on your booking page, so they can just tap a time instead of guessing. Turn it on in Settings > Booking Requests.",
+        "It's just a helpful guide for clients — it doesn't stop two people picking the same time by accident, so you'll still want to check and confirm any request yourself."
+      ]
+    },
+    {
+      "id": "accepting-request",
+      "category": "Booking Requests & Your Availability Page",
+      "title": "Accepting or declining a request",
+      "body": [
+        "New requests show up as a notification in the app — tap it to see the details. If the person's already one of your clients, Hound-Up recognises them automatically and won't create a duplicate.",
+        "Tap Accept to book it in, or Decline if it doesn't work for you."
+      ]
+    },
+    {
+      "id": "what-is-cloud-sync",
+      "category": "Cloud Sync & Hound-Up Pro",
+      "title": "What is Cloud Sync?",
+      "body": [
+        "Cloud Sync keeps a safe copy of your data and lets you use Hound-Up on more than one phone. You turn it on by signing in with Apple.",
+        "It's part of Hound-Up Pro — see \"Free vs Hound-Up Pro\" for exactly what you get."
+      ]
+    },
+    {
+      "id": "free-vs-pro",
+      "category": "Cloud Sync & Hound-Up Pro",
+      "title": "Free vs Hound-Up Pro",
+      "kind": "planComparison",
+      "body": [
+        "Hound-Up is free to use, with no limits on clients, dogs, walks or invoices. Hound-Up Pro is £9.99 a month and adds automatic backup and some extra automation. Here's exactly what's different."
+      ],
+      "rows": [
+        { "feature": "Clients, dogs, walks, sits and invoicing", "free": "Everything, no limits", "pro": "The same" },
+        { "feature": "Keeping a backup of your data", "free": "You do it yourself (Settings → Data → Export)", "pro": "Happens by itself, all the time" },
+        { "feature": "Using Hound-Up on more than one phone", "free": "Not available", "pro": "Yes" },
+        { "feature": "Reminding clients about late invoices", "free": "Only while you have the app open", "pro": "Happens by itself, even with the app shut" },
+        { "feature": "Your online booking page staying up to date", "free": "Only while you have the app open", "pro": "Stays up to date all the time" },
+        { "feature": "Your calendar feed staying up to date", "free": "Only while you have the app open", "pro": "Stays up to date all the time" },
+        { "feature": "Hearing about a new booking request", "free": "Next time you open the app", "pro": "Straight away, as a notification" },
+        { "feature": "Knowing when a client has paid by card", "free": "You mark it as paid yourself", "pro": "Hound-Up spots it and marks it for you" }
+      ]
+    },
+    {
+      "id": "how-to-upgrade",
+      "category": "Cloud Sync & Hound-Up Pro",
+      "title": "How do I upgrade to Hound-Up Pro?",
+      "body": [
+        "Go to Settings > Cloud Sync and tap Upgrade. You'll see the price and what's included, then Apple's own payment screen. Once you've paid, you'll be asked to sign in with Apple to finish setting it up."
+      ]
+    },
+    {
+      "id": "managing-subscription",
+      "category": "Cloud Sync & Hound-Up Pro",
+      "title": "Managing or cancelling your subscription",
+      "body": [
+        "Go to Settings > Cloud Sync and tap \"Manage subscription\" — this opens Apple's own subscription screen, where you can cancel or change it any time.",
+        "If you cancel, you keep everything until the end of the period you've already paid for. After that, Hound-Up goes back to working exactly like the free version — nothing is deleted, and you can still get your data back onto a new phone by signing in again."
+      ]
+    },
+    {
+      "id": "backup-yourself",
+      "category": "Data & Backup",
+      "title": "Backing up your data yourself",
+      "body": [
+        "Go to Settings > Data and tap \"Export all data\". This saves everything — clients, dogs, walks, invoices, even photos — as one file you can save anywhere: Files, email, Google Drive, wherever you like.",
+        "This is completely free and doesn't need you to sign in. It's a good habit to do this every so often if you're not using Hound-Up Pro's automatic backup."
+      ]
+    },
+    {
+      "id": "restoring-backup",
+      "category": "Data & Backup",
+      "title": "Restoring from a backup",
+      "body": [
+        "Go to Settings > Data and tap \"Restore from backup\". Choose the file you saved earlier. Hound-Up shows you what's in it before doing anything, so you can check it's the right one.",
+        "Restoring replaces everything currently on your phone with what's in the backup — so make sure that's what you want first."
+      ]
+    },
+    {
+      "id": "erasing-data",
+      "category": "Data & Backup",
+      "title": "Erasing all your data",
+      "body": [
+        "Go to Settings > Data and tap \"Erase all data\". This can't be undone, so Hound-Up will ask you to confirm first.",
+        "If you're signed in to Hound-Up Pro, this also deletes your backed-up copy — it's the same as deleting your cloud data entirely."
+      ]
+    },
+    {
+      "id": "turning-on-notifications",
+      "category": "Notifications",
+      "title": "Turning on notifications",
+      "body": [
+        "Go to Settings > Notifications to turn on things like a daily digest or invoicing reminders. The first time you turn one on, Hound-Up will ask you to confirm before the phone's own permission prompt appears."
+      ]
+    },
+    {
+      "id": "daily-digest",
+      "category": "Notifications",
+      "title": "Daily digest",
+      "body": [
+        "A single notification each morning summing up what's on today — how many walks, and anything that needs your attention. Turn it on in Settings > Notifications."
+      ]
+    },
+    {
+      "id": "invoicing-reminders",
+      "category": "Notifications",
+      "title": "Invoicing reminders",
+      "body": [
+        "A reminder on the day of the month you choose, nudging you to send out invoices for everything logged that month. Turn it on and set the day in Settings > Notifications."
+      ]
+    }
+  ]
+}
