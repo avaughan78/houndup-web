@@ -250,6 +250,51 @@ footer {
   cursor: default;
 }
 
+.btn-secondary {
+  display: inline-block;
+  font: inherit;
+  font-size: 15.5px;
+  font-weight: 700;
+  color: var(--ink);
+  background: transparent;
+  border: 1px solid var(--hairline);
+  border-radius: 10px;
+  padding: 13px 20px;
+  cursor: pointer;
+  width: 100%;
+}
+
+.btn-row {
+  display: flex;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.btn-row .btn,
+.btn-row .btn-secondary {
+  width: auto;
+  flex: 1;
+}
+
+.review-list {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 8px 16px;
+  margin: 16px 0;
+}
+
+.review-list dt {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--muted);
+}
+
+.review-list dd {
+  margin: 0;
+  font-size: 15.5px;
+  color: var(--ink);
+}
+
 .form-error {
   color: #a1483c;
   font-size: 13.5px;

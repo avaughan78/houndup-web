@@ -53,12 +53,31 @@
         <textarea id="note" name="note" maxlength="1000" placeholder="e.g. dog's name, a preference if you're not fussed on an exact time, or a regular arrangement you'd like to discuss"></textarea>
       </div>
       <p class="form-error" id="form-error" style="display: none;"></p>
-      <button type="submit" class="btn" id="submit-btn">Send request</button>
+      <button type="submit" class="btn" id="submit-btn">Continue</button>
     </form>
   </div>
 
+  <div class="card" id="review-card" style="display: none;">
+    <p style="margin-top: 0;"><strong>Check this before it's sent</strong></p>
+    <dl class="review-list">
+      <dt>Date</dt><dd id="review-date"></dd>
+      <dt>Time</dt><dd id="review-time"></dd>
+      <dt>Note</dt><dd id="review-note"></dd>
+    </dl>
+    <div class="btn-row">
+      <button type="button" class="btn-secondary" id="review-edit-btn">Edit</button>
+      <button type="button" class="btn" id="review-confirm-btn">Confirm &amp; send</button>
+    </div>
+  </div>
+
   <div class="card" id="success-card" style="display: none;">
-    <p>Thanks — your request has been sent. Your walker will be in touch to confirm.</p>
+    <p>Thanks — your request has been sent:</p>
+    <dl class="review-list">
+      <dt>Date</dt><dd id="success-date"></dd>
+      <dt>Time</dt><dd id="success-time"></dd>
+      <dt>Note</dt><dd id="success-note"></dd>
+    </dl>
+    <p>Your walker will be in touch to confirm.</p>
   </div>
 
   <footer>
@@ -313,13 +332,49 @@
     }
   }
 
-  form.addEventListener("submit", async (event) => {
+  // 12-hour display only for the review/success summaries — the day-strip
+  // chips elsewhere on the page stay 24-hour (minutesToTime), so this is
+  // deliberately separate rather than reused, to keep that existing
+  // behavior untouched.
+  function formatTimeLabel(value) {
+    if (!value) return "Not specified — your walker will suggest a time";
+    const [h, m] = value.split(":").map(Number);
+    const period = h < 12 ? "am" : "pm";
+    const hour12 = h % 12 === 0 ? 12 : h % 12;
+    return m === 0 ? `${hour12}${period}` : `${hour12}:${String(m).padStart(2, "0")}${period}`;
+  }
+
+  function fillSummary(prefix) {
+    const dateValue = document.getElementById("requested_date").value;
+    document.getElementById(`${prefix}-date`).textContent = dateValue ? formatDayLabel(dateValue) : "";
+    document.getElementById(`${prefix}-time`).textContent = formatTimeLabel(document.getElementById("requested_time").value);
+    document.getElementById(`${prefix}-note`).textContent = document.getElementById("note").value.trim() || "—";
+  }
+
+  // Submitting the form no longer sends the request directly — it shows a
+  // review step first, so a mis-tapped date/time gets caught by the client
+  // before the walker ever sees it, rather than only being discoverable
+  // after the fact.
+  form.addEventListener("submit", (event) => {
     event.preventDefault();
+    fillSummary("review");
+    document.getElementById("form-card").style.display = "none";
+    document.getElementById("availability-card").style.display = "none";
+    document.getElementById("review-card").style.display = "block";
+  });
+
+  document.getElementById("review-edit-btn").addEventListener("click", () => {
+    document.getElementById("review-card").style.display = "none";
+    document.getElementById("form-card").style.display = "block";
+    if (currentAvailability) document.getElementById("availability-card").style.display = "block";
+  });
+
+  document.getElementById("review-confirm-btn").addEventListener("click", async () => {
     const errorEl = document.getElementById("form-error");
-    const submitBtn = document.getElementById("submit-btn");
+    const confirmBtn = document.getElementById("review-confirm-btn");
     errorEl.style.display = "none";
-    submitBtn.disabled = true;
-    submitBtn.textContent = "Sending…";
+    confirmBtn.disabled = true;
+    confirmBtn.textContent = "Sending…";
 
     try {
       const response = await fetch(`${FUNCTIONS_BASE}/submit-walk-request`, {
@@ -340,14 +395,19 @@
         throw new Error(body.error || "Something went wrong — try again.");
       }
 
-      document.getElementById("form-card").style.display = "none";
-      document.getElementById("availability-card").style.display = "none";
+      fillSummary("success");
+      document.getElementById("review-card").style.display = "none";
       document.getElementById("success-card").style.display = "block";
     } catch (error) {
+      // Back to the form (not just the review card) so the error is
+      // visible next to the fields it actually relates to.
+      document.getElementById("review-card").style.display = "none";
+      document.getElementById("form-card").style.display = "block";
+      if (currentAvailability) document.getElementById("availability-card").style.display = "block";
       errorEl.textContent = error.message || "Couldn't send this — check your connection and try again.";
       errorEl.style.display = "block";
-      submitBtn.disabled = false;
-      submitBtn.textContent = "Send request";
+      confirmBtn.disabled = false;
+      confirmBtn.textContent = "Confirm & send";
     }
   });
 </script>
