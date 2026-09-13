@@ -273,6 +273,17 @@
       ]
     },
     {
+      "id": "how-notifications-work",
+      "category": "Notifications",
+      "title": "What you get told about, and how",
+      "body": [
+        "Hound-Up tells you about things in three ways: a bell icon in the app, a notification that pops up on your phone (even with the app shut), and sometimes an email. Not everything uses all three — here's how it works.",
+        "Getting a new booking request and getting paid are the two big ones. Both always show up in the bell icon. With Hound-Up Pro, both also pop up on your phone straight away.",
+        "Getting paid also always sends you an email — free or Pro. Money matters, so we tell you either way, even if the pop-up notification is a Pro-only extra.",
+        "Quieter jobs running in the background — like an automatic payment reminder or visit summary going out — only show up in the bell icon. They don't pop up on your phone. If several of these happened at once, a pop-up for every single one would just be annoying, so the bell icon is where they live instead."
+      ]
+    },
+    {
       "id": "daily-digest",
       "category": "Notifications",
       "title": "Daily digest",
