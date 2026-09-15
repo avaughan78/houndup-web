@@ -20,7 +20,7 @@
   </header>
 
   <h1>Privacy Policy</h1>
-  <p class="meta">Effective 14 September 2026 &middot; Operated by Andy Vaughan (sole trader)</p>
+  <p class="meta">Effective 15 September 2026 &middot; Operated by Andy Vaughan (sole trader)</p>
 
   <p>Hound-Up is a business management app for solo dog walkers — scheduling, client and dog records, and invoicing. It's built to work entirely offline. This page explains, plainly, what data the app handles and where it goes.</p>
 
@@ -43,6 +43,11 @@
   </ul>
   <p>This is used only to run features you've separately chosen to turn on for yourself — automatic payment reminders, automatic visit-summary emails, your calendar feed, your availability calendar, and booking-request notifications — computed on a schedule on our servers instead of only when you have the app open. It's never sold, used for advertising, or shared beyond what's already listed under Sub-processors below.</p>
   <p>Cloud Sync is entirely optional and off by default. If you never turn it on, none of this applies to you, and everything elsewhere on this page still describes Hound-Up exactly. Signing out (Settings &rarr; Cloud Sync &rarr; Sign out) stops any further syncing but doesn't delete what's already stored. To permanently and immediately delete everything Cloud Sync has stored about you, use Settings &rarr; Cloud Sync &rarr; "Delete cloud data" — this never affects your own device's data, which stays exactly as it is.</p>
+
+  <h2>Public micro-site — Hound-Up Pro (optional)</h2>
+  <p>Hound-Up Pro also includes an optional public micro-site (Settings &rarr; Profile &rarr; Micro-site), off by default — a shareable business page you can post on Instagram, Facebook, or WhatsApp. The business details, bio, badges, and other fields on it are already stored on our backend as part of Cloud Sync above; turning the micro-site on simply makes a subset of them &mdash; your business name, logo, bio, "Insured"/"DBS checked" badges, qualifications, specialities, service area, rates, and up to three stats &mdash; visible on a public page reachable by anyone with the link, or who finds it via search.</p>
+  <p>You can also feature specific dogs on the page — off by default for every dog — which shows that dog's name and existing photo (already stored for your own records, not newly uploaded for this). As with all client data (see "Your clients' data" below), it's your responsibility to have your client's agreement before publishing their dog's name and photo this way.</p>
+  <p>The page is served at <code>houndup.atomlabs.dev/m/...</code>, via a Cloudflare Worker that proxies our backend. The link itself is permanent once generated — switching the micro-site off stops the page from showing anything to visitors (they see a simple "not currently available" message) rather than changing the link, so a link you've already shared publicly keeps working if you turn the feature back on later. If you never turn this on, nothing here applies to you.</p>
 
   <h2>Sending an invoice by email</h2>
   <p>When you choose to email an invoice from inside the app, the following is sent, only for that purpose, to a backend that relays it on to your client:</p>
@@ -86,6 +91,7 @@
   <h2 id="sub-processors">Sub-processors</h2>
   <p>These are every third party any backend feature above can send data to, and exactly what each one sees:</p>
   <div class="card"><p><strong>Supabase</strong> (EU, eu-west-1) &mdash; hosts the backend itself and the calendar feed files. For every walker, sees whatever a given request sends, as described above. Additionally, for any walker who's turned on Cloud Sync, stores the business/client/schedule/invoice data listed in that section, your device push token, and, if provided, your Stripe Restricted key &mdash; until you delete it or delete your account.</p></div>
+  <div class="card"><p><strong>Cloudflare</strong> &mdash; if you've turned on the public micro-site, proxies that one page so it renders correctly as a webpage. Sees only what's already public on that page for visitors who load it.</p></div>
   <div class="card"><p><strong>Resend</strong> &mdash; delivers invoice and support emails. Sees the recipient address, subject, body, and any PDF attached to that one email.</p></div>
   <div class="card"><p><strong>Microsoft Azure OpenAI</strong> &mdash; parses pasted booking messages. Sees the message text you paste in, for that one request.</p></div>
   <div class="card"><p><strong>Stripe</strong> &mdash; only if you've connected online payments for your own clients to pay by card. This is your own Stripe account, connected directly by you; when a client pays an invoice online, Stripe processes that payment and the card details involved. Hound-Up never sees or stores your clients' card details itself, only whether an invoice has been marked paid.</p></div>
@@ -98,7 +104,7 @@
   <p>Hound-Up is a tool you use to run your own dog-walking business. The personal details you enter about your clients (names, addresses, contact details, emergency contacts, and their dogs' medical/vet information) are your responsibility to collect and use appropriately — for example, telling clients you keep these records and only using them for the purposes they'd reasonably expect (scheduling and invoicing their walks).</p>
 
   <h2>Your control over your data</h2>
-  <p>You can edit or delete any client, dog, or walk record at any time from within the app, or use Settings &rarr; Data &rarr; "Erase all data" to wipe everything on the device at once. Deleting the app from your device removes the local copy; if iCloud sync was ever turned on, a copy may remain in your iCloud account until you clear it from your device's iCloud settings, or until Apple's own retention policy removes it — turning sync off in Hound-Up stops future syncing but doesn't retroactively delete what's already there. If you've turned on Cloud Sync, use Settings &rarr; Cloud Sync &rarr; "Delete cloud data" to immediately and permanently erase everything it stored on our backend, independently of anything above.</p>
+  <p>You can edit or delete any client, dog, or walk record at any time from within the app, or use Settings &rarr; Data &rarr; "Erase all data" to wipe everything on the device at once. Deleting the app from your device removes the local copy; if iCloud sync was ever turned on, a copy may remain in your iCloud account until you clear it from your device's iCloud settings, or until Apple's own retention policy removes it — turning sync off in Hound-Up stops future syncing but doesn't retroactively delete what's already there. If you've turned on Cloud Sync, use Settings &rarr; Cloud Sync &rarr; "Delete cloud data" to immediately and permanently erase everything it stored on our backend, independently of anything above. If you've turned on the public micro-site, switching it off (Settings &rarr; Profile &rarr; Micro-site) immediately stops the page showing anything publicly.</p>
 
   <h2>Children</h2>
   <p>Hound-Up isn't directed at children and isn't intended for use by them.</p>
