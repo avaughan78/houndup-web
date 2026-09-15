@@ -392,3 +392,119 @@ main h1, main h2, main h3, main h4 {
 @media (max-width: 480px) {
   .flow-steps { grid-template-columns: 1fr; }
 }
+
+/* ---------- See all features ---------- */
+
+:root { --pro: #8A7025; --pro-bg: #F3ECDA; }
+@media (prefers-color-scheme: dark) { :root { --pro: #C9B06B; --pro-bg: #2b2410; } }
+:root[data-theme="dark"] { --pro: #C9B06B; --pro-bg: #2b2410; }
+:root[data-theme="light"] { --pro: #8A7025; --pro-bg: #F3ECDA; }
+
+.all-features {
+  margin-top: 36px;
+  border-top: 1px solid var(--hairline);
+  padding-top: 36px;
+}
+
+.all-features summary {
+  list-style: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  font-weight: 700;
+  font-size: 15.5px;
+  color: var(--accent);
+  padding: 10px;
+}
+
+.all-features summary::-webkit-details-marker { display: none; }
+
+.all-features .chev { width: 17px; height: 17px; transition: transform 0.2s ease; }
+.all-features[open] .chev { transform: rotate(180deg); }
+
+.all-features-body {
+  max-width: 760px;
+  margin: 28px auto 0;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 34px 44px;
+}
+
+.feat-topic h3 {
+  font-size: 16px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  margin: 0 0 12px;
+}
+
+.feat-topic ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.feat-topic li {
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--muted);
+  padding-left: 18px;
+  position: relative;
+}
+
+.feat-topic li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 7px;
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--accent);
+}
+
+.feat-topic li strong {
+  color: var(--ink);
+  font-weight: 700;
+}
+
+.pro-tag {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  color: var(--pro);
+  background: var(--pro-bg);
+  border-radius: 5px;
+  padding: 2px 6px;
+  margin-left: 4px;
+  vertical-align: 1px;
+}
+
+.pro-summary {
+  grid-column: 1 / -1;
+  background: var(--surface);
+  border: 1px solid var(--hairline);
+  border-radius: 16px;
+  padding: 22px 24px;
+  margin-top: 6px;
+}
+
+.pro-summary p {
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: var(--muted);
+  margin: 0;
+}
+
+.pro-summary p + p { margin-top: 10px; }
+
+.pro-summary strong { color: var(--ink); }
+
+@media (max-width: 680px) {
+  .all-features-body { grid-template-columns: 1fr; gap: 30px; }
+}
