@@ -57,12 +57,19 @@ body {
 
 .wrap--wide {
   max-width: 1080px;
+  /* style.css's base .wrap carries a 56px/96px top/bottom padding sized for
+     one single legal-page wrap — every section here is its own separate
+     .wrap, so that padding was compounding between every section and was
+     the actual source of the big dead gaps. Each section below owns its
+     own vertical rhythm instead; this only keeps the horizontal gutter. */
+  padding-top: 0;
+  padding-bottom: 0;
 }
 
 header.top {
   border-bottom: none;
   margin-bottom: 0;
-  padding-top: 8px;
+  padding-top: 28px;
 }
 
 header.top .brand {
@@ -203,7 +210,7 @@ main h1, main h2, main h3, main h4 {
 /* ---------- Feature grid ---------- */
 
 .features {
-  padding: 40px 0 20px;
+  padding: 24px 0 8px;
 }
 
 .feature-grid {
@@ -282,7 +289,7 @@ main h1, main h2, main h3, main h4 {
 /* ---------- Payment flow ---------- */
 
 .flow {
-  padding: 76px 0;
+  padding: 48px 0 56px;
 }
 
 .flow-steps {
@@ -334,7 +341,7 @@ main h1, main h2, main h3, main h4 {
 /* ---------- Built for ---------- */
 
 .built-for {
-  padding: 20px 0 76px;
+  padding: 8px 0 56px;
 }
 
 .built-for-grid {
@@ -362,7 +369,7 @@ main h1, main h2, main h3, main h4 {
 /* ---------- Final CTA ---------- */
 
 .final-cta {
-  padding: 16px 0 88px;
+  padding: 8px 0 60px;
 }
 
 .final-cta-inner {
@@ -575,7 +582,7 @@ main h1, main h2, main h3, main h4 {
 /* ---------- Live activity showcase ---------- */
 
 .live-activity {
-  padding: 10px 0 72px;
+  padding: 6px 0 48px;
 }
 
 .live-activity-grid {
