@@ -614,11 +614,17 @@ main h1, main h2, main h3, main h4 {
 .la-card {
   width: 100%;
   max-width: 300px;
-  background: #14161c;
+  background: linear-gradient(160deg, #1d1f28, #14161c);
   color: #f2f2f1;
+  border: 1px solid rgba(255,255,255,0.09);
   border-radius: 26px;
   padding: 20px 20px 18px;
-  box-shadow: 0 30px 60px -24px rgba(0,0,0,0.45);
+  /* The page's own dark-mode background is itself near-black, so a
+     black-tinted shadow alone (fine against the light-mode page)
+     disappears completely there — the border above plus this pale outer
+     glow are what actually separate the card from the page in both
+     themes, not the shadow. */
+  box-shadow: 0 30px 60px -24px rgba(0,0,0,0.45), 0 0 0 1px rgba(0,0,0,0.3), 0 12px 40px -8px rgba(136,133,183,0.12);
 }
 
 .la-card-top {
