@@ -606,11 +606,16 @@ main h1, main h2, main h3, main h4 {
   justify-content: center;
 }
 
+/* Fixed dark palette, deliberately not tied to --ink/--accent — this
+   mimics a real iOS Lock Screen Live Activity, which keeps its own dark
+   material regardless of the device's own light/dark setting. Tying it
+   to --ink previously meant the card inverted to a near-white background
+   in the site's own dark mode. */
 .la-card {
   width: 100%;
   max-width: 300px;
-  background: var(--ink);
-  color: var(--canvas, #f6f6f5);
+  background: #14161c;
+  color: #f2f2f1;
   border-radius: 26px;
   padding: 20px 20px 18px;
   box-shadow: 0 30px 60px -24px rgba(0,0,0,0.45);
@@ -634,11 +639,67 @@ main h1, main h2, main h3, main h4 {
   box-shadow: 0 0 0 4px rgba(111,207,124,0.25);
 }
 
-.la-route {
+/* A stylized map tile (streets, one park block, one water bend — all
+   invented shapes, not a real map provider's tiles) sitting behind the
+   route, rather than the route floating on plain black. */
+.la-map {
+  position: relative;
   width: 100%;
-  height: auto;
-  color: var(--accent);
-  margin-bottom: 6px;
+  aspect-ratio: 240 / 128;
+  border-radius: 14px;
+  overflow: hidden;
+  margin-bottom: 14px;
+}
+
+.la-map-bg,
+.la-route {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.la-route-shadow {
+  stroke: #8885B7;
+  stroke-opacity: 0.4;
+  stroke-width: 8;
+  stroke-linecap: round;
+  filter: blur(4px);
+}
+
+.la-route-line {
+  stroke: #8885B7;
+  stroke-width: 3.5;
+  stroke-linecap: round;
+}
+
+.la-route-start {
+  fill: #14161c;
+  stroke: #8885B7;
+  stroke-width: 2;
+}
+
+.la-dot-current {
+  fill: #ffffff;
+  stroke: #8885B7;
+  stroke-width: 2;
+}
+
+.la-pulse {
+  fill: #8885B7;
+  opacity: 0.5;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: laPulse 1.8s ease-out infinite;
+}
+
+@keyframes laPulse {
+  0% { transform: scale(1); opacity: 0.5; }
+  100% { transform: scale(3.4); opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .la-pulse { animation: none; opacity: 0.22; }
 }
 
 .la-card-bottom {

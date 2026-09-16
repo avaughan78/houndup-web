@@ -89,11 +89,24 @@
             <span class="la-dot"></span>
             <span>Walking &middot; Buster &amp; Milo</span>
           </div>
-          <svg class="la-route" viewBox="0 0 220 90" fill="none">
-            <path d="M8 70 C 40 20, 70 85, 100 40 S 160 10, 212 45" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-dasharray="1 10"/>
-            <circle cx="8" cy="70" r="5" fill="currentColor"/>
-            <circle cx="212" cy="45" r="5" fill="currentColor"/>
-          </svg>
+          <div class="la-map">
+            <svg class="la-map-bg" viewBox="0 0 240 128" preserveAspectRatio="none">
+              <rect width="240" height="128" fill="#1b1e26"/>
+              <path d="M-10 30H250M-10 66H250M-10 100H250" stroke="#ffffff" stroke-opacity="0.05"/>
+              <path d="M40-10V140M96-10V140M168-10V140M210-10V140" stroke="#ffffff" stroke-opacity="0.05"/>
+              <rect x="102" y="6" width="48" height="36" rx="4" fill="#7fa87f" opacity="0.14"/>
+              <path d="M-10 100C40 112,70 82,130 96S212 122,250 108" stroke="#6f9fd6" stroke-opacity="0.16" stroke-width="12" fill="none"/>
+            </svg>
+            <svg class="la-route" viewBox="0 0 240 128" fill="none">
+              <path class="la-route-shadow" d="M20 96C55 40,90 100,128 58S195 20,222 52"/>
+              <path class="la-route-line" d="M20 96C55 40,90 100,128 58S195 20,222 52"/>
+              <circle class="la-route-start" cx="20" cy="96" r="4.5"/>
+              <g transform="translate(222 52)">
+                <circle class="la-pulse" r="5"/>
+                <circle class="la-dot-current" r="5"/>
+              </g>
+            </svg>
+          </div>
           <div class="la-card-bottom">
             <div><b>24:18</b><span>Elapsed</span></div>
             <div><b>1.8 mi</b><span>Distance</span></div>
