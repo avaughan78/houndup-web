@@ -55,6 +55,38 @@ body {
   font-family: "Manrope", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 
+/* This page only — overrides style.css's shared brand tokens (Hound-Up's
+   own fixed Indigo, used everywhere else on this site: request.html, the
+   legal pages) with the microsite's own "meadow" palette instead, so the
+   sales pitch reads as a companion piece to the thing it's actually
+   selling — a walker's own green-themed public page. Exact values lifted
+   from supabase/functions/render-microsite/index.ts's THEMES.meadow in
+   the app repo, not eyeballed, so the two truly match. request.html/
+   help.html/the legal pages deliberately keep the Indigo brand mark —
+   only the sales page borrows the product's own colour. */
+:root {
+  --bg: #F7F8F2;
+  --surface: #FFFFFF;
+  --ink: #202B1E;
+  --muted: #6B7364;
+  --hairline: #E1E6D8;
+  --accent: #4F7942;
+  --accent-ink: #FFFFFF;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --accent: #7FB86A; --accent-ink: #14210F; }
+}
+:root[data-theme="dark"] { --accent: #7FB86A; --accent-ink: #14210F; }
+:root[data-theme="light"] {
+  --bg: #F7F8F2;
+  --surface: #FFFFFF;
+  --ink: #202B1E;
+  --muted: #6B7364;
+  --hairline: #E1E6D8;
+  --accent: #4F7942;
+  --accent-ink: #FFFFFF;
+}
+
 .wrap--wide {
   max-width: 1080px;
   /* style.css's base .wrap carries a 56px/96px top/bottom padding sized for
@@ -346,7 +378,7 @@ main h1, main h2, main h3, main h4 {
 
 .built-for-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 20px;
   border-top: 1px solid var(--hairline);
   border-bottom: 1px solid var(--hairline);
@@ -386,6 +418,10 @@ main h1, main h2, main h3, main h4 {
 }
 
 /* ---------- Responsive ---------- */
+
+@media (max-width: 900px) {
+  .built-for-grid { grid-template-columns: repeat(2, 1fr); }
+}
 
 @media (max-width: 780px) {
   .hero h1 { font-size: 38px; }
@@ -739,6 +775,184 @@ main h1, main h2, main h3, main h4 {
   border-radius: 999px;
   padding: 9px 14px;
   cursor: default;
+}
+
+/* ---------- Booking-page showcase ---------- */
+
+.site-showcase {
+  padding: 12px 0 56px;
+}
+
+.site-showcase-grid {
+  display: grid;
+  grid-template-columns: 0.95fr 1.05fr;
+  gap: 48px;
+  align-items: center;
+}
+
+.ss-visual {
+  display: flex;
+  justify-content: center;
+}
+
+.browser-card {
+  width: 100%;
+  max-width: 320px;
+  background: var(--surface);
+  border: 1px solid var(--hairline);
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 30px 60px -24px rgba(32,43,30,0.16), 0 0 0 1px rgba(32,43,30,0.03);
+}
+
+.browser-chrome {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 11px 14px;
+  background: color-mix(in srgb, var(--ink) 4%, var(--surface));
+  border-bottom: 1px solid var(--hairline);
+}
+
+.browser-dots { display: flex; gap: 5px; }
+.browser-dots span { width: 8px; height: 8px; border-radius: 999px; background: var(--hairline); }
+
+.browser-url {
+  flex: 1;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--muted);
+  background: var(--bg);
+  border-radius: 999px;
+  padding: 5px 12px;
+  text-align: center;
+}
+
+.bc-body { padding: 18px 18px 20px; }
+
+.bc-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.bc-brand { display: flex; align-items: center; gap: 8px; font-weight: 800; font-size: 13px; }
+
+.bc-avatar {
+  width: 26px;
+  height: 26px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--accent), color-mix(in srgb, var(--accent) 60%, #2b3a24));
+  flex-shrink: 0;
+}
+
+.bc-book-now {
+  font-size: 10.5px;
+  font-weight: 700;
+  color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 13%, var(--surface));
+  border-radius: 999px;
+  padding: 5px 11px;
+}
+
+.bc-pin {
+  display: inline-block;
+  font-size: 10.5px;
+  font-weight: 700;
+  color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 10%, var(--surface));
+  border-radius: 999px;
+  padding: 5px 10px;
+  margin-bottom: 10px;
+}
+
+.bc-body h4 {
+  font-size: 17px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  margin: 0 0 12px;
+  line-height: 1.15;
+}
+
+.bc-tabs {
+  display: flex;
+  gap: 4px;
+  background: var(--bg);
+  border: 1px solid var(--hairline);
+  border-radius: 999px;
+  padding: 3px;
+  margin-bottom: 12px;
+}
+
+.bc-tab {
+  flex: 1;
+  text-align: center;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 7px 0;
+  border-radius: 999px;
+  color: var(--muted);
+}
+
+.bc-tab.on { background: var(--accent); color: var(--accent-ink); }
+
+.bc-pills { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
+
+.bc-pill {
+  font-size: 10.5px;
+  font-weight: 700;
+  padding: 7px 11px;
+  border-radius: 999px;
+  border: 1px solid var(--hairline);
+  color: var(--ink);
+}
+
+.bc-pill.on { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+
+.bc-cta {
+  display: block;
+  width: 100%;
+  text-align: center;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--accent-ink);
+  background: var(--accent);
+  border-radius: 999px;
+  padding: 11px 0;
+}
+
+.ss-copy .stat-strip {
+  display: flex;
+  gap: 22px;
+  margin: 20px 0 22px;
+  flex-wrap: wrap;
+}
+
+.stat-strip div { min-width: 90px; }
+
+.stat-strip b {
+  display: block;
+  font-size: 21px;
+  font-weight: 800;
+  color: var(--accent);
+}
+
+.stat-strip span {
+  display: block;
+  font-size: 12px;
+  color: var(--muted);
+  font-weight: 600;
+  margin-top: 2px;
+}
+
+@media (max-width: 900px) {
+  .site-showcase-grid { grid-template-columns: 1fr; gap: 30px; }
+  .ss-copy .section-title, .ss-copy .section-eyebrow { text-align: center !important; margin-left: auto !important; }
+  .ss-copy .la-text, .ss-copy p { text-align: center; }
+  .ss-copy .feature-list { align-items: center; }
+  .ss-copy .feature-list li { text-align: left; }
+  .stat-strip { justify-content: center; }
 }
 
 /* ---------- 6-card grid ---------- */
