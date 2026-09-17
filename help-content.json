@@ -20,6 +20,15 @@
       ]
     },
     {
+      "id": "where-weather-comes-from",
+      "category": "Getting Started",
+      "title": "Where does the weather come from?",
+      "body": [
+        "The weather shown at the top of Today is based on the postcode saved in Business Details, not your phone's live location.",
+        "If it looks wrong, check that postcode is correct in Settings → Business Details."
+      ]
+    },
+    {
       "id": "adding-first-client",
       "category": "Getting Started",
       "title": "Adding your first client",
