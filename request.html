@@ -8,6 +8,18 @@
 <link rel="icon" href="img/favicon-16.png" sizes="16x16">
 <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
 <link rel="stylesheet" href="style.css?v=2">
+<style>
+  /* Scoped to this page — the service-type picker and mode toggle don't
+     exist anywhere else on the marketing site. */
+  .mode-toggle { display: flex; gap: 6px; background: var(--surface); border: 1px solid var(--hairline); border-radius: 999px; padding: 4px; margin-bottom: 18px; }
+  .mode-tab { flex: 1; font: inherit; font-size: 14px; font-weight: 700; color: var(--muted); background: transparent; border: none; border-radius: 999px; padding: 10px 12px; cursor: pointer; }
+  .mode-tab.selected { color: var(--accent-ink); background: var(--accent); }
+  .service-pills { display: flex; flex-wrap: wrap; gap: 8px; }
+  .service-pill { font: inherit; font-size: 13.5px; font-weight: 700; color: var(--ink); background: var(--bg); border: 1px solid var(--hairline); border-radius: 999px; padding: 9px 14px; cursor: pointer; }
+  .service-pill.selected { color: var(--accent-ink); background: var(--accent); border-color: var(--accent); }
+  .date-range-row { display: flex; gap: 10px; }
+  .date-range-row .field { flex: 1; margin-bottom: 0; }
+</style>
 </head>
 <body>
 <div class="wrap">
@@ -24,6 +36,11 @@
 
   <h1>Request a booking<span id="hero-suffix"></span></h1>
   <p class="meta">Pick a day and time below, or just fill in the form — your walker will get this next time they open the app. This is for a one-off walk; for a regular arrangement, mention it in the note.</p>
+
+  <div class="mode-toggle" id="mode-toggle" style="display: none;">
+    <button type="button" class="mode-tab selected" id="tab-walk" data-mode="walk">Book a walk</button>
+    <button type="button" class="mode-tab" id="tab-enquiry" data-mode="enquiry">Ask a question</button>
+  </div>
 
   <div class="card" id="availability-card" style="display: none;">
     <p style="margin-top: 0;"><strong>Availability</strong> — pick a day, then tap a free time.</p>
@@ -43,17 +60,29 @@
         <label for="contact">Phone or email</label>
         <input type="text" id="contact" name="contact" maxlength="200">
       </div>
-      <div class="field">
+      <div class="field" id="walk-fields" style="display: none;">
+        <label>What kind of booking?</label>
+        <div class="service-pills" id="service-pills"></div>
+      </div>
+      <div class="field" id="single-date-field">
         <label for="requested_date">Preferred date</label>
         <input type="date" id="requested_date" name="requested_date" required>
       </div>
-      <div class="field">
+      <div class="field" id="time-field">
         <label for="requested_time">Preferred time (optional)</label>
         <input type="time" id="requested_time" name="requested_time">
       </div>
-      <div class="field">
+      <div class="date-range-row" id="range-date-field" style="display: none;">
+        <div class="field"><label for="requested_date_from">From</label><input type="date" id="requested_date_from"></div>
+        <div class="field"><label for="requested_date_to">To</label><input type="date" id="requested_date_to"></div>
+      </div>
+      <div class="field" id="walk-note-field">
         <label for="note">Note (optional)</label>
         <textarea id="note" name="note" maxlength="1000" placeholder="e.g. dog's name, a preference if you're not fussed on an exact time, or a regular arrangement you'd like to discuss"></textarea>
+      </div>
+      <div class="field" id="message-field" style="display: none;">
+        <label for="message">Your question</label>
+        <textarea id="message" name="message" maxlength="1000" placeholder="e.g. do you cover my area? Do you take puppies?"></textarea>
       </div>
       <p class="form-error" id="form-error" style="display: none;"></p>
       <button type="submit" class="btn" id="submit-btn">Continue</button>
@@ -63,6 +92,7 @@
   <div class="card" id="review-card" style="display: none;">
     <p style="margin-top: 0;"><strong>Check this before it's sent</strong></p>
     <dl class="review-list">
+      <dt>Service</dt><dd id="review-service"></dd>
       <dt>Date</dt><dd id="review-date"></dd>
       <dt>Time</dt><dd id="review-time"></dd>
       <dt>Note</dt><dd id="review-note"></dd>
@@ -74,8 +104,9 @@
   </div>
 
   <div class="card" id="success-card" style="display: none;">
-    <p>Thanks — your request has been sent:</p>
-    <dl class="review-list">
+    <p id="success-lede">Thanks — your request has been sent:</p>
+    <dl class="review-list" id="success-fields">
+      <dt>Service</dt><dd id="success-service"></dd>
       <dt>Date</dt><dd id="success-date"></dd>
       <dt>Time</dt><dd id="success-time"></dd>
       <dt>Note</dt><dd id="success-note"></dd>
@@ -97,6 +128,88 @@
   const form = document.getElementById("request-form");
   let selectedDayIndex = 0;
   let currentAvailability = null;
+  // "walk" or "enquiry" — set once initServicePicker() knows whether
+  // there's anything to pick from (mirrors render-microsite's own,
+  // server-known-upfront version of this same toggle).
+  let mode = "walk";
+  let rateCards = [];
+  let selectedCardIndex = 0;
+
+  function selectedCard() { return rateCards[selectedCardIndex] || null; }
+
+  function updateDateFieldsForSelectedCard() {
+    const card = selectedCard();
+    const isRange = !!card && card.kind === "overnightSit";
+    document.getElementById("single-date-field").style.display = isRange ? "none" : "";
+    document.getElementById("time-field").style.display = isRange ? "none" : "";
+    document.getElementById("range-date-field").style.display = isRange ? "flex" : "none";
+    document.getElementById("requested_date").required = !isRange;
+    document.getElementById("requested_date_from").required = isRange;
+    document.getElementById("requested_date_to").required = isRange;
+    if (isRange) {
+      document.getElementById("availability-card").style.display = "none";
+    } else if (currentAvailability) {
+      document.getElementById("availability-card").style.display = "block";
+    }
+  }
+
+  function setMode(next) {
+    mode = next;
+    document.getElementById("tab-walk").classList.toggle("selected", mode === "walk");
+    document.getElementById("tab-enquiry").classList.toggle("selected", mode === "enquiry");
+    document.getElementById("walk-fields").style.display = mode === "walk" ? "" : "none";
+    document.getElementById("walk-note-field").style.display = mode === "walk" ? "" : "none";
+    document.getElementById("message-field").style.display = mode === "enquiry" ? "" : "none";
+    document.getElementById("message").required = mode === "enquiry";
+    if (mode === "walk") {
+      updateDateFieldsForSelectedCard();
+    } else {
+      document.getElementById("single-date-field").style.display = "none";
+      document.getElementById("time-field").style.display = "none";
+      document.getElementById("range-date-field").style.display = "none";
+      document.getElementById("availability-card").style.display = "none";
+      document.getElementById("requested_date").required = false;
+      document.getElementById("requested_date_from").required = false;
+      document.getElementById("requested_date_to").required = false;
+    }
+    document.getElementById("submit-btn").textContent = mode === "walk" ? "Continue" : "Send Question";
+  }
+
+  // Called once get-availability resolves (successfully or not) — until
+  // then the static markup's plain single-date form is left showing as a
+  // harmless default (see the HTML's own comment-free but deliberate
+  // initial state). A failed/empty lookup degrades to enquiry-only,
+  // same as a walker with zero rate cards configured: we can't ask for a
+  // required service pick we have nothing to offer for.
+  function initServicePicker(cards) {
+    rateCards = cards || [];
+    if (rateCards.length === 0) {
+      document.getElementById("mode-toggle").style.display = "none";
+      document.getElementById("walk-fields").style.display = "none";
+      setMode("enquiry");
+      return;
+    }
+    document.getElementById("mode-toggle").style.display = "flex";
+    const pillsEl = document.getElementById("service-pills");
+    pillsEl.innerHTML = "";
+    rateCards.forEach((card, index) => {
+      const pill = document.createElement("button");
+      pill.type = "button";
+      pill.className = "service-pill" + (index === 0 ? " selected" : "");
+      pill.textContent = card.serviceName;
+      pill.addEventListener("click", () => {
+        selectedCardIndex = index;
+        document.querySelectorAll("#service-pills .service-pill").forEach((el) => el.classList.remove("selected"));
+        pill.classList.add("selected");
+        updateDateFieldsForSelectedCard();
+      });
+      pillsEl.appendChild(pill);
+    });
+    document.getElementById("walk-fields").style.display = "";
+    document.getElementById("tab-walk").addEventListener("click", () => setMode("walk"));
+    document.getElementById("tab-enquiry").addEventListener("click", () => setMode("enquiry"));
+    updateDateFieldsForSelectedCard();
+  }
 
   if (!walkerToken) {
     document.getElementById("missing-token").style.display = "block";
@@ -323,15 +436,20 @@
   async function loadAvailability(token) {
     try {
       const response = await fetch(`${FUNCTIONS_BASE}/get-availability?token=${encodeURIComponent(token)}`);
-      if (!response.ok) return; // unknown token — plain form still works, no branding
+      if (!response.ok) { initServicePicker([]); return; } // unknown token — enquiry-only fallback, no branding
       const data = await response.json();
       applyBranding(data.businessName || data.fullName);
+      initServicePicker(data.rateCards);
       if (data.days && data.days.length > 0) {
         renderAvailability(data);
-        document.getElementById("availability-card").style.display = "block";
+        const card = selectedCard();
+        if (mode === "walk" && !(card && card.kind === "overnightSit")) {
+          document.getElementById("availability-card").style.display = "block";
+        }
       }
     } catch {
-      // Silently ignore — the plain date/time/note form still works fine.
+      // Network error — same enquiry-only fallback as an unknown token.
+      initServicePicker([]);
     }
   }
 
@@ -348,18 +466,70 @@
   }
 
   function fillSummary(prefix) {
-    const dateValue = document.getElementById("requested_date").value;
-    document.getElementById(`${prefix}-date`).textContent = dateValue ? formatDayLabel(dateValue) : "";
-    document.getElementById(`${prefix}-time`).textContent = formatTimeLabel(document.getElementById("requested_time").value);
+    const card = selectedCard();
+    document.getElementById(`${prefix}-service`).textContent = card ? card.serviceName : "—";
+    if (card && card.kind === "overnightSit") {
+      const from = document.getElementById("requested_date_from").value;
+      const to = document.getElementById("requested_date_to").value;
+      document.getElementById(`${prefix}-date`).textContent = (from ? formatDayLabel(from) : "") + " → " + (to ? formatDayLabel(to) : "");
+      document.getElementById(`${prefix}-time`).textContent = "—";
+    } else {
+      const dateValue = document.getElementById("requested_date").value;
+      document.getElementById(`${prefix}-date`).textContent = dateValue ? formatDayLabel(dateValue) : "";
+      document.getElementById(`${prefix}-time`).textContent = formatTimeLabel(document.getElementById("requested_time").value);
+    }
     document.getElementById(`${prefix}-note`).textContent = document.getElementById("note").value.trim() || "—";
   }
 
-  // Submitting the form no longer sends the request directly — it shows a
-  // review step first, so a mis-tapped date/time gets caught by the client
-  // before the walker ever sees it, rather than only being discoverable
-  // after the fact.
+  // "Ask a question" skips the review step entirely — same reasoning as
+  // render-microsite's own equivalent: a quick question doesn't need a
+  // confirm-before-send gate the way a booking (which commits the walker
+  // to a specific date) does.
+  async function submitEnquiry() {
+    const errorEl = document.getElementById("form-error");
+    const submitBtn = document.getElementById("submit-btn");
+    errorEl.style.display = "none";
+    submitBtn.disabled = true;
+    submitBtn.textContent = "Sending…";
+    try {
+      const response = await fetch(`${FUNCTIONS_BASE}/submit-enquiry`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          walker_token: walkerToken,
+          client_name: document.getElementById("client_name").value.trim(),
+          contact: document.getElementById("contact").value.trim() || undefined,
+          message: document.getElementById("message").value.trim(),
+        }),
+      });
+      if (!response.ok) {
+        const body = await response.json().catch(() => ({}));
+        throw new Error(body.error || "Something went wrong — try again.");
+      }
+      document.getElementById("success-lede").textContent = "Thanks — your question has been sent.";
+      document.getElementById("success-fields").style.display = "none";
+      document.getElementById("form-card").style.display = "none";
+      document.getElementById("success-card").style.display = "block";
+    } catch (error) {
+      errorEl.textContent = error.message || "Couldn't send this — check your connection and try again.";
+      errorEl.style.display = "block";
+      submitBtn.disabled = false;
+      submitBtn.textContent = "Send Question";
+    }
+  }
+
+  // Submitting a *booking* still no longer sends the request directly —
+  // it shows a review step first, so a mis-tapped date/time gets caught
+  // by the client before the walker ever sees it, rather than only being
+  // discoverable after the fact.
   form.addEventListener("submit", (event) => {
     event.preventDefault();
+    if (mode === "enquiry") {
+      submitEnquiry();
+      return;
+    }
+    document.getElementById("success-lede").textContent = "Thanks — your request has been sent:";
+    document.getElementById("success-fields").style.display = "";
     fillSummary("review");
     document.getElementById("form-card").style.display = "none";
     document.getElementById("availability-card").style.display = "none";
@@ -369,17 +539,19 @@
   document.getElementById("review-edit-btn").addEventListener("click", () => {
     document.getElementById("review-card").style.display = "none";
     document.getElementById("form-card").style.display = "block";
-    if (currentAvailability) document.getElementById("availability-card").style.display = "block";
+    if (currentAvailability) updateDateFieldsForSelectedCard();
   });
 
   document.getElementById("review-confirm-btn").addEventListener("click", async () => {
     const errorEl = document.getElementById("form-error");
     const confirmBtn = document.getElementById("review-confirm-btn");
+    const card = selectedCard();
     errorEl.style.display = "none";
     confirmBtn.disabled = true;
     confirmBtn.textContent = "Sending…";
 
     try {
+      const isRange = !!card && card.kind === "overnightSit";
       const response = await fetch(`${FUNCTIONS_BASE}/submit-walk-request`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -387,9 +559,12 @@
           walker_token: walkerToken,
           client_name: document.getElementById("client_name").value.trim(),
           contact: document.getElementById("contact").value.trim() || undefined,
-          requested_date: document.getElementById("requested_date").value,
-          requested_time: document.getElementById("requested_time").value || undefined,
+          requested_date: isRange ? document.getElementById("requested_date_from").value : document.getElementById("requested_date").value,
+          requested_date_to: isRange ? document.getElementById("requested_date_to").value : undefined,
+          requested_time: isRange ? undefined : (document.getElementById("requested_time").value || undefined),
           note: document.getElementById("note").value.trim() || undefined,
+          service_name: card ? card.serviceName : undefined,
+          service_kind: card ? card.kind : undefined,
         }),
       });
 
@@ -406,7 +581,7 @@
       // visible next to the fields it actually relates to.
       document.getElementById("review-card").style.display = "none";
       document.getElementById("form-card").style.display = "block";
-      if (currentAvailability) document.getElementById("availability-card").style.display = "block";
+      if (currentAvailability) updateDateFieldsForSelectedCard();
       errorEl.textContent = error.message || "Couldn't send this — check your connection and try again.";
       errorEl.style.display = "block";
       confirmBtn.disabled = false;
