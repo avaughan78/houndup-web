@@ -73,10 +73,35 @@ body {
   --accent: #4F7942;
   --accent-ink: #FFFFFF;
 }
+/* The light block above was the only one actually filled in — bg/
+   surface/ink/muted/hairline never varied here, so this page silently
+   never switched to dark at all regardless of OS/toggle state, despite
+   the doc comment above claiming light/dark "keep working with zero
+   extra logic here." `bg`/`ink` reuse this same meadow theme's own
+   `deep`/`deepInk` pair (already used for render-microsite's footer
+   band) rather than inventing new colours; `surface`/`muted`/`hairline`
+   are lightness-adjusted from that same base to stay in the same
+   family. */
 @media (prefers-color-scheme: dark) {
-  :root { --accent: #7FB86A; --accent-ink: #14210F; }
+  :root {
+    --bg: #1F2E1A;
+    --surface: #293D22;
+    --ink: #F2F5EA;
+    --muted: #B3B8AE;
+    --hairline: #314829;
+    --accent: #7FB86A;
+    --accent-ink: #14210F;
+  }
 }
-:root[data-theme="dark"] { --accent: #7FB86A; --accent-ink: #14210F; }
+:root[data-theme="dark"] {
+  --bg: #1F2E1A;
+  --surface: #293D22;
+  --ink: #F2F5EA;
+  --muted: #B3B8AE;
+  --hairline: #314829;
+  --accent: #7FB86A;
+  --accent-ink: #14210F;
+}
 :root[data-theme="light"] {
   --bg: #F7F8F2;
   --surface: #FFFFFF;
