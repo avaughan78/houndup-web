@@ -370,6 +370,14 @@ main h1, main h2, main h3, main h4 {
   margin: 0;
 }
 
+.flow-footnote {
+  margin: 20px 0 0;
+  font-size: 12.5px;
+  color: var(--muted);
+  line-height: 1.5;
+  max-width: 640px;
+}
+
 /* ---------- Built for ---------- */
 
 .built-for {
@@ -1009,9 +1017,13 @@ main h1, main h2, main h3, main h4 {
 
 .screen-frame {
   position: relative;
-  border-radius: 34px;
-  background: #111;
-  padding: 10px;
+  border-radius: 26px;
+  background: #0a0a0a;
+  /* Taller top edge than the other three sides — real room for the
+     notch below to sit in above the screenshot, rather than overlapping
+     its own header content (these screenshots crop right up to the
+     app's own title bar, with no blank status-bar margin to hide it in). */
+  padding: 20px 4px 4px;
   box-shadow: 0 24px 48px -20px rgba(0, 0, 0, 0.35), 0 0 0 1px rgba(0, 0, 0, 0.08);
 }
 
@@ -1019,27 +1031,22 @@ main h1, main h2, main h3, main h4 {
   display: block;
   width: 100%;
   height: auto;
-  border-radius: 24px;
+  border-radius: 20px;
 }
 
 .screen-frame::before {
   content: "";
   position: absolute;
-  top: 10px;
+  top: 7px;
   left: 50%;
   transform: translateX(-50%);
-  width: 70px;
-  height: 18px;
-  background: #111;
-  border-radius: 0 0 14px 14px;
-  z-index: 1;
-}
-
-.screen-caption {
-  margin-top: 16px;
-  font-size: 14.5px;
-  font-weight: 700;
-  color: var(--muted);
+  width: 32px;
+  height: 7px;
+  /* A touch lighter than the bezel itself — pure black-on-black would
+     make this invisible now that it's fully inside the top edge rather
+     than cutting into the (lighter) screenshot below it. */
+  background: #2c2c2e;
+  border-radius: 999px;
 }
 
 @media (max-width: 780px) {
