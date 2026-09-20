@@ -216,14 +216,14 @@
       "title": "Free vs Hound-Up Pro",
       "kind": "planComparison",
       "body": [
-        "Hound-Up is free to use, with no limits on clients, dogs, walks or invoices. Sign in with Apple (also free, takes a few seconds) and everything backs up automatically and stays in sync across your devices. Hound-Up Pro is £9.99 a month on top and adds Autopilot — automation that keeps running even with the app closed. Here is exactly what is different."
+        "Hound-Up is free to use, with no limits on dogs, walks or invoices, and up to 10 active clients. Sign in with Apple (also free, takes a few seconds) and everything backs up automatically and stays in sync across your devices. Hound-Up Pro is £9.99 a month on top, removes the 10-client cap, and adds a booking website with live availability booking plus auto-chasing overdue invoices even with the app closed. Here is exactly what is different."
       ],
       "rows": [
         {
           "feature": "Clients, dogs, walks, sits and invoicing",
-          "notSignedIn": "Everything, no limits",
-          "free": "Everything, no limits",
-          "pro": "The same"
+          "notSignedIn": "Up to 10 active clients, then upgrade to add more — dogs, walks, sits and invoicing stay unlimited either way",
+          "free": "Up to 10 active clients, then upgrade to add more — dogs, walks, sits and invoicing stay unlimited either way",
+          "pro": "Unlimited clients too — everything else stays the same"
         },
         {
           "feature": "Backing up your data",
@@ -246,8 +246,8 @@
         {
           "feature": "How you find out a client has paid",
           "notSignedIn": "You are not told — check the Ledger yourself",
-          "free": "We email you",
-          "pro": "Instant notification on your phone"
+          "free": "Your choice — email and/or an instant push, pick in Settings",
+          "pro": "The same"
         },
         {
           "feature": "Reminding clients about late invoices",
