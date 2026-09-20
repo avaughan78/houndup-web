@@ -216,17 +216,63 @@
       "title": "Free vs Hound-Up Pro",
       "kind": "planComparison",
       "body": [
-        "Hound-Up is free to use, with no limits on clients, dogs, walks or invoices, and backs up automatically via iCloud either way. Hound-Up Pro is £9.99 a month and adds Autopilot — automation that keeps running even with the app closed. Here's exactly what's different."
+        "Hound-Up is free to use, with no limits on clients, dogs, walks or invoices. Sign in with Apple (also free, takes a few seconds) and everything backs up automatically and stays in sync across your devices. Hound-Up Pro is £9.99 a month on top and adds Autopilot — automation that keeps running even with the app closed. Here is exactly what is different."
       ],
       "rows": [
-        { "feature": "Clients, dogs, walks, sits and invoicing", "free": "Everything, no limits", "pro": "The same" },
-        { "feature": "Backing up your data", "free": "Automatic, via iCloud", "pro": "The same" },
-        { "feature": "Using Hound-Up on more than one phone", "free": "Yes, via iCloud", "pro": "The same" },
-        { "feature": "Reminding clients about late invoices", "free": "Only while you have the app open", "pro": "Happens by itself, even with the app shut" },
-        { "feature": "Your online booking page staying up to date", "free": "Only while you have the app open", "pro": "Stays up to date all the time" },
-        { "feature": "Your calendar feed staying up to date", "free": "Only while you have the app open", "pro": "Stays up to date all the time" },
-        { "feature": "Hearing about a new booking request", "free": "Next time you open the app", "pro": "Straight away, as a notification" },
-        { "feature": "Knowing when a client has paid by card", "free": "You mark it as paid yourself", "pro": "Hound-Up spots it and marks it for you" }
+        {
+          "feature": "Clients, dogs, walks, sits and invoicing",
+          "notSignedIn": "Everything, no limits",
+          "free": "Everything, no limits",
+          "pro": "The same"
+        },
+        {
+          "feature": "Backing up your data",
+          "notSignedIn": "Only if your iPhone's iCloud is already switched on — we cannot check or turn this on for you",
+          "free": "Yes, automatically, the moment you are online",
+          "pro": "The same"
+        },
+        {
+          "feature": "Using Hound-Up on more than one phone",
+          "notSignedIn": "Not reliable — depends on iCloud",
+          "free": "Yes",
+          "pro": "The same"
+        },
+        {
+          "feature": "When a client pays online, your invoice",
+          "notSignedIn": "Stays marked unpaid until you tap Mark as Paid yourself",
+          "free": "Is marked Paid automatically — no need to check",
+          "pro": "The same"
+        },
+        {
+          "feature": "How you find out a client has paid",
+          "notSignedIn": "You are not told — check the Ledger yourself",
+          "free": "We email you",
+          "pro": "Instant notification on your phone"
+        },
+        {
+          "feature": "Reminding clients about late invoices",
+          "notSignedIn": "Only while you have the app open",
+          "free": "Only while you have the app open",
+          "pro": "Happens by itself, even with the app shut"
+        },
+        {
+          "feature": "Your online booking page",
+          "notSignedIn": "Not available",
+          "free": "Not available",
+          "pro": "Your own page, staying up to date all the time"
+        },
+        {
+          "feature": "Your calendar feed staying up to date",
+          "notSignedIn": "Only while you have the app open",
+          "free": "Only while you have the app open",
+          "pro": "Stays up to date all the time"
+        },
+        {
+          "feature": "Hearing about a new booking request",
+          "notSignedIn": "Nothing syncs to your phone — sign in to receive these at all",
+          "free": "Next time you open the app",
+          "pro": "Straight away, as a notification"
+        }
       ]
     },
     {

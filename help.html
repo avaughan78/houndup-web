@@ -142,7 +142,8 @@
         card.className = "plan-card";
         card.innerHTML = `
           <div class="feature">${row.feature}</div>
-          <div class="plan-line"><span class="plan-label">Free</span><span class="plan-value">${row.free}</span></div>
+          <div class="plan-line"><span class="plan-label">Just installed</span><span class="plan-value">${row.notSignedIn}</span></div>
+          <div class="plan-line"><span class="plan-label">Free account</span><span class="plan-value">${row.free}</span></div>
           <div class="plan-line pro"><span class="plan-label">Hound-Up Pro</span><span class="plan-value">${row.pro}</span></div>
         `;
         body.appendChild(card);
