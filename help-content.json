@@ -207,7 +207,7 @@
       "title": "What is Autopilot?",
       "body": [
         "Autopilot is Hound-Up's paid tier — it keeps things running even with the app closed: nudging late payers, keeping your booking page and calendar feed live, and telling you straight away about a new booking request. You turn it on from Settings → Autopilot.",
-        "It's not a backup feature — your data already backs up automatically via iCloud whether or not you ever turn this on. See \"Free vs Autopilot\" for exactly what it adds."
+        "It's not a backup feature — your data already backs up automatically via iCloud (as long as iCloud itself is switched on for Hound-Up, which it is by default) whether or not you ever turn this on. See \"Free vs Autopilot\" for exactly what it adds."
       ]
     },
     {
