@@ -179,8 +179,8 @@
       "category": "Booking Requests & Your Availability Page",
       "title": "What is the booking requests page?",
       "body": [
-        "It's a web page you can share with clients (or put on your own website) so they can ask you for a walk without phoning or texting you first.",
-        "Turn it on in Settings > Booking Requests. You'll get a link to share."
+        "It's the booking form built right into your microsite, so clients can ask you for a walk without phoning or texting you first — no separate link or page.",
+        "Turn it on in Settings > Booking Availability. Share your microsite link (Settings > Microsite) to give clients access to it."
       ]
     },
     {
@@ -188,7 +188,7 @@
       "category": "Booking Requests & Your Availability Page",
       "title": "Turning on your availability calendar",
       "body": [
-        "This shows clients which times you're actually free, right on your booking page, so they can just tap a time instead of guessing. Turn it on in Settings > Booking Requests.",
+        "This shows clients which times you're actually free, right on your microsite's booking form, so they can just tap a time instead of guessing. Turn it on in Settings > Booking Availability.",
         "It's just a helpful guide for clients — it doesn't stop two people picking the same time by accident, so you'll still want to check and confirm any request yourself."
       ]
     },
