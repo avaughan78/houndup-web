@@ -69,6 +69,10 @@
   <h2>Reading a booking message</h2>
   <p>The "read a message" feature (for turning a pasted booking request into a scheduled walk or sit) sends the message text you paste in to <strong>Microsoft Azure OpenAI</strong>, which returns the booking details it found — who, when, any notes — back to the app. Nothing is retained by us once the response comes back. This only happens when you actively use this feature.</p>
 
+  <h2>Booking requests and enquiries from your clients</h2>
+  <p>If you've turned on Booking Availability or the public micro-site, a visitor to your micro-site can submit a booking request or a general question directly to you. Whatever they enter — their name, a phone number or email if they give one, and either their requested date/time and a note (for a booking) or a free-text message (for a question) — is sent to our backend and stored only until your device next fetches it (typically within moments, whenever you have the app open or a push notification wakes it), at which point it's deleted from our backend entirely. If push notifications are on, the request's headline details are also delivered to your device the same way as any other push.</p>
+  <p>This is the one place Hound-Up's backend handles personal data belonging to someone who isn't a Hound-Up user themselves — your prospective client. It's used solely to deliver their message to you; it's never used for anything else, and isn't affected by whether you're signed in.</p>
+
   <h2>Publishing a calendar feed</h2>
   <p>If you turn on "Publish a calendar feed" in Settings, your booked walks and sits (dates, times, and dog names) are uploaded to a file on our backend (via Supabase), at a link only you have. Anyone who has that exact link can view it, which is why the in-app confirmation warns against sharing it publicly. Turning the feed off removes the file. This is entirely opt-in and off by default.</p>
 
@@ -98,7 +102,9 @@
   <div class="card"><p><strong>Stripe</strong> &mdash; only if you've connected online payments for your own clients to pay by card. This is your own Stripe account, connected directly by you; when a client pays an invoice online, Stripe processes that payment and the card details involved. Hound-Up never sees or stores your clients' card details itself, only whether an invoice has been marked paid.</p></div>
   <div class="card"><p><strong>Apple (iCloud/CloudKit)</strong> &mdash; automatic backup, under your own Apple ID. Sees everything except your own business profile fields (see "Your data, and automatic iCloud backup" above) &mdash; never shared with us.</p></div>
   <div class="card"><p><strong>Apple (App Store)</strong> &mdash; bills and manages the Autopilot subscription entirely through your Apple ID. Hound-Up never sees your payment details, only that you're subscribed.</p></div>
-  <div class="card"><p><strong>Apple (Push Notifications &amp; WeatherKit)</strong> &mdash; if notifications are enabled, Apple's Push Notification service delivers them to your device using the device push token described above. Separately, Today's weather icon sends your business postcode (from Business Details) to Apple's WeatherKit to fetch current conditions &mdash; nothing else about your business is sent for this.</p></div>
+  <div class="card"><p><strong>Apple (Push Notifications)</strong> &mdash; if notifications are enabled, Apple's Push Notification service delivers them to your device using the device push token described above.</p></div>
+  <div class="card"><p><strong>postcodes.io</strong> &mdash; Today's weather icon looks up your business postcode (from Business Details) to get its coordinates, sent directly from your device. Free, no API key, no account.</p></div>
+  <div class="card"><p><strong>Open-Meteo</strong> &mdash; fetches the current weather for those coordinates, via our own backend rather than directly from your device &mdash; nothing else about your business is sent for this.</p></div>
   <p>We won't add or replace a sub-processor for these features without updating this list first.</p>
 
   <h2>Your clients' data</h2>
