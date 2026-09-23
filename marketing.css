@@ -1035,7 +1035,7 @@ main h1, main h2, main h3, main h4 {
 
 .screens-carousel {
   display: flex;
-  gap: 28px;
+  gap: 14px;
   overflow-x: auto;
   scroll-snap-type: x proximity;
   scroll-padding: 0 10%;
