@@ -18,7 +18,7 @@
 <link rel="icon" href="img/favicon-16.png" sizes="16x16">
 <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
 <link rel="stylesheet" href="style.css?v=2">
-<link rel="stylesheet" href="marketing.css?v=6">
+<link rel="stylesheet" href="marketing.css?v=7">
 </head>
 <body>
 
@@ -126,21 +126,30 @@
 
   <section class="screens">
     <div class="wrap wrap--wide">
-      <p class="section-eyebrow">No mockups here</p>
+      <p class="section-eyebrow">Straight from the app</p>
       <h2 class="section-title">The Hound-Up App</h2>
-      <div class="screens-grid">
-        <figure class="screen-frame reveal" style="--index:0">
-          <img src="img/screens/today.jpg" alt="Hound-Up's Today screen, showing a walker's real bookings for the day" loading="lazy">
-        </figure>
-        <figure class="screen-frame reveal" style="--index:1">
-          <img src="img/screens/calendar.jpg" alt="Hound-Up's Calendar screen, showing a month of booked walks" loading="lazy">
-        </figure>
-        <figure class="screen-frame reveal" style="--index:2">
-          <img src="img/screens/microsite.jpg" alt="A real Hound-Up walker's own booking page, live on the web" loading="lazy">
-        </figure>
+      <div class="screens-carousel-wrap">
+        <button class="carousel-arrow carousel-prev" type="button" data-carousel-prev aria-label="Previous screenshot">‹</button>
+        <div class="screens-carousel" data-carousel>
+          <figure class="screen-frame reveal" style="--index:0" tabindex="0" role="button" aria-label="Enlarge screenshot: Today screen" data-lightbox-trigger data-full-src="img/screens/today.jpg" data-full-alt="Hound-Up's Today screen, showing a walker's real bookings for the day">
+            <img src="img/screens/today.jpg" alt="Hound-Up's Today screen, showing a walker's real bookings for the day" loading="lazy">
+          </figure>
+          <figure class="screen-frame reveal" style="--index:1" tabindex="0" role="button" aria-label="Enlarge screenshot: Calendar screen" data-lightbox-trigger data-full-src="img/screens/calendar.jpg" data-full-alt="Hound-Up's Calendar screen, showing a month of booked walks">
+            <img src="img/screens/calendar.jpg" alt="Hound-Up's Calendar screen, showing a month of booked walks" loading="lazy">
+          </figure>
+          <figure class="screen-frame reveal" style="--index:2" tabindex="0" role="button" aria-label="Enlarge screenshot: your own booking page" data-lightbox-trigger data-full-src="img/screens/microsite.jpg" data-full-alt="A real Hound-Up walker's own booking page, live on the web">
+            <img src="img/screens/microsite.jpg" alt="A real Hound-Up walker's own booking page, live on the web" loading="lazy">
+          </figure>
+        </div>
+        <button class="carousel-arrow carousel-next" type="button" data-carousel-next aria-label="Next screenshot">›</button>
       </div>
     </div>
   </section>
+
+  <div class="lightbox" data-lightbox aria-hidden="true">
+    <button class="lightbox-close" type="button" data-lightbox-close aria-label="Close">✕</button>
+    <img data-lightbox-img src="" alt="">
+  </div>
 
   <section class="live-activity">
     <div class="wrap wrap--wide live-activity-grid">
@@ -520,6 +529,7 @@
 </div>
 
 <script src="reveal.js?v=1" defer></script>
+<script src="carousel.js?v=1" defer></script>
 <script src="waitlist.js?v=1" defer></script>
 </body>
 </html>

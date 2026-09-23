@@ -1028,16 +1028,29 @@ main h1, main h2, main h3, main h4 {
   text-align: center;
 }
 
-.screens-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 220px));
-  justify-content: center;
-  gap: 28px;
+.screens-carousel-wrap {
+  position: relative;
   margin-top: 48px;
+}
+
+.screens-carousel {
+  display: flex;
+  gap: 28px;
+  overflow-x: auto;
+  scroll-snap-type: x proximity;
+  scroll-padding: 0 10%;
+  padding: 4px 10% 20px;
+  margin: 0 -10%;
+  /* Scrollbar stays available (trackpad/touch drag is the primary way
+     in, but this isn't hidden-and-hoping) — just thinned so it doesn't
+     compete visually with the arrow buttons below. */
+  scrollbar-width: thin;
 }
 
 .screen-frame {
   position: relative;
+  flex: 0 0 auto;
+  width: 220px;
   border-radius: 26px;
   background: #0a0a0a;
   /* Taller top edge than the other three sides — real room for the
@@ -1046,6 +1059,29 @@ main h1, main h2, main h3, main h4 {
      app's own title bar, with no blank status-bar margin to hide it in). */
   padding: 20px 4px 4px;
   box-shadow: 0 24px 48px -20px rgba(0, 0, 0, 0.35), 0 0 0 1px rgba(0, 0, 0, 0.08);
+  scroll-snap-align: center;
+  cursor: zoom-in;
+  /* Also carries the .reveal fade-in for this element (rather than
+     letting .reveal's own generic `transition` shorthand apply) — two
+     rules both setting `transition` on the same element don't merge,
+     the later one in source wins wholesale, which would otherwise drop
+     .reveal's opacity transition and stagger entirely. Delays are
+     listed positionally per transition-property: opacity gets the
+     --index stagger, transform/box-shadow (the hover response) stay
+     instant regardless of card position. */
+  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease;
+  transition-delay: calc(var(--index, 0) * 90ms), 0s, 0s;
+}
+
+.screen-frame:hover,
+.screen-frame:focus-visible {
+  transform: translateY(-6px) scale(1.045);
+  box-shadow: 0 30px 56px -18px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(0, 0, 0, 0.08);
+}
+
+.screen-frame:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
 }
 
 .screen-frame img {
@@ -1053,6 +1089,7 @@ main h1, main h2, main h3, main h4 {
   width: 100%;
   height: auto;
   border-radius: 20px;
+  pointer-events: none;
 }
 
 .screen-frame::before {
@@ -1070,12 +1107,96 @@ main h1, main h2, main h3, main h4 {
   border-radius: 999px;
 }
 
+.carousel-arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  border: 1px solid var(--hairline);
+  background: var(--surface);
+  color: var(--ink);
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+  box-shadow: 0 8px 20px -10px rgba(0, 0, 0, 0.25);
+  transition: background 0.15s ease, transform 0.15s ease;
+}
+
+.carousel-arrow:hover { background: color-mix(in srgb, var(--accent) 10%, var(--surface)); }
+.carousel-arrow:active { transform: translateY(-50%) scale(0.94); }
+.carousel-prev { left: -6px; }
+.carousel-next { right: -6px; }
+
 @media (max-width: 780px) {
-  .screens-grid { grid-template-columns: repeat(2, minmax(0, 200px)); }
-  .screens-grid > :last-child { grid-column: 1 / -1; }
+  .carousel-arrow { display: none; }
+  .screen-frame { width: 200px; }
 }
 
 @media (max-width: 480px) {
-  .screens-grid { grid-template-columns: minmax(0, 220px); }
-  .screens-grid > :last-child { grid-column: auto; }
+  .screens-carousel { padding-left: 14%; padding-right: 14%; margin: 0; scroll-padding: 0 14%; }
+  .screen-frame { width: 72vw; max-width: 260px; }
+}
+
+/* ---------- Lightbox ---------- */
+
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  background: rgba(10, 10, 10, 0.82);
+  opacity: 0;
+  visibility: hidden;
+  /* visibility in the transition list (not just opacity) so closing
+     actually fades instead of vanishing the instant .is-open is
+     removed — visibility flips at the end of the transition when going
+     hidden, immediately when going visible, in every current browser. */
+  transition: opacity 0.2s ease, visibility 0.2s ease;
+}
+
+.lightbox.is-open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.lightbox img {
+  max-width: min(420px, 90vw);
+  max-height: 86vh;
+  width: auto;
+  border-radius: 28px;
+  box-shadow: 0 40px 80px -20px rgba(0, 0, 0, 0.6);
+  transform: scale(0.96);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.lightbox.is-open img {
+  transform: scale(1);
+}
+
+.lightbox-close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 40px;
+  height: 40px;
+  border-radius: 999px;
+  border: none;
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.lightbox-close:hover { background: rgba(255, 255, 255, 0.22); }
+
+@media (prefers-reduced-motion: reduce) {
+  .screen-frame, .lightbox, .lightbox img { transition: none; }
 }
