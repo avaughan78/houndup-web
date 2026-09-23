@@ -1031,26 +1031,60 @@ main h1, main h2, main h3, main h4 {
 .screens-carousel-wrap {
   position: relative;
   margin-top: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
 }
 
-.screens-carousel {
-  display: flex;
-  gap: 14px;
-  overflow-x: auto;
-  scroll-snap-type: x proximity;
-  scroll-padding: 0 10%;
-  padding: 4px 10% 20px;
-  margin: 0 -10%;
-  /* Scrollbar stays available (trackpad/touch drag is the primary way
-     in, but this isn't hidden-and-hoping) — just thinned so it doesn't
-     compete visually with the arrow buttons below. */
-  scrollbar-width: thin;
+/* A true 3D ring (transform-style: preserve-3d), not a flat scroller —
+   carousel3d.js continuously rotates .carousel3d-ring via
+   requestAnimationFrame (not a CSS @keyframes loop) so the same tick
+   can also fade/scale each card by its current angle from front-facing
+   and support drag-to-spin. --card-width/--radius are read by JS at
+   init and on resize, so the breakpoints below are the only place
+   sizing lives. */
+.carousel3d-stage {
+  position: relative;
+  width: 100%;
+  max-width: 720px;
+  height: 440px;
+  overflow: hidden;
+  perspective: 1400px;
+  --card-width: 220px;
+  --radius: 230px;
+}
+
+.carousel3d-ring {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+  cursor: grab;
+}
+
+.carousel3d-ring.is-dragging {
+  cursor: grabbing;
+}
+
+.carousel3d-card {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: var(--card-width);
+  will-change: transform, opacity;
+}
+
+@media (max-width: 680px) {
+  .carousel3d-stage { height: 360px; --card-width: 168px; --radius: 175px; }
+}
+
+@media (max-width: 420px) {
+  .carousel3d-stage { height: 300px; --card-width: 136px; --radius: 140px; }
 }
 
 .screen-frame {
   position: relative;
-  flex: 0 0 auto;
-  width: 220px;
+  width: 100%;
   border-radius: 26px;
   background: #0a0a0a;
   /* Taller top edge than the other three sides — real room for the
@@ -1111,9 +1145,7 @@ main h1, main h2, main h3, main h4 {
   display: flex;
   align-items: center;
   justify-content: center;
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
+  flex-shrink: 0;
   width: 44px;
   height: 44px;
   border-radius: 999px;
@@ -1128,19 +1160,12 @@ main h1, main h2, main h3, main h4 {
 }
 
 .carousel-arrow:hover { background: color-mix(in srgb, var(--accent) 10%, var(--surface)); }
-.carousel-arrow:active { transform: translateY(-50%) scale(0.94); }
-.carousel-prev { left: -6px; }
-.carousel-next { right: -6px; }
+.carousel-arrow:active { transform: scale(0.9); }
 
-@media (max-width: 780px) {
-  .carousel-arrow { display: none; }
-  .screen-frame { width: 200px; }
+@media (max-width: 420px) {
+  .carousel-arrow { width: 36px; height: 36px; font-size: 17px; }
 }
 
-@media (max-width: 480px) {
-  .screens-carousel { padding-left: 14%; padding-right: 14%; margin: 0; scroll-padding: 0 14%; }
-  .screen-frame { width: 72vw; max-width: 260px; }
-}
 
 /* ---------- Lightbox ---------- */
 

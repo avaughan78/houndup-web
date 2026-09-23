@@ -1,98 +1,141 @@
 (function () {
-  var track = document.querySelector("[data-carousel]");
   var prevBtn = document.querySelector("[data-carousel-prev]");
   var nextBtn = document.querySelector("[data-carousel-next]");
-  var wrap = document.querySelector(".screens-carousel-wrap");
+  var stage = document.querySelector("[data-carousel-stage]");
+  var ring = document.querySelector("[data-carousel-ring]");
   var reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  var startAuto = function () {};
-  var stopAuto = function () {};
+  var pause = function () {};
+  var resume = function () {};
+  var consumeDragFlag = function () { return false; };
 
-  if (track && prevBtn && nextBtn && wrap) {
-    var realCards = Array.prototype.slice.call(track.querySelectorAll(".screen-frame"));
-    var n = realCards.length;
+  if (stage && ring) {
+    var cards = Array.prototype.slice.call(ring.querySelectorAll("[data-carousel-card]"));
+    var n = cards.length;
 
     if (n > 1) {
-      // Clone the whole set before and after the real one, so stepping
-      // past either end lands on a visually-identical clone — once the
-      // (instant, no-animation) scroll lands back on the matching real
-      // card a moment later, the loop reads as endless. Clones are
-      // inert: no lightbox trigger, no tab stop, hidden from screen
-      // readers — the real card (once, in the middle set) carries all
-      // of that.
-      function makeClone(card) {
-        var clone = card.cloneNode(true);
-        clone.classList.remove("reveal"); // see reveal.js — clones are
-        // created after it has already run, so they'd never get
-        // .is-visible and would sit at opacity:0 forever otherwise.
-        clone.removeAttribute("data-lightbox-trigger");
-        clone.removeAttribute("role");
-        clone.setAttribute("aria-hidden", "true");
-        clone.setAttribute("tabindex", "-1");
-        return clone;
+      var step = 360 / n;
+      var cardWidth = 220;
+      var radius = 230;
+
+      function readGeometry() {
+        var styles = window.getComputedStyle(stage);
+        cardWidth = parseFloat(styles.getPropertyValue("--card-width")) || cardWidth;
+        radius = parseFloat(styles.getPropertyValue("--radius")) || radius;
+        cards.forEach(function (card) { card.style.width = cardWidth + "px"; });
       }
 
-      var leading = realCards.map(makeClone);
-      var trailing = realCards.map(makeClone);
-      // Reversed so each successive insertBefore keeps leading clones in
-      // their original left-to-right order.
-      leading.slice().reverse().forEach(function (clone) { track.insertBefore(clone, track.firstChild); });
-      trailing.forEach(function (clone) { track.appendChild(clone); });
+      // Degrees, not radians — every angle in this file is degrees so it
+      // reads directly against the CSS rotateY() values it produces.
+      var angle = 0; // current live rotation of the whole ring
+      var velocity = 360 / 26000; // deg/ms — one full turn every 26s
+      var paused = false;
+      var dragging = false;
+      var dragStartX = 0;
+      var dragStartAngle = 0;
+      var lastFrameTime = null;
 
-      var allCards = Array.prototype.slice.call(track.querySelectorAll(".screen-frame"));
-      var current = n; // first real card, now sitting at index n
-      var settleTimer = null;
+      function normalize(deg) {
+        var d = deg % 360;
+        if (d > 180) d -= 360;
+        if (d < -180) d += 360;
+        return d;
+      }
 
-      function goTo(index, smooth) {
-        current = index;
-        allCards[current].scrollIntoView({
-          behavior: smooth && !reducedMotion ? "smooth" : "auto",
-          inline: "center",
-          block: "nearest",
+      function render() {
+        cards.forEach(function (card, i) {
+          var cardAngle = i * step + angle;
+          var facing = Math.abs(normalize(cardAngle)) / 180; // 0 front, 1 back
+          var opacity = 1 - facing * 0.8;
+          card.style.transform =
+            "translate(-50%, -50%) rotateY(" + cardAngle + "deg) translateZ(" + radius + "px)";
+          card.style.opacity = String(Math.max(0.15, opacity));
+          // Cards facing away shouldn't intercept clicks meant for
+          // whatever's currently in front of them.
+          card.style.pointerEvents = facing > 0.6 ? "none" : "auto";
         });
       }
 
-      function settle() {
-        // Correct however far a burst of rapid clicks pushed `current`
-        // past either clone band, not just by one set-width — a loop,
-        // not a single if/else, so it can't land mid-clone-band.
-        while (current >= 2 * n) current -= n;
-        while (current < n) current += n;
-        goTo(current, false);
+      function tick(time) {
+        if (lastFrameTime === null) lastFrameTime = time;
+        var dt = time - lastFrameTime;
+        lastFrameTime = time;
+        if (!paused && !dragging) {
+          angle = (angle + velocity * dt) % 360;
+        }
+        render();
+        window.requestAnimationFrame(tick);
       }
 
-      function step(direction) {
-        goTo(current + direction, true);
-        window.clearTimeout(settleTimer);
-        settleTimer = window.setTimeout(settle, 500);
+      readGeometry();
+      render();
+      if (!reducedMotion) {
+        window.requestAnimationFrame(tick);
       }
 
-      goTo(n, false);
+      var resizeTimer = null;
+      window.addEventListener("resize", function () {
+        window.clearTimeout(resizeTimer);
+        resizeTimer = window.setTimeout(readGeometry, 150);
+      });
 
-      var AUTO_MS = 3200;
-      var timer = null;
-      startAuto = function () {
-        if (reducedMotion) return;
-        stopAuto();
-        timer = window.setInterval(function () { step(1); }, AUTO_MS);
+      pause = function () { paused = true; };
+      resume = function () { paused = false; };
+
+      function step_(direction) {
+        angle = (angle + direction * step) % 360;
+        render();
+      }
+
+      if (prevBtn) prevBtn.addEventListener("click", function () { step_(1); });
+      if (nextBtn) nextBtn.addEventListener("click", function () { step_(-1); });
+
+      stage.addEventListener("mouseenter", pause);
+      stage.addEventListener("mouseleave", resume);
+      stage.addEventListener("focusin", pause);
+      stage.addEventListener("focusout", resume);
+
+      // Drag-to-spin — pointer events cover mouse and touch alike.
+      var dragMoved = false;
+      function dragStart(clientX) {
+        dragging = true;
+        dragMoved = false;
+        pause();
+        dragStartX = clientX;
+        dragStartAngle = angle;
+        ring.classList.add("is-dragging");
+      }
+      function dragMove(clientX) {
+        if (!dragging) return;
+        var deltaX = clientX - dragStartX;
+        if (Math.abs(deltaX) > 4) dragMoved = true;
+        // Degrees per pixel dragged — tied to radius so a drag around a
+        // tighter/wider ring still feels proportional.
+        angle = dragStartAngle + (deltaX / radius) * 60;
+        render();
+      }
+      function dragEnd() {
+        if (!dragging) return;
+        dragging = false;
+        ring.classList.remove("is-dragging");
+        resume();
+      }
+      consumeDragFlag = function () {
+        var moved = dragMoved;
+        dragMoved = false;
+        return moved;
       };
-      stopAuto = function () {
-        if (timer) window.clearInterval(timer);
-        timer = null;
-      };
 
-      prevBtn.addEventListener("click", function () { step(-1); startAuto(); });
-      nextBtn.addEventListener("click", function () { step(1); startAuto(); });
-
-      wrap.addEventListener("mouseenter", stopAuto);
-      wrap.addEventListener("mouseleave", startAuto);
-      wrap.addEventListener("focusin", stopAuto);
-      wrap.addEventListener("focusout", startAuto);
-      // A manual drag/swipe is "hands on" too — don't fight it mid-drag.
-      track.addEventListener("touchstart", stopAuto, { passive: true });
-      track.addEventListener("touchend", startAuto, { passive: true });
-
-      startAuto();
+      ring.addEventListener("pointerdown", function (event) {
+        if (event.button !== undefined && event.button !== 0) return;
+        dragStart(event.clientX);
+        ring.setPointerCapture && ring.setPointerCapture(event.pointerId);
+      });
+      ring.addEventListener("pointermove", function (event) {
+        if (dragging) dragMove(event.clientX);
+      });
+      ring.addEventListener("pointerup", dragEnd);
+      ring.addEventListener("pointercancel", dragEnd);
     }
   }
 
@@ -103,7 +146,7 @@
 
   function openLightbox(trigger) {
     if (!lightbox || !lightboxImg) return;
-    stopAuto();
+    pause();
     lightboxImg.src = trigger.getAttribute("data-full-src");
     lightboxImg.alt = trigger.getAttribute("data-full-alt") || "";
     lastFocused = trigger;
@@ -120,11 +163,19 @@
     lightbox.setAttribute("aria-hidden", "true");
     document.body.style.overflow = "";
     if (lastFocused) lastFocused.focus();
-    startAuto();
+    resume();
   }
 
   triggers.forEach(function (trigger) {
-    trigger.addEventListener("click", function () { openLightbox(trigger); });
+    trigger.addEventListener("click", function (event) {
+      // A drag that ends over a card fires a click too — don't also
+      // open the lightbox on the way past.
+      if (consumeDragFlag()) {
+        event.preventDefault();
+        return;
+      }
+      openLightbox(trigger);
+    });
     trigger.addEventListener("keydown", function (event) {
       if (event.key === "Enter" || event.key === " ") {
         event.preventDefault();
