@@ -15,8 +15,9 @@
       "category": "Getting Started",
       "title": "Do I need to sign in?",
       "body": [
-        "No. Hound-Up works fully without signing in. You can add clients, log walks, and send invoices straight away — your data backs up automatically via iCloud either way.",
-        "Signing in is only needed for Autopilot's extra automation — things like nudges and booking alerts happening even with the app closed. See \"Free vs Autopilot\" for the full list."
+        "For most things, no. You can add clients, log walks and sits, and build up your ledger fully without signing in — your data backs up automatically via iCloud either way.",
+        "Sending an invoice is the one thing that needs it, since Hound-Up sends it on your behalf. You'll be asked to sign in with Apple (free, a few seconds) the first time you tap Send.",
+        "Signing in also backs up your own business profile (name, rates, bank details) and syncs everything across your devices. Autopilot adds extra automation on top of that — see \"Free vs Autopilot\" for the full list."
       ]
     },
     {
@@ -33,7 +34,7 @@
       "category": "Getting Started",
       "title": "Adding your first client",
       "body": [
-        "Tap the + button on the Today tab, or go to the Dogs tab and tap \"New dog\".",
+        "Tap the + button on the Today tab, or go to the Dogs tab and tap \"+ Dog\".",
         "You'll be asked for the dog's name and the owner's name and phone number. That's all you need to get started — you can fill in the rest of their details later."
       ]
     },
@@ -42,7 +43,7 @@
       "category": "Clients & Dogs",
       "title": "Adding a new client",
       "body": [
-        "Go to the Dogs tab and tap \"New dog\". Type the dog's name and the owner's details.",
+        "Go to the Dogs tab and tap \"+ Dog\". Type the dog's name and the owner's details.",
         "You can add more information later, like the owner's address, emergency contact, and any notes — just open the client's page and tap Edit."
       ]
     },
@@ -51,7 +52,7 @@
       "category": "Clients & Dogs",
       "title": "Adding a dog to an existing client",
       "body": [
-        "Open the client's page and tap \"Add a dog\". If they've already got one dog on file, this adds another one for the same owner — you won't need to type the owner's details again."
+        "Open the client's page and tap the + next to Dogs. If they've already got one dog on file, this adds another one for the same owner — you won't need to type the owner's details again."
       ]
     },
     {
@@ -85,8 +86,8 @@
       "category": "Walks & Sits",
       "title": "Logging a walk",
       "body": [
-        "Tap the + on Today and choose \"Log a past walk\". Pick the dog, the date, and how long the walk was. Hound-Up works out what to charge automatically, using your rates.",
-        "You can add a note or a photo too, if you like."
+        "Tap the + on Today (or Calendar's \"Book…\" button) and pick the service — one row per rate you've set up in Rates & Pricing, e.g. \"Hourly Walk\". Pick the dog, then the date.",
+        "The date decides what happens next: pick today or an earlier day and Hound-Up logs it as done and bills it straight away. Pick a day in the future and it's booked instead — nothing's charged until it actually happens. You can add a note or a photo too, if you like."
       ]
     },
     {
@@ -94,7 +95,7 @@
       "category": "Walks & Sits",
       "title": "Recording a walk live",
       "body": [
-        "Tap the + on Today and choose \"Start a walk\". Hound-Up tracks your route using GPS while you walk, and you tap \"Stop & save\" when you're done.",
+        "Tap the + on Today and choose \"Start a live walk\". Hound-Up tracks your route using GPS while you walk, and you tap \"Stop & save\" when you're done.",
         "This needs Hound-Up to know your location while you're recording — you'll be asked to allow this the first time."
       ]
     },
@@ -103,7 +104,7 @@
       "category": "Walks & Sits",
       "title": "Booking a one-off walk",
       "body": [
-        "Tap a day on the Calendar tab, or use the + button, and choose \"Book a walk\". Pick the dog (or add a new one), then the date and time.",
+        "Tap a day on the Calendar tab and use the \"Book…\" button, or the + on Today. Pick the service and the dog, then choose a date in the future — Hound-Up books it in instead of billing it straight away.",
         "This is for a single walk. If it's a regular booking, set up a schedule instead — see \"Setting up a regular schedule\"."
       ]
     },
@@ -112,7 +113,7 @@
       "category": "Walks & Sits",
       "title": "Setting up a regular schedule",
       "body": [
-        "Open a dog's page, go to the Schedule tab, and tap \"Add a schedule\". Pick the day of the week, the time, and how long the walk is.",
+        "Open a dog's page, go to the Schedule tab, and tap \"Set a recurring schedule\" (or \"Add another schedule\" if they've already got one). Pick the day of the week, the time, and how long the walk is.",
         "Hound-Up creates each week's walk automatically, so you don't need to book it every time."
       ]
     },
@@ -121,7 +122,8 @@
       "category": "Walks & Sits",
       "title": "Logging or booking a sit",
       "body": [
-        "Use the + button and choose \"Log a sit\" or \"Book a sit\" from the Calendar tab. Sits can be a few hours or several days — Hound-Up bills by the night for anything longer than a day."
+        "Tap the + on Today (or Calendar's \"Book…\" button) and pick your overnight sit service, then the dog and the date. Sits can be a few hours or several days — Hound-Up bills by the night for anything longer than a day.",
+        "Same as a walk: today or an earlier date logs and bills it straight away; a future date books it instead."
       ]
     },
     {
@@ -138,7 +140,8 @@
       "category": "Invoicing & Getting Paid",
       "title": "Sending an invoice",
       "body": [
-        "Go to the Ledger tab, open a client's outstanding balance, and tap Send. You can send it by email or WhatsApp, straight from your phone's own Mail or WhatsApp app."
+        "Go to the Ledger tab, open a client's outstanding balance, and tap Send. Hound-Up emails the invoice to your client for you — there's no separate Mail app step, and you'll be asked to sign in with Apple the first time (see \"Do I need to sign in?\").",
+        "To send it a different way instead — WhatsApp, AirDrop, or anything else on your phone — tap \"Share invoice\" and pick from your phone's usual share sheet."
       ]
     },
     {
@@ -179,8 +182,8 @@
       "category": "Booking Requests & Your Availability Page",
       "title": "What is the booking requests page?",
       "body": [
-        "It's the booking form built right into your microsite, so clients can ask you for a walk without phoning or texting you first — no separate link or page.",
-        "Turn it on in Settings > Booking Availability. Share your microsite link (Settings > Microsite) to give clients access to it."
+        "It's the booking form built right into your microsite, so clients can ask you for a walk without phoning or texting you first — no separate link or page. It's an Autopilot feature — see \"Free vs Autopilot\".",
+        "Turn it on in Settings > Booking Availability. Share your micro-site link (Settings > Micro-site) to give clients access to it."
       ]
     },
     {
@@ -221,8 +224,8 @@
       "rows": [
         {
           "feature": "Clients, dogs, walks, sits and invoicing",
-          "notSignedIn": "Up to 10 active clients, then upgrade to add more — dogs, walks, sits and invoicing stay unlimited either way",
-          "free": "Up to 10 active clients, then upgrade to add more — dogs, walks, sits and invoicing stay unlimited either way",
+          "notSignedIn": "Up to 10 active clients — dogs, walks and sits stay unlimited, but sending an invoice needs you to sign in first",
+          "free": "Up to 10 active clients, then upgrade to add more — dogs, walks, sits and invoicing all unlimited",
           "pro": "Unlimited clients too — everything else stays the same"
         },
         {
