@@ -1052,7 +1052,7 @@ main h1, main h2, main h3, main h4 {
   overflow: hidden;
   perspective: 1400px;
   --card-width: 170px;
-  --radius: 280px;
+  --radius: 380px;
 }
 
 .carousel3d-ring {
@@ -1075,11 +1075,11 @@ main h1, main h2, main h3, main h4 {
 }
 
 @media (max-width: 680px) {
-  .carousel3d-stage { height: 320px; --card-width: 140px; --radius: 190px; }
+  .carousel3d-stage { height: 320px; --card-width: 140px; --radius: 258px; }
 }
 
 @media (max-width: 420px) {
-  .carousel3d-stage { height: 260px; --card-width: 112px; --radius: 145px; }
+  .carousel3d-stage { height: 260px; --card-width: 112px; --radius: 197px; }
 }
 
 .screen-frame {
