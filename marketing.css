@@ -1047,12 +1047,38 @@ main h1, main h2, main h3, main h4 {
 .carousel3d-stage {
   position: relative;
   width: 100%;
-  max-width: 920px;
-  height: 400px;
+  max-width: 980px;
+  height: 440px;
   overflow: hidden;
-  perspective: 1400px;
-  --card-width: 170px;
-  --radius: 380px;
+  /* A larger perspective than the "photographic" default (~1000-1400px)
+     deliberately flattens the front-card magnification: CSS's
+     perspective-projection scale factor is perspective / (perspective -
+     translateZ), so at a fixed --radius, a bigger perspective value
+     means the front-facing card grows less as it swings to the centre.
+     At the old 1400px/380px pairing the front card was ~1.37x its
+     nominal size — taller than this stage and clipped top/bottom no
+     matter how much stage height alone was thrown at it. 2200px keeps
+     the depth cue while capping that growth around ~1.2x. */
+  perspective: 2200px;
+  --card-width: 150px;
+  --radius: 340px;
+}
+
+/* A soft ambient contact shadow under the ring — otherwise the cards
+   read as floating in space rather than sitting on anything. Painted
+   before .carousel3d-ring in the same stacking context, so it sits
+   underneath every card regardless of the ring's live rotation. */
+.carousel3d-stage::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 8%;
+  width: 55%;
+  height: 40px;
+  transform: translateX(-50%);
+  background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.18), transparent 72%);
+  filter: blur(3px);
+  pointer-events: none;
 }
 
 .carousel3d-ring {
@@ -1075,11 +1101,11 @@ main h1, main h2, main h3, main h4 {
 }
 
 @media (max-width: 680px) {
-  .carousel3d-stage { height: 320px; --card-width: 140px; --radius: 258px; }
+  .carousel3d-stage { height: 380px; --card-width: 130px; --radius: 295px; }
 }
 
 @media (max-width: 420px) {
-  .carousel3d-stage { height: 260px; --card-width: 112px; --radius: 197px; }
+  .carousel3d-stage { height: 300px; --card-width: 100px; --radius: 227px; }
 }
 
 .screen-frame {
