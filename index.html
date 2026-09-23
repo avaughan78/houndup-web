@@ -18,7 +18,7 @@
 <link rel="icon" href="img/favicon-16.png" sizes="16x16">
 <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
 <link rel="stylesheet" href="style.css?v=2">
-<link rel="stylesheet" href="marketing.css?v=5">
+<link rel="stylesheet" href="marketing.css?v=6">
 </head>
 <body>
 
@@ -42,13 +42,6 @@
 <main>
 
   <section class="hero">
-    <div class="paw-field" aria-hidden="true">
-      <svg viewBox="0 0 64 64" fill="currentColor" class="pf p1"><circle cx="20" cy="18" r="7"/><circle cx="38" cy="14" r="6"/><circle cx="50" cy="26" r="6"/><ellipse cx="32" cy="42" rx="16" ry="13"/></svg>
-      <svg viewBox="0 0 64 64" fill="currentColor" class="pf p2"><circle cx="20" cy="18" r="7"/><circle cx="38" cy="14" r="6"/><circle cx="50" cy="26" r="6"/><ellipse cx="32" cy="42" rx="16" ry="13"/></svg>
-      <svg viewBox="0 0 64 64" fill="currentColor" class="pf p3"><circle cx="20" cy="18" r="7"/><circle cx="38" cy="14" r="6"/><circle cx="50" cy="26" r="6"/><ellipse cx="32" cy="42" rx="16" ry="13"/></svg>
-      <svg viewBox="0 0 64 64" fill="currentColor" class="pf p4"><circle cx="20" cy="18" r="7"/><circle cx="38" cy="14" r="6"/><circle cx="50" cy="26" r="6"/><ellipse cx="32" cy="42" rx="16" ry="13"/></svg>
-      <svg viewBox="0 0 64 64" fill="currentColor" class="pf p5"><circle cx="20" cy="18" r="7"/><circle cx="38" cy="14" r="6"/><circle cx="50" cy="26" r="6"/><ellipse cx="32" cy="42" rx="16" ry="13"/></svg>
-    </div>
     <div class="wrap wrap--wide hero-inner">
       <p class="eyebrow">For UK independent dog walkers</p>
       <h1>Run your business more efficiently.</h1>
@@ -69,7 +62,7 @@
     </div>
   </section>
 
-  <section class="pain">
+  <section class="pain reveal">
     <div class="wrap wrap--wide">
       <p class="pain-text">Other platforms often want a <strong>cut of your bookings</strong> or
         charge high rates regardless of the scale of your operations. Hound-Up is built only for
@@ -79,15 +72,9 @@
     </div>
   </section>
 
-  <div class="paw-trail" aria-hidden="true">
-    <svg viewBox="0 0 64 64" fill="currentColor"><circle cx="20" cy="18" r="7"/><circle cx="38" cy="14" r="6"/><circle cx="50" cy="26" r="6"/><ellipse cx="32" cy="42" rx="16" ry="13"/></svg>
-    <svg viewBox="0 0 64 64" fill="currentColor"><circle cx="20" cy="18" r="7"/><circle cx="38" cy="14" r="6"/><circle cx="50" cy="26" r="6"/><ellipse cx="32" cy="42" rx="16" ry="13"/></svg>
-    <svg viewBox="0 0 64 64" fill="currentColor"><circle cx="20" cy="18" r="7"/><circle cx="38" cy="14" r="6"/><circle cx="50" cy="26" r="6"/><ellipse cx="32" cy="42" rx="16" ry="13"/></svg>
-  </div>
-
   <section class="site-showcase">
     <div class="wrap wrap--wide site-showcase-grid">
-      <div class="ss-visual" aria-hidden="true">
+      <div class="ss-visual reveal" style="--index:0" aria-hidden="true">
         <div class="browser-card">
           <div class="browser-chrome">
             <div class="browser-dots"><span></span><span></span><span></span></div>
@@ -113,7 +100,7 @@
           </div>
         </div>
       </div>
-      <div class="ss-copy">
+      <div class="ss-copy reveal" style="--index:1">
         <p class="section-eyebrow" style="text-align:left">New — and it's actually yours</p>
         <h2 class="section-title" style="text-align:left; margin-left:0;">A booking website that's yours, not a listing</h2>
         <p class="la-text" style="text-align:left; margin-left:0;">Clients can pick a service
@@ -142,13 +129,13 @@
       <p class="section-eyebrow">No mockups here</p>
       <h2 class="section-title">The Hound-Up App</h2>
       <div class="screens-grid">
-        <figure class="screen-frame">
+        <figure class="screen-frame reveal" style="--index:0">
           <img src="img/screens/today.jpg" alt="Hound-Up's Today screen, showing a walker's real bookings for the day" loading="lazy">
         </figure>
-        <figure class="screen-frame">
+        <figure class="screen-frame reveal" style="--index:1">
           <img src="img/screens/calendar.jpg" alt="Hound-Up's Calendar screen, showing a month of booked walks" loading="lazy">
         </figure>
-        <figure class="screen-frame">
+        <figure class="screen-frame reveal" style="--index:2">
           <img src="img/screens/microsite.jpg" alt="A real Hound-Up walker's own booking page, live on the web" loading="lazy">
         </figure>
       </div>
@@ -157,7 +144,7 @@
 
   <section class="live-activity">
     <div class="wrap wrap--wide live-activity-grid">
-      <div class="live-activity-copy">
+      <div class="live-activity-copy reveal" style="--index:0">
         <p class="section-eyebrow" style="text-align:left">See it in action</p>
         <h2 class="section-title" style="text-align:left; margin-left:0;">Live from your Lock Screen</h2>
         <p class="la-text">Start a walk and it sits on your Lock Screen and Dynamic Island —
@@ -169,7 +156,7 @@
           <li>Voice-to-text notes, transcribed entirely on-device</li>
         </ul>
       </div>
-      <div class="la-visual" aria-hidden="true">
+      <div class="la-visual reveal" style="--index:1" aria-hidden="true">
         <img class="la-island-shot" src="img/screens/dynamic-island.png" alt="A real Dynamic Island showing a live Hound-Up walk, 2 minutes 21 seconds in" loading="lazy">
         <div class="la-card">
           <div class="la-card-top">
@@ -243,7 +230,7 @@
 
       <div class="feature-grid">
 
-        <article class="feature-card">
+        <article class="feature-card reveal" style="--index:0">
           <div class="feature-icon" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none"><path d="M12 12a4 4 0 100-8 4 4 0 000 8zM4 20c0-3.5 3.5-6 8-6s8 2.5 8 6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="19" cy="6" r="2.4" stroke="currentColor" stroke-width="1.6"/></svg>
           </div>
@@ -257,7 +244,7 @@
           </ul>
         </article>
 
-        <article class="feature-card">
+        <article class="feature-card reveal" style="--index:1">
           <div class="feature-icon" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none"><path d="M12 21s-6.5-5.8-6.5-10.5A6.5 6.5 0 0112 4a6.5 6.5 0 016.5 6.5C18.5 15.2 12 21 12 21z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><circle cx="12" cy="10.2" r="2.3" stroke="currentColor" stroke-width="1.6"/></svg>
           </div>
@@ -270,7 +257,7 @@
           </ul>
         </article>
 
-        <article class="feature-card">
+        <article class="feature-card reveal" style="--index:2">
           <div class="feature-icon" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none"><path d="M5 3.5h14v17l-3.2-2.1-2 2.1-1.8-2.1-1.8 2.1-2-2.1L5 20.5v-17z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M8.2 8.3h7.6M8.2 11.6h7.6M8.2 14.9h4.6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
           </div>
@@ -283,7 +270,7 @@
           </ul>
         </article>
 
-        <article class="feature-card">
+        <article class="feature-card reveal" style="--index:3">
           <div class="feature-icon" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none"><path d="M21 11.5a8.4 8.4 0 01-8.9 8.4c-1.3 0-2.5-.3-3.6-.8L4 20l1-4.3a8.3 8.3 0 01-1-4A8.4 8.4 0 0112.9 3a8.5 8.5 0 018.1 8.5z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M8.5 11h7M8.5 14h4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
           </div>
@@ -296,7 +283,7 @@
           </ul>
         </article>
 
-        <article class="feature-card">
+        <article class="feature-card reveal" style="--index:4">
           <div class="feature-icon" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5" stroke="currentColor" stroke-width="1.6"/><path d="M3.5 9.5h17M8 3v3.5M16 3v3.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><circle cx="8.3" cy="14" r="1.1" fill="currentColor"/><circle cx="12" cy="14" r="1.1" fill="currentColor"/><circle cx="15.7" cy="14" r="1.1" fill="currentColor"/></svg>
           </div>
@@ -309,7 +296,7 @@
           </ul>
         </article>
 
-        <article class="feature-card">
+        <article class="feature-card reveal" style="--index:5">
           <div class="feature-icon" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none"><path d="M12 3l7 3.2v5.3c0 4.6-3 8.7-7 9.5-4-.8-7-4.9-7-9.5V6.2L12 3z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M9 12l2.2 2.2L15.5 10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </div>
@@ -324,7 +311,7 @@
 
       </div>
 
-      <details class="all-features">
+      <details class="all-features reveal">
         <summary>
           <span>See every feature</span>
           <svg viewBox="0 0 24 24" fill="none" class="chev"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -452,21 +439,21 @@
       <h2 class="section-title">From walk to paid, without opening a spreadsheet</h2>
 
       <ol class="flow-steps">
-        <li>
+        <li class="reveal" style="--index:0">
           <span class="flow-num">1</span>
           <div>
             <h4>Auto-compiled</h4>
             <p>Every completed walk adds its line item to the client's ledger by itself.</p>
           </div>
         </li>
-        <li>
+        <li class="reveal" style="--index:1">
           <span class="flow-num">2</span>
           <div>
             <h4>One-tap batch send</h4>
             <p>At the end of the week or month, send every invoice at once via email or WhatsApp.</p>
           </div>
         </li>
-        <li>
+        <li class="reveal" style="--index:2">
           <span class="flow-num">3</span>
           <div>
             <h4>Simple payments</h4>
@@ -474,7 +461,7 @@
               them an instant payment link* — no app to download.</p>
           </div>
         </li>
-        <li>
+        <li class="reveal" style="--index:3">
           <span class="flow-num">4</span>
           <div>
             <h4>Reconciliation</h4>
@@ -492,19 +479,19 @@
   <section class="built-for">
     <div class="wrap wrap--wide">
       <div class="built-for-grid">
-        <div class="built-for-item">
+        <div class="built-for-item reveal" style="--index:0">
           <h4>No marketplace, no commission</h4>
           <p>Your booking page, your clients, your rates. Hound-Up never takes a cut of what you earn.</p>
         </div>
-        <div class="built-for-item">
+        <div class="built-for-item reveal" style="--index:1">
           <h4>Works with no signal</h4>
           <p>Offline-first by design — a dead zone on a countryside walk never costs you a note.</p>
         </div>
-        <div class="built-for-item">
+        <div class="built-for-item reveal" style="--index:2">
           <h4>Local-first, sync optional</h4>
           <p>Every dog, client and walk record lives on your phone from the first launch. Signing in — free, Apple ID only — adds backup and lets you send invoices.</p>
         </div>
-        <div class="built-for-item">
+        <div class="built-for-item reveal" style="--index:3">
           <h4>Looks like a modern iOS app</h4>
           <p>Because it is one — built native, not a wrapped web app, with real light and dark mode.</p>
         </div>
@@ -513,7 +500,7 @@
   </section>
 
   <section class="final-cta">
-    <div class="wrap wrap--wide final-cta-inner">
+    <div class="wrap wrap--wide final-cta-inner reveal">
       <h2>Built for independent dog walkers. Not marketplaces, not agencies — you.</h2>
       <form class="waitlist-form" data-waitlist-form novalidate>
         <label class="sr-only" for="waitlist-email-footer">Email address</label>
@@ -532,6 +519,7 @@
   </footer>
 </div>
 
+<script src="reveal.js?v=1" defer></script>
 <script src="waitlist.js?v=1" defer></script>
 </body>
 </html>

@@ -55,61 +55,33 @@ body {
   font-family: "Manrope", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 
-/* This page only — overrides style.css's shared brand tokens (Hound-Up's
-   own fixed Indigo, used everywhere else on this site: request.html, the
-   legal pages) with the microsite's own "meadow" palette instead, so the
-   sales pitch reads as a companion piece to the thing it's actually
-   selling — a walker's own green-themed public page. Exact values lifted
-   from supabase/functions/render-microsite/index.ts's THEMES.meadow in
-   the app repo, not eyeballed, so the two truly match. request.html/
-   help.html/the legal pages deliberately keep the Indigo brand mark —
-   only the sales page borrows the product's own colour. */
-:root {
-  --bg: #F7F8F2;
-  --surface: #FFFFFF;
-  --ink: #202B1E;
-  --muted: #6B7364;
-  --hairline: #E1E6D8;
-  --accent: #4F7942;
-  --accent-ink: #FFFFFF;
+/* No brand-token override here (there used to be one, pointing this page
+   at the microsite's "meadow" green) — this page now inherits style.css's
+   tokens verbatim, same fixed Indigo brand as request.html/help.html/the
+   legal pages, so the whole site reads as one product rather than the
+   sales page borrowing the thing it's selling. */
+
+/* Scroll-triggered reveal — toggled by reveal.js via IntersectionObserver.
+   --index (set inline per grid item) staggers a cascade instead of every
+   card in a row arriving at once. */
+.reveal {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  transition-delay: calc(var(--index, 0) * 90ms);
 }
-/* The light block above was the only one actually filled in — bg/
-   surface/ink/muted/hairline never varied here, so this page silently
-   never switched to dark at all regardless of OS/toggle state, despite
-   the doc comment above claiming light/dark "keep working with zero
-   extra logic here." `bg`/`ink` reuse this same meadow theme's own
-   `deep`/`deepInk` pair (already used for render-microsite's footer
-   band) rather than inventing new colours; `surface`/`muted`/`hairline`
-   are lightness-adjusted from that same base to stay in the same
-   family. */
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg: #1F2E1A;
-    --surface: #293D22;
-    --ink: #F2F5EA;
-    --muted: #B3B8AE;
-    --hairline: #314829;
-    --accent: #7FB86A;
-    --accent-ink: #14210F;
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
   }
-}
-:root[data-theme="dark"] {
-  --bg: #1F2E1A;
-  --surface: #293D22;
-  --ink: #F2F5EA;
-  --muted: #B3B8AE;
-  --hairline: #314829;
-  --accent: #7FB86A;
-  --accent-ink: #14210F;
-}
-:root[data-theme="light"] {
-  --bg: #F7F8F2;
-  --surface: #FFFFFF;
-  --ink: #202B1E;
-  --muted: #6B7364;
-  --hairline: #E1E6D8;
-  --accent: #4F7942;
-  --accent-ink: #FFFFFF;
 }
 
 .wrap--wide {
@@ -674,46 +646,8 @@ main h1, main h2, main h3, main h4 {
   display: block;
 }
 
-.paw-field {
-  position: absolute;
-  inset: 0;
-  overflow: hidden;
-  pointer-events: none;
-  z-index: 0;
-}
-
-.paw-field svg {
-  position: absolute;
-  color: var(--accent);
-  opacity: 0.07;
-}
-
 .hero { position: relative; }
 .hero-inner { position: relative; z-index: 1; }
-
-.paw-field .p1 { width: 90px; top: 6%; left: 4%; transform: rotate(-18deg); }
-.paw-field .p2 { width: 60px; top: 62%; left: 10%; transform: rotate(22deg); }
-.paw-field .p3 { width: 110px; top: 12%; right: 6%; transform: rotate(15deg); }
-.paw-field .p4 { width: 54px; top: 70%; right: 14%; transform: rotate(-30deg); }
-.paw-field .p5 { width: 46px; top: 40%; left: 46%; transform: rotate(8deg); }
-
-.paw-trail {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 22px;
-  padding: 4px 0 46px;
-}
-
-.paw-trail svg {
-  color: var(--accent);
-  width: 15px;
-  height: 15px;
-}
-
-.paw-trail svg:nth-child(1) { opacity: 0.25; transform: rotate(-12deg) translateY(4px); }
-.paw-trail svg:nth-child(2) { opacity: 0.45; width: 19px; height: 19px; }
-.paw-trail svg:nth-child(3) { opacity: 0.7; transform: rotate(12deg) translateY(-4px); }
 
 /* ---------- Live activity showcase ---------- */
 
@@ -954,7 +888,7 @@ main h1, main h2, main h3, main h4 {
   width: 26px;
   height: 26px;
   border-radius: 999px;
-  background: linear-gradient(135deg, var(--accent), color-mix(in srgb, var(--accent) 60%, #2b3a24));
+  background: linear-gradient(135deg, var(--accent), color-mix(in srgb, var(--accent) 60%, #14161c));
   flex-shrink: 0;
 }
 
@@ -1084,7 +1018,6 @@ main h1, main h2, main h3, main h4 {
 
 @media (max-width: 560px) {
   .feature-grid { grid-template-columns: 1fr; }
-  .paw-field .p3, .paw-field .p4 { display: none; }
 }
 
 /* ---------- Real-screens gallery ---------- */
