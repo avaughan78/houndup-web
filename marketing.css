@@ -55,11 +55,9 @@ body {
   font-family: "Manrope", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 
-/* No brand-token override here (there used to be one, pointing this page
-   at the microsite's "meadow" green) — this page now inherits style.css's
-   tokens verbatim, same fixed Indigo brand as request.html/help.html/the
-   legal pages, so the whole site reads as one product rather than the
-   sales page borrowing the thing it's selling. */
+/* No brand-token override here — this page inherits style.css's tokens
+   verbatim (the microsite's "meadow" green, same fixed brand as help.html/
+   the legal pages), so the whole site reads as one product. */
 
 /* Scroll-triggered reveal — toggled by reveal.js via IntersectionObserver.
    --index (set inline per grid item) staggers a cascade instead of every

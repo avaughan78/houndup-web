@@ -1,15 +1,17 @@
-/* Matches Hound-Up's own design tokens exactly — see
+/* Neutrals match Hound-Up's own design tokens exactly — see
    Packages/DesignSystem/Sources/DesignSystem/Colors/ColorTokens.swift
-   in the app repo (canvas/surface/ink/mutedBody/hairline/accent/onAccent).
-   --accent is the app's own Indigo theme (AppTheme.palette, .indigo case)
-   — every walker's page uses this same brand color, not a per-walker one. */
+   in the app repo (canvas/surface/ink/mutedBody/hairline). --accent is
+   the microsite's own "meadow" green (supabase/functions/render-microsite/
+   index.ts's THEMES.meadow), not the app's in-app Indigo — every web page
+   (this one, help/terms/privacy/support) uses this same fixed brand
+   colour, not a per-walker one. */
 :root {
   --bg: #f6f6f5;
   --surface: #ffffff;
   --ink: #1d1e1e;
   --muted: #7c7d7c;
   --hairline: #e9e9e7;
-  --accent: #4E4A8C;
+  --accent: #4F7942;
   --accent-ink: #ffffff;
 }
 
@@ -20,8 +22,8 @@
     --ink: #eeefef;
     --muted: #868888;
     --hairline: #272828;
-    --accent: #8885B7;
-    --accent-ink: #111212;
+    --accent: #7FB86A;
+    --accent-ink: #14210F;
   }
 }
 
@@ -31,8 +33,8 @@
   --ink: #eeefef;
   --muted: #868888;
   --hairline: #272828;
-  --accent: #8885B7;
-  --accent-ink: #111212;
+  --accent: #7FB86A;
+  --accent-ink: #14210F;
 }
 
 :root[data-theme="light"] {
@@ -41,7 +43,7 @@
   --ink: #1d1e1e;
   --muted: #7c7d7c;
   --hairline: #e9e9e7;
-  --accent: #4E4A8C;
+  --accent: #4F7942;
   --accent-ink: #ffffff;
 }
 
