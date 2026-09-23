@@ -5,6 +5,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Hound-Up — The dog-walking app built for you, not a marketplace</title>
 <meta name="description" content="Hound-Up is the offline-first iOS app built exclusively for UK independent dog walkers — your own branded booking website, live GPS walk tracking, AI-assisted booking import, and invoicing that's entirely yours. No marketplace, no commission, ever.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://houndup.atomlabs.dev/">
+<meta property="og:title" content="Hound-Up — The dog-walking app built for you, not a marketplace">
+<meta property="og:description" content="The offline-first iOS app built exclusively for UK independent dog walkers — your own branded booking website, live GPS walk tracking, AI-assisted booking import, and invoicing that's entirely yours.">
+<meta property="og:image" content="https://houndup.atomlabs.dev/img/screens/today.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Hound-Up — The dog-walking app built for you, not a marketplace">
+<meta name="twitter:description" content="The offline-first iOS app built exclusively for UK independent dog walkers — your own branded booking website, live GPS walk tracking, AI-assisted booking import, and invoicing that's entirely yours.">
+<meta name="twitter:image" content="https://houndup.atomlabs.dev/img/screens/today.jpg">
 <link rel="icon" href="img/favicon-32.png" sizes="32x32">
 <link rel="icon" href="img/favicon-16.png" sizes="16x16">
 <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
@@ -48,10 +57,15 @@
         your own themed marketing and appointment booking website. No marketplace standing between
         you and your clients and no commission on what you earn.</p>
       <div class="hero-cta">
-        <a class="btn btn-hero" href="mailto:hello@houndup.atomlabs.dev?subject=Early%20access%20to%20Hound-Up">Get early access</a>
+        <form class="waitlist-form" data-waitlist-form novalidate>
+          <label class="sr-only" for="waitlist-email-hero">Email address</label>
+          <input class="waitlist-input" id="waitlist-email-hero" type="email" name="email" placeholder="you@example.com" required autocomplete="email">
+          <button class="btn-hero" type="submit">Get early access</button>
+        </form>
         <a class="btn-ghost" href="#features">See what's inside ↓</a>
       </div>
-      <p class="hero-note">Currently in private beta &middot; iOS &middot; no account required</p>
+      <p class="waitlist-status" data-waitlist-status aria-live="polite"></p>
+      <p class="hero-note">Currently in private beta &middot; iOS</p>
     </div>
   </section>
 
@@ -165,10 +179,42 @@
           <div class="la-map">
             <svg class="la-map-bg" viewBox="0 0 240 128" preserveAspectRatio="none">
               <rect width="240" height="128" fill="#1b1e26"/>
-              <path d="M-10 30H250M-10 66H250M-10 100H250" stroke="#ffffff" stroke-opacity="0.05"/>
-              <path d="M40-10V140M96-10V140M168-10V140M210-10V140" stroke="#ffffff" stroke-opacity="0.05"/>
-              <rect x="102" y="6" width="48" height="36" rx="4" fill="#7fa87f" opacity="0.14"/>
-              <path d="M-10 100C40 112,70 82,130 96S212 122,250 108" stroke="#6f9fd6" stroke-opacity="0.16" stroke-width="12" fill="none"/>
+
+              <!-- Park — an organic blob, not a rectangle, with a scatter of tree dots -->
+              <path d="M92 2C112 0,132 6,138 20C144 34,130 44,110 43C90 42,74 34,74 20C74 10,80 4,92 2Z" fill="#7fa87f" opacity="0.16"/>
+              <circle cx="98" cy="16" r="1.6" fill="#7fa87f" opacity="0.35"/>
+              <circle cx="119" cy="25" r="1.4" fill="#7fa87f" opacity="0.3"/>
+              <circle cx="107" cy="33" r="1.5" fill="#7fa87f" opacity="0.3"/>
+              <circle cx="86" cy="26" r="1.3" fill="#7fa87f" opacity="0.28"/>
+
+              <!-- River — a soft outer band with a brighter centre line, like light on water -->
+              <path d="M-10 102C38 114,66 84,124 98S208 124,250 110" stroke="#6f9fd6" stroke-opacity="0.15" stroke-width="13" fill="none" stroke-linecap="round"/>
+              <path d="M-10 102C38 114,66 84,124 98S208 124,250 110" stroke="#a9c9e8" stroke-opacity="0.1" stroke-width="3" fill="none" stroke-linecap="round"/>
+
+              <!-- City blocks, irregular sizes rather than a repeating tile -->
+              <rect x="16" y="46" width="20" height="14" rx="1.5" fill="#ffffff" opacity="0.045"/>
+              <rect x="44" y="8" width="16" height="20" rx="1.5" fill="#ffffff" opacity="0.04"/>
+              <rect x="160" y="58" width="26" height="16" rx="1.5" fill="#ffffff" opacity="0.05"/>
+              <rect x="192" y="20" width="18" height="26" rx="1.5" fill="#ffffff" opacity="0.045"/>
+              <rect x="150" y="92" width="22" height="15" rx="1.5" fill="#ffffff" opacity="0.04"/>
+              <rect x="24" y="82" width="18" height="18" rx="1.5" fill="#ffffff" opacity="0.045"/>
+
+              <!-- Minor residential streets — thin, dim, unevenly spaced -->
+              <path d="M-10 13H250" stroke="#ffffff" stroke-opacity="0.045"/>
+              <path d="M-10 65H250" stroke="#ffffff" stroke-opacity="0.05"/>
+              <path d="M-10 113H250" stroke="#ffffff" stroke-opacity="0.04"/>
+              <path d="M32-10V140" stroke="#ffffff" stroke-opacity="0.045"/>
+              <path d="M148-10V140" stroke="#ffffff" stroke-opacity="0.05"/>
+              <path d="M204-10V140" stroke="#ffffff" stroke-opacity="0.04"/>
+
+              <!-- Arterial roads — thicker, brighter, gently curved rather than ruler-straight -->
+              <path d="M-10 48C60 42,120 54,250 46" stroke="#ffffff" stroke-opacity="0.09" stroke-width="2.4" stroke-linecap="round" fill="none"/>
+              <path d="M86-10C80 40,94 88,90 140" stroke="#ffffff" stroke-opacity="0.09" stroke-width="2.4" stroke-linecap="round" fill="none"/>
+
+              <!-- Intersection markers -->
+              <circle cx="32" cy="13" r="1" fill="#ffffff" opacity="0.12"/>
+              <circle cx="148" cy="65" r="1" fill="#ffffff" opacity="0.12"/>
+              <circle cx="204" cy="113" r="1" fill="#ffffff" opacity="0.12"/>
             </svg>
             <svg class="la-route" viewBox="0 0 240 128" fill="none">
               <path class="la-route-shadow" d="M20 96C55 40,90 100,128 58S195 20,222 52"/>
@@ -366,8 +412,8 @@
           <div class="feat-topic">
             <h3>🔒 Privacy &amp; Reliability</h3>
             <ul>
-              <li>Fully offline-first — client records, scheduling, walk logging and invoicing all work with zero signal</li>
-              <li>No account required to use the app at all</li>
+              <li>Fully offline-first — client records, scheduling and walk logging all work with zero signal</li>
+              <li>No account required for offline logging, scheduling and client records — signing in is only needed to send invoices and back up your data</li>
               <li>Optional iCloud sync across your own devices, entirely between you and Apple</li>
               <li>No ads, no analytics, no data harvesting</li>
               <li>Manual backup export/import any time</li>
@@ -455,8 +501,8 @@
           <p>Offline-first by design — a dead zone on a countryside walk never costs you a note.</p>
         </div>
         <div class="built-for-item">
-          <h4>No account required</h4>
-          <p>Your data stays on your phone from the first launch. Sync is opt-in, not a login wall.</p>
+          <h4>Local-first, sync optional</h4>
+          <p>Every dog, client and walk record lives on your phone from the first launch. Signing in — free, Apple ID only — adds backup and lets you send invoices.</p>
         </div>
         <div class="built-for-item">
           <h4>Looks like a modern iOS app</h4>
@@ -469,7 +515,12 @@
   <section class="final-cta">
     <div class="wrap wrap--wide final-cta-inner">
       <h2>Built for independent dog walkers. Not marketplaces, not agencies — you.</h2>
-      <a class="btn btn-hero" href="mailto:hello@houndup.atomlabs.dev?subject=Early%20access%20to%20Hound-Up">Get early access</a>
+      <form class="waitlist-form" data-waitlist-form novalidate>
+        <label class="sr-only" for="waitlist-email-footer">Email address</label>
+        <input class="waitlist-input" id="waitlist-email-footer" type="email" name="email" placeholder="you@example.com" required autocomplete="email">
+        <button class="btn-hero" type="submit">Get early access</button>
+      </form>
+      <p class="waitlist-status" data-waitlist-status aria-live="polite"></p>
     </div>
   </section>
 
@@ -481,5 +532,6 @@
   </footer>
 </div>
 
+<script src="waitlist.js?v=1" defer></script>
 </body>
 </html>

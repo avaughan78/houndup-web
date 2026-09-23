@@ -194,6 +194,8 @@ main h1, main h2, main h3, main h4 {
   border-radius: 999px;
   padding: 15px 30px;
   text-decoration: none;
+  border: none;
+  cursor: pointer;
   transition: transform 0.15s ease, box-shadow 0.15s ease;
   box-shadow: 0 8px 24px -8px color-mix(in srgb, var(--accent) 60%, transparent);
 }
@@ -201,6 +203,64 @@ main h1, main h2, main h3, main h4 {
 .btn-hero:hover {
   transform: translateY(-1px);
   box-shadow: 0 12px 28px -8px color-mix(in srgb, var(--accent) 70%, transparent);
+}
+
+.btn-hero:disabled {
+  opacity: 0.6;
+  cursor: default;
+  transform: none;
+}
+
+/* Progressively-enhanced email capture — degrades to a plain, working
+   <form method> POST-less submit only in the no-JS case handled by
+   waitlist.js swapping novalidate/action at load time. */
+.waitlist-form {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--surface);
+  border: 1px solid var(--hairline);
+  border-radius: 999px;
+  padding: 6px 6px 6px 22px;
+  box-shadow: 0 8px 24px -14px rgba(0, 0, 0, 0.18);
+}
+
+.waitlist-input {
+  flex: 1;
+  min-width: 180px;
+  border: none;
+  background: none;
+  outline: none;
+  font: inherit;
+  font-size: 15px;
+  color: var(--ink);
+  padding: 9px 0;
+}
+
+.waitlist-input::placeholder {
+  color: var(--muted);
+}
+
+.waitlist-form .btn-hero {
+  padding: 11px 24px;
+  font-size: 15px;
+  white-space: nowrap;
+}
+
+.waitlist-status {
+  font-size: 13px;
+  font-weight: 600;
+  min-height: 17px;
+  margin: 10px 0 0;
+}
+
+.waitlist-status[data-state="ok"] { color: #3BA55D; }
+.waitlist-status[data-state="error"] { color: #D6534A; }
+
+@media (max-width: 480px) {
+  .waitlist-form { flex-wrap: wrap; border-radius: 22px; padding: 14px; }
+  .waitlist-input { flex-basis: 100%; padding: 6px 4px; }
+  .waitlist-form .btn-hero { flex: 1; }
 }
 
 .btn-ghost {
@@ -440,6 +500,11 @@ main h1, main h2, main h3, main h4 {
 .final-cta-inner {
   text-align: center;
   max-width: 560px;
+}
+
+.final-cta-inner .waitlist-form {
+  max-width: 420px;
+  margin: 0 auto;
 }
 
 .final-cta h2 {
@@ -727,9 +792,9 @@ main h1, main h2, main h3, main h4 {
   box-shadow: 0 0 0 4px rgba(111,207,124,0.25);
 }
 
-/* A stylized map tile (streets, one park block, one water bend — all
-   invented shapes, not a real map provider's tiles) sitting behind the
-   route, rather than the route floating on plain black. */
+/* A stylized map tile (road hierarchy, a park, a river, city blocks —
+   all invented shapes, not a real map provider's tiles) sitting behind
+   the route, rather than the route floating on plain black. */
 .la-map {
   position: relative;
   width: 100%;
