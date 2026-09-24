@@ -7,7 +7,7 @@
       "title": "What is Hound-Up?",
       "body": [
         "Hound-Up is an app for dog walkers. It helps you keep track of your clients, their dogs, your walks and sits, and your invoices.",
-        "It works fully on your phone, with no internet needed. Your data backs up automatically via iCloud, so it's safe even if you never sign in — more on that below."
+        "It works fully on your phone, with no internet needed — even out on a walk with no signal. You'll sign in once with Apple to get started, and after that your data backs up automatically."
       ]
     },
     {
@@ -15,9 +15,9 @@
       "category": "Getting Started",
       "title": "Do I need to sign in?",
       "body": [
-        "For most things, no. You can add clients, log walks and sits, and build up your ledger fully without signing in — your data backs up automatically via iCloud either way.",
-        "Sending an invoice is the one thing that needs it, since Hound-Up sends it on your behalf. You'll be asked to sign in with Apple (free, a few seconds) the first time you tap Send.",
-        "Signing in also backs up your own business profile (name, rates, bank details) and syncs everything across your devices. Autopilot adds extra automation on top of that — see \"Free vs Autopilot\" for the full list."
+        "Yes — you'll be asked to sign in with Apple the moment you open Hound-Up for the first time, before anything else. It's free and takes a few seconds.",
+        "Signing in is what keeps your clients, dogs, invoices, and your own business profile (name, rates, bank details) backed up and synced — so nothing's lost if you ever lose or replace your phone.",
+        "Autopilot adds extra automation on top of that — see \"Free vs Autopilot\" for the full list."
       ]
     },
     {
@@ -140,7 +140,7 @@
       "category": "Invoicing & Getting Paid",
       "title": "Sending an invoice",
       "body": [
-        "Go to the Ledger tab, open a client's outstanding balance, and tap Send. Hound-Up emails the invoice to your client for you — there's no separate Mail app step, and you'll be asked to sign in with Apple the first time (see \"Do I need to sign in?\").",
+        "Go to the Ledger tab, open a client's outstanding balance, and tap Send. Hound-Up emails the invoice to your client for you — there's no separate Mail app step needed.",
         "To send it a different way instead — WhatsApp, AirDrop, or anything else on your phone — tap \"Share invoice\" and pick from your phone's usual share sheet."
       ]
     },
@@ -158,7 +158,7 @@
       "category": "Invoicing & Getting Paid",
       "title": "Marking an invoice as paid",
       "body": [
-        "Open the invoice and tap \"Mark as paid\". If you're signed in and a client pays through your Stripe \"Pay now\" link, this happens automatically instead — whether or not you're on Autopilot. See \"Free vs Autopilot\"."
+        "Open the invoice and tap \"Mark as paid\". If a client pays through your Stripe \"Pay now\" link, this happens automatically instead — whether or not you're on Autopilot. See \"Free vs Autopilot\"."
       ]
     },
     {
@@ -210,7 +210,7 @@
       "title": "What is Autopilot?",
       "body": [
         "Autopilot is Hound-Up's paid tier — it keeps things running even with the app closed: nudging late payers, keeping your booking page and calendar feed live, and telling you straight away about a new booking request. You turn it on from Settings → Autopilot.",
-        "It's not a backup feature — your data already backs up automatically via iCloud (as long as iCloud itself is switched on for Hound-Up, which it is by default) whether or not you ever turn this on. See \"Free vs Autopilot\" for exactly what it adds."
+        "It's not a backup feature — your data already backs up automatically as soon as you sign in, whether or not you ever turn this on. See \"Free vs Autopilot\" for exactly what it adds."
       ]
     },
     {
@@ -219,60 +219,51 @@
       "title": "Free vs Autopilot",
       "kind": "planComparison",
       "body": [
-        "Hound-Up is free to use, with no limits on dogs, walks or invoices, and up to 10 active clients. Sign in with Apple (also free, takes a few seconds) and everything backs up automatically and stays in sync across your devices. Autopilot is £9.99 a month on top, removes the 10-client cap, and adds a booking website with live availability booking plus auto-chasing overdue invoices even with the app closed. Here is exactly what is different."
+        "Hound-Up is free to use, with no limits on dogs, walks or invoices, and up to 10 active clients — everything backs up automatically and stays in sync across your devices from the moment you sign in. Autopilot is £9.99 a month on top, removes the 10-client cap, and adds a booking website with live availability booking plus auto-chasing overdue invoices even with the app closed. Here is exactly what is different."
       ],
       "rows": [
         {
           "feature": "Clients, dogs, walks, sits and invoicing",
-          "notSignedIn": "Up to 10 active clients — dogs, walks and sits stay unlimited, but sending an invoice needs you to sign in first",
           "free": "Up to 10 active clients, then upgrade to add more — dogs, walks, sits and invoicing all unlimited",
           "pro": "Unlimited clients too — everything else stays the same"
         },
         {
           "feature": "Backing up your data",
-          "notSignedIn": "Only if your iPhone's iCloud is already switched on — we cannot check or turn this on for you",
           "free": "Yes, automatically, the moment you are online",
           "pro": "The same"
         },
         {
           "feature": "Using Hound-Up on more than one phone",
-          "notSignedIn": "Not reliable — depends on iCloud",
           "free": "Yes",
           "pro": "The same"
         },
         {
           "feature": "When a client pays online, your invoice",
-          "notSignedIn": "Stays marked unpaid until you tap Mark as Paid yourself",
           "free": "Is marked Paid automatically — no need to check",
           "pro": "The same"
         },
         {
           "feature": "How you find out a client has paid",
-          "notSignedIn": "You are not told — check the Ledger yourself",
           "free": "Your choice — email and/or an instant push, pick in Settings",
           "pro": "The same"
         },
         {
           "feature": "Reminding clients about late invoices",
-          "notSignedIn": "Only while you have the app open",
           "free": "Only while you have the app open",
           "pro": "Happens by itself, even with the app shut"
         },
         {
           "feature": "Your online booking page",
-          "notSignedIn": "Not available",
           "free": "Not available",
           "pro": "Your own page, staying up to date all the time"
         },
         {
           "feature": "Your calendar feed staying up to date",
-          "notSignedIn": "Only while you have the app open",
           "free": "Only while you have the app open",
           "pro": "Stays up to date all the time"
         },
         {
           "feature": "Hearing about a new booking request",
-          "notSignedIn": "Nothing syncs to your phone — sign in to receive these at all",
           "free": "Next time you open the app",
           "pro": "Straight away, as a notification"
         }
@@ -283,7 +274,7 @@
       "category": "Autopilot",
       "title": "How do I upgrade to Autopilot?",
       "body": [
-        "Go to Settings > Autopilot and tap Upgrade. You'll see the price and what's included, then Apple's own payment screen. Once you've paid, you'll be asked to sign in with Apple to finish setting it up."
+        "Go to Settings > Autopilot and tap Upgrade. You'll see the price and what's included, then Apple's own payment screen — that's it, since you're already signed in."
       ]
     },
     {
@@ -292,17 +283,17 @@
       "title": "Managing or cancelling your subscription",
       "body": [
         "Go to Settings > Autopilot and tap \"Manage subscription\" — this opens Apple's own subscription screen, where you can cancel or change it any time.",
-        "If you cancel, you keep everything until the end of the period you've already paid for. After that, Hound-Up goes back to working exactly like the free version — nothing is deleted, and your data keeps backing up via iCloud exactly as before."
+        "If you cancel, you keep everything until the end of the period you've already paid for. After that, Hound-Up goes back to working exactly like the free version — nothing is deleted, and your data keeps backing up exactly as before."
       ]
     },
     {
       "id": "icloud-backup",
       "category": "Data & Backup",
-      "title": "Automatic backup via iCloud",
+      "title": "Automatic backup",
       "body": [
-        "Hound-Up backs up your clients, dogs, walks, sits, invoices and ledger automatically, using your own iCloud account. There's nothing to turn on, and no account with Hound-Up needed — it just works, the same way iCloud backs up your Photos.",
-        "This needs iCloud to be switched on for Hound-Up on your iPhone, which it is by default. If you've turned iCloud off for apps generally, check Settings (the iPhone's own Settings app, not Hound-Up's) → your name → iCloud → See All, and make sure Hound-Up is on there.",
-        "One thing this doesn't cover: your own business profile (name, address, rates, logo, bank details) stays only on this device unless you also sign in — see \"Do I need to sign in?\" for why."
+        "Hound-Up backs up your clients, dogs, walks, sits, invoices, ledger, and your own business profile automatically, the moment you're online — there's nothing to turn on.",
+        "This starts as soon as you sign in with Apple, which happens automatically the first time you open the app.",
+        "If you ever lose your phone or get a new one, sign in again and everything comes straight back."
       ]
     },
     {
@@ -311,7 +302,7 @@
       "title": "Backing up your data yourself",
       "body": [
         "Go to Settings > Data and tap \"Export all data\". This saves everything — clients, dogs, walks, invoices, even photos — as one file you can save anywhere: Files, email, Google Drive, wherever you like.",
-        "This is completely free and doesn't need you to sign in. Your data already backs up automatically via iCloud (see \"Automatic backup via iCloud\"), but this is a good extra copy to keep somewhere outside of Apple's own ecosystem too."
+        "This is completely free. Your data already backs up automatically (see \"Automatic backup\"), but this is a good extra copy to keep somewhere outside the app too."
       ]
     },
     {
@@ -328,8 +319,8 @@
       "category": "Data & Backup",
       "title": "Erasing all your data",
       "body": [
-        "Go to Settings > Data and tap \"Erase all data\". This can't be undone, so Hound-Up will ask you to confirm first — it clears your iCloud backup too, since that's just a copy of what's on your phone.",
-        "If you're signed in, this doesn't automatically delete your cloud data too — use Settings → Autopilot → \"Delete cloud data\" for that separately."
+        "Go to Settings > Data and tap \"Erase all data\". This can't be undone, so Hound-Up will ask you to confirm first — it clears everything on this phone and deletes your account, including everything backed up to it.",
+        "If you just want to clear what's backed up to your account but keep everything on this phone, use \"Delete cloud data\" instead, further down the same screen."
       ]
     },
     {
@@ -346,7 +337,7 @@
       "title": "What you get told about, and how",
       "body": [
         "Hound-Up tells you about things in three ways: a bell icon in the app, a notification that pops up on your phone (even with the app shut), and sometimes an email. Not everything uses all three — here's how it works.",
-        "Getting a new booking request and getting paid are the two big ones — both always show up in the bell icon. Getting paid also sends an email and can pop up on your phone straight away, for any signed-in walker who's turned that on in Settings — free or Autopilot, it's the same.",
+        "Getting a new booking request and getting paid are the two big ones — both always show up in the bell icon. Getting paid also sends an email and can pop up on your phone straight away, for anyone who's turned that on in Settings — free or Autopilot, it's the same.",
         "A new booking request is different — receiving them at all is part of what Autopilot switches on, so that one's Autopilot-only, popping up on your phone the moment it arrives.",
         "Quieter jobs running in the background — like an automatic payment reminder or visit summary going out — only show up in the bell icon. They don't pop up on your phone. If several of these happened at once, a pop-up for every single one would just be annoying, so the bell icon is where they live instead."
       ]
