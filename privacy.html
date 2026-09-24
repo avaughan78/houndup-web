@@ -22,27 +22,23 @@
   <h1>Privacy Policy</h1>
   <p class="meta">Effective 16 September 2026 &middot; Operated by Andy Vaughan (sole trader)</p>
 
-  <p>Hound-Up is a business management app for solo dog walkers — scheduling, client and dog records, and invoicing. It's built to work entirely offline. This page explains, plainly, what data the app handles and where it goes.</p>
+  <p>Hound-Up is a business management app for solo dog walkers — scheduling, client and dog records, and invoicing. You sign in with Apple once, the first time you open it, and it then works entirely offline. This page explains, plainly, what data the app handles and where it goes.</p>
 
-  <h2>Your data, and automatic iCloud backup</h2>
-  <p>Everything you enter — client details, dog details, schedules, walk records, notes, and invoices — is stored locally on your device using Apple's on-device database (SwiftData), and backs up automatically to <strong>your own private iCloud account</strong> via Apple's CloudKit, so it carries over to your other devices too. There's nothing to turn on for this — it works the same way iCloud backs up your Photos, as long as iCloud itself is switched on for apps on your iPhone (the default). This sync is between your device and Apple directly — Andy Vaughan has no server that stores or has access to this data, and cannot see, access, or receive it at any point. Apple's own privacy policy governs how iCloud handles it.</p>
-  <p>One deliberate exception: your own business profile (your name, business name, address, rates, bank details, logo) is <strong>not</strong> included in this automatic iCloud backup — it stays only on this device unless you also sign in with Apple (see below), which is what carries it to a new device or to a second device instead.</p>
-
-  <h2>Signing in (free, optional)</h2>
-  <p>Hound-Up also offers an optional, off-by-default way to sign in with Apple — from Settings, or the first time you send an invoice while signed out (invoicing itself requires it, since invoice numbers and Stripe payment links are issued by our backend, not generated purely on-device). This is free, and separate from Autopilot below. Signing in creates a real account and copies your business data to our own backend, hosted on Supabase, so it carries over to a new device or a second device — this is what backs up the one thing iCloud alone doesn't (your business profile).</p>
-  <p>If you sign in, the following is copied to our backend:</p>
+  <h2>Your data, and your account</h2>
+  <p>Everything you enter — client details, dog details, schedules, walk records, notes, invoices, and your own business profile — is stored locally on your device using Apple's on-device database (SwiftData). Hound-Up asks you to sign in with Apple the moment you first open it, before anything else — this is free, takes a few seconds, and never asks for an email address or password. Signing in creates a real account and backs up everything to our own backend, hosted on Supabase, so it carries over automatically if you lose this phone or add a second device.</p>
+  <p>What's copied to our backend once you're signed in:</p>
   <ul>
-    <li>Your business details (name, address, rates, bank details) — the one part of your data that doesn't otherwise leave this device</li>
+    <li>Your business details (name, address, rates, bank details)</li>
     <li>Your clients' names, contact details, addresses, and their dogs' details, including medical/vet notes</li>
     <li>Your schedules, walks, sits, and notes</li>
     <li>Your invoices and payment records, including a copy of each sent invoice PDF</li>
     <li>Your Stripe Restricted API key, if you've connected online payments — so payment links keep working even if your phone isn't reachable at the time</li>
     <li>A device push token, if you turn on any push notification (for example, being told the moment a client pays)</li>
   </ul>
-  <p>This is never sold, used for advertising, or shared beyond what's already listed under Sub-processors below. Signing out (Settings &rarr; Autopilot &rarr; Sign out) stops any further syncing but doesn't delete what's already stored. To permanently and immediately delete everything stored about you, use Settings &rarr; Autopilot &rarr; "Delete cloud data" — this never affects your own device's data (or its iCloud backup), which stays exactly as it is.</p>
+  <p>This is never sold, used for advertising, or shared beyond what's already listed under Sub-processors below. Signing out (Settings &rarr; Data &rarr; Sign out) stops any further syncing but doesn't delete what's already stored, and doesn't touch your local data on this device either way. To permanently and immediately delete everything stored on our servers, use Settings &rarr; Data &rarr; "Delete cloud data".</p>
 
   <h2>Autopilot (optional, paid)</h2>
-  <p>Autopilot is a separate, additional paid subscription (currently £9.99/month, billed through your Apple ID; see the <a href="/terms.html">Terms of Service</a> for billing details) — it requires being signed in (above) but doesn't change what's synced or copy anything new. What it actually adds: certain features run on a schedule on our servers instead of only when you have the app open — automatic payment reminders, automatic visit-summary emails, your calendar feed, your availability calendar, and instant booking-request notifications. It isn't a backup feature — your data already backs up (via iCloud automatically, as long as that's switched on for the app, or to our backend once you're signed in) whether or not you ever turn Autopilot on. Apple, not Hound-Up, processes the subscription payment itself and holds your payment details — we only know that you're subscribed, not your card details.</p>
+  <p>Autopilot is a separate, additional paid subscription (currently £9.99/month, billed through your Apple ID; see the <a href="/terms.html">Terms of Service</a> for billing details) — you're already signed in by the time you can turn it on, so it doesn't change what's synced or copy anything new. What it actually adds: certain features run on a schedule on our servers instead of only when you have the app open — automatic payment reminders, automatic visit-summary emails, your calendar feed, your availability calendar, and instant booking-request notifications. It isn't a backup feature — your data already backs up automatically the moment you sign in, whether or not you ever turn Autopilot on. Apple, not Hound-Up, processes the subscription payment itself and holds your payment details — we only know that you're subscribed, not your card details.</p>
   <p>Autopilot is entirely optional and off by default. If you never turn it on, the features listed above only run while you have the app open — everything about signing in, above, still applies exactly the same either way.</p>
 
   <h2>Public micro-site — Autopilot (optional)</h2>
@@ -59,7 +55,7 @@
   </ul>
   <p>This is relayed through two services, solely to deliver that one email:</p>
   <div class="card">
-    <p><strong>Supabase</strong> — runs the backend that receives the request and forwards it to Resend. It also stores a device attestation key for your phone (see below), so the sending feature can't be abused by requests that didn't come from a genuine copy of the app. This key isn't linked to your name, your clients, or any account — there are no accounts.</p>
+    <p><strong>Supabase</strong> — runs the backend that receives the request and forwards it to Resend. It also stores a device attestation key for your phone (see below), so the sending feature can't be abused by requests that didn't come from a genuine copy of the app. This key exists purely to prove the request came from a genuine copy of the app — it isn't linked to your name, your clients, or your account.</p>
   </div>
   <div class="card">
     <p><strong>Resend</strong> — the email delivery provider that actually sends the message to your client's inbox.</p>
@@ -87,7 +83,6 @@
 
   <h2>What Hound-Up doesn't do</h2>
   <ul>
-    <li>No account or sign-in required to use the app, or for your data to back up automatically via iCloud — Autopilot (Settings, off by default) is the one optional exception; see above</li>
     <li>No advertising or ad tracking</li>
     <li>No analytics or usage tracking</li>
     <li>No selling of data, and no sharing with third parties beyond what a feature you actively chose to use needs to do its job</li>
@@ -95,12 +90,12 @@
 
   <h2 id="sub-processors">Sub-processors</h2>
   <p>These are every third party any backend feature above can send data to, and exactly what each one sees:</p>
-  <div class="card"><p><strong>Supabase</strong> (EU, eu-west-1) &mdash; hosts the backend itself and the calendar feed files. For every walker, sees whatever a given request sends, as described above. Additionally, for any walker who's turned on Autopilot, stores the business/client/schedule/invoice data listed in that section, your device push token, and, if provided, your Stripe Restricted key &mdash; until you delete it or delete your account.</p></div>
+  <div class="card"><p><strong>Supabase</strong> (EU, eu-west-1) &mdash; hosts the backend itself and the calendar feed files. For every walker, sees whatever a given request sends, as described above. Once you're signed in, also stores the business/client/schedule/invoice data listed in that section, your device push token, and, if provided, your Stripe Restricted key &mdash; until you delete it or delete your account.</p></div>
   <div class="card"><p><strong>Cloudflare</strong> &mdash; if you've turned on the public micro-site, proxies that one page so it renders correctly as a webpage. Sees only what's already public on that page for visitors who load it.</p></div>
   <div class="card"><p><strong>Resend</strong> &mdash; delivers invoice and support emails. Sees the recipient address, subject, body, and any PDF attached to that one email.</p></div>
   <div class="card"><p><strong>Microsoft Azure OpenAI</strong> &mdash; parses pasted booking messages. Sees the message text you paste in, for that one request.</p></div>
   <div class="card"><p><strong>Stripe</strong> &mdash; only if you've connected online payments for your own clients to pay by card. This is your own Stripe account, connected directly by you; when a client pays an invoice online, Stripe processes that payment and the card details involved. Hound-Up never sees or stores your clients' card details itself, only whether an invoice has been marked paid.</p></div>
-  <div class="card"><p><strong>Apple (iCloud/CloudKit)</strong> &mdash; automatic backup, under your own Apple ID. Sees everything except your own business profile fields (see "Your data, and automatic iCloud backup" above) &mdash; never shared with us.</p></div>
+  <div class="card"><p><strong>Apple (Sign in with Apple)</strong> &mdash; handles authentication when you sign in. Apple decides how much to share with us, typically a stable identifier and your name, and your email only if you choose to share it (or a private relay address if you don't). Apple's own privacy policy governs this.</p></div>
   <div class="card"><p><strong>Apple (App Store)</strong> &mdash; bills and manages the Autopilot subscription entirely through your Apple ID. Hound-Up never sees your payment details, only that you're subscribed.</p></div>
   <div class="card"><p><strong>Apple (Push Notifications)</strong> &mdash; if notifications are enabled, Apple's Push Notification service delivers them to your device using the device push token described above.</p></div>
   <div class="card"><p><strong>postcodes.io</strong> &mdash; Today's weather icon looks up your business postcode (from Business Details) to get its coordinates, sent directly from your device. Free, no API key, no account.</p></div>
@@ -111,7 +106,7 @@
   <p>Hound-Up is a tool you use to run your own dog-walking business. The personal details you enter about your clients (names, addresses, contact details, emergency contacts, and their dogs' medical/vet information) are your responsibility to collect and use appropriately — for example, telling clients you keep these records and only using them for the purposes they'd reasonably expect (scheduling and invoicing their walks).</p>
 
   <h2>Your control over your data</h2>
-  <p>You can edit or delete any client, dog, or walk record at any time from within the app, or use Settings &rarr; Data &rarr; "Erase all data" to wipe everything on the device (and its iCloud backup) at once. Deleting the app from your device removes the local copy; a copy may still remain in your iCloud account until you clear it from your device's own iCloud settings, or until Apple's own retention policy removes it. If you've turned on Autopilot, use Settings &rarr; Autopilot &rarr; "Delete cloud data" to separately and permanently erase everything it stored on our backend — this is independent of your iCloud backup, so deleting one doesn't delete the other. If you've turned on the public micro-site, switching it off (Settings &rarr; Profile &rarr; Micro-site) immediately stops the page showing anything publicly.</p>
+  <p>You can edit or delete any client, dog, or walk record at any time from within the app, or use Settings &rarr; Data &rarr; "Erase all data" to wipe everything — on this device and on our servers — at once. If you'd rather keep your local records but only clear what's stored on our servers, use Settings &rarr; Data &rarr; "Delete cloud data" instead; your device's own data is untouched either way. Signing out (Settings &rarr; Data &rarr; Sign out) just ends the session on this device and doesn't delete anything, locally or on our servers. If you've turned on the public micro-site, switching it off (Settings &rarr; Profile &rarr; Micro-site) immediately stops the page showing anything publicly.</p>
 
   <h2>Children</h2>
   <p>Hound-Up isn't directed at children and isn't intended for use by them.</p>
