@@ -97,6 +97,10 @@
 
       // Drag-to-spin — pointer events cover mouse and touch alike.
       var dragMoved = false;
+      // Captured lazily (see dragMove), not on every pointerdown — see
+      // that function's own comment for why unconditional capture here
+      // silently broke the lightbox.
+      var capturedPointerId = null;
       function dragStart(clientX) {
         dragging = true;
         dragMoved = false;
@@ -108,7 +112,18 @@
       function dragMove(clientX) {
         if (!dragging) return;
         var deltaX = clientX - dragStartX;
-        if (Math.abs(deltaX) > 4) dragMoved = true;
+        if (Math.abs(deltaX) > 4 && !dragMoved) {
+          dragMoved = true;
+          // Only capture once this is confirmed to be a real drag, not
+          // a plain click/tap — confirmed live: capturing unconditionally
+          // on every pointerdown (the previous behavior) retargets the
+          // browser's synthesized `click` event to `ring` instead of
+          // whatever card was actually under the pointer, which silently
+          // broke every screenshot's "enlarge" click — the magnifying-
+          // glass cursor still appeared on hover, but nothing happened
+          // on click, since the card's own click listener never fired.
+          if (capturedPointerId !== null && ring.setPointerCapture) ring.setPointerCapture(capturedPointerId);
+        }
         // Degrees per pixel dragged — tied to radius so a drag around a
         // tighter/wider ring still feels proportional.
         angle = dragStartAngle + (deltaX / radius) * 60;
@@ -118,6 +133,10 @@
         if (!dragging) return;
         dragging = false;
         ring.classList.remove("is-dragging");
+        if (capturedPointerId !== null && ring.releasePointerCapture) {
+          try { ring.releasePointerCapture(capturedPointerId); } catch (e) {}
+        }
+        capturedPointerId = null;
         resume();
       }
       consumeDragFlag = function () {
@@ -128,8 +147,8 @@
 
       ring.addEventListener("pointerdown", function (event) {
         if (event.button !== undefined && event.button !== 0) return;
+        capturedPointerId = event.pointerId;
         dragStart(event.clientX);
-        ring.setPointerCapture && ring.setPointerCapture(event.pointerId);
       });
       ring.addEventListener("pointermove", function (event) {
         if (dragging) dragMove(event.clientX);
