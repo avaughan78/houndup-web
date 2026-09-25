@@ -306,15 +306,6 @@
       ]
     },
     {
-      "id": "restoring-backup",
-      "category": "Data & Backup",
-      "title": "Recovering your data",
-      "body": [
-        "If something on your phone looks out of date or missing — a client, a walk, an invoice — go to Settings > Data and tap \"Recover\" next to \"Recover data\". This pulls everything fresh from your account, straight over whatever's currently on this phone.",
-        "There's no separate restore-from-file step — \"Export all data\" (see \"Backing up your data yourself\") is a personal copy to keep outside the app, not something you re-import. Your account itself, via sign-in, is the real backup — that's what \"Recover\" pulls from."
-      ]
-    },
-    {
       "id": "erasing-data",
       "category": "Data & Backup",
       "title": "Erasing all your data",
