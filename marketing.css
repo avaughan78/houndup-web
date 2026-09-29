@@ -1117,7 +1117,12 @@ main h1, main h2, main h3, main h4 {
 }
 
 .lightbox img {
-  max-width: min(420px, 90vw);
+  /* 420px comfortably fit the portrait phone screenshots this was
+     built for — those are actually height-bound by max-height below
+     well before hitting any width cap, so raising this only helps
+     wider images (like the landscape map) without changing how the
+     screenshots display. */
+  max-width: min(900px, 92vw);
   max-height: 86vh;
   width: auto;
   border-radius: 28px;
