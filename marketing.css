@@ -677,6 +677,11 @@ main h1, main h2, main h3, main h4 {
   height: 100%;
 }
 
+.la-map-bg {
+  object-fit: cover;
+  display: block;
+}
+
 .la-route-shadow {
   stroke: #8885B7;
   stroke-opacity: 0.4;
