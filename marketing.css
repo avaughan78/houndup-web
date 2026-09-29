@@ -667,6 +667,13 @@ main h1, main h2, main h3, main h4 {
   border-radius: 14px;
   overflow: hidden;
   margin-bottom: 14px;
+  cursor: zoom-in;
+  transition: opacity 0.15s ease;
+}
+
+.la-map:hover,
+.la-map:focus-visible {
+  opacity: 0.88;
 }
 
 .la-map-bg {
